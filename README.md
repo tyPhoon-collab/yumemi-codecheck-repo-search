@@ -4,6 +4,8 @@
 
 ## 開発環境
 
+[![style: very good analysis](https://img.shields.io/badge/style-very_good_analysis-B22C89.svg)](https://pub.dev/packages/very_good_analysis)
+
 ```bash
 $ flutter --version
 Flutter 3.22.2 • channel stable • https://github.com/flutter/flutter.git
