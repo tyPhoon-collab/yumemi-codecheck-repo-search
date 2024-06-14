@@ -26,7 +26,9 @@
     "**/pubspec.yaml",
     // "**/node_modules/**",
     ".vscode",
-    "*.pbxproj"
+    "*.pbxproj",
+    "*.g.dart",
+    "*.freezed.dart",
   ],
   "cSpell.words": [
     "codecheck",
