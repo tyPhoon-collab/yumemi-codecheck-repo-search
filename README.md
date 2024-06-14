@@ -30,3 +30,6 @@ Tools • Dart 3.4.3 • DevTools 2.34.3
 ### 6/15
 
 - 評価ポイントとして「レビューのしやすさ」があるため、チーム開発を意識して、issue作成→PR作成→PRマージという流れを取ることにした。
+- GitHub REST API 構築のために、retrofitとfreezedを使用することにした。
+  - 良くテストされているはずの既存のREST API Wrapperを使用することで、負担を軽減する。
+  - freezedを使用することにより、immutableかつ、便利なモデルクラスを構築する。
