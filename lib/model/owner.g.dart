@@ -7,12 +7,12 @@ part of 'owner.dart';
 // **************************************************************************
 
 _$OwnerImpl _$$OwnerImplFromJson(Map<String, dynamic> json) => _$OwnerImpl(
-      login: json['login'] as String,
+      htmlUrl: json['html_url'] as String,
       avatarUrl: json['avatar_url'] as String,
     );
 
 Map<String, dynamic> _$$OwnerImplToJson(_$OwnerImpl instance) =>
     <String, dynamic>{
-      'login': instance.login,
+      'html_url': instance.htmlUrl,
       'avatar_url': instance.avatarUrl,
     };

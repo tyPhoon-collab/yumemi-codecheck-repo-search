@@ -20,7 +20,7 @@ Owner _$OwnerFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Owner {
-  String get login => throw _privateConstructorUsedError;
+  String get htmlUrl => throw _privateConstructorUsedError;
   String get avatarUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -33,7 +33,7 @@ abstract class $OwnerCopyWith<$Res> {
   factory $OwnerCopyWith(Owner value, $Res Function(Owner) then) =
       _$OwnerCopyWithImpl<$Res, Owner>;
   @useResult
-  $Res call({String login, String avatarUrl});
+  $Res call({String htmlUrl, String avatarUrl});
 }
 
 /// @nodoc
@@ -49,13 +49,13 @@ class _$OwnerCopyWithImpl<$Res, $Val extends Owner>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? login = null,
+    Object? htmlUrl = null,
     Object? avatarUrl = null,
   }) {
     return _then(_value.copyWith(
-      login: null == login
-          ? _value.login
-          : login // ignore: cast_nullable_to_non_nullable
+      htmlUrl: null == htmlUrl
+          ? _value.htmlUrl
+          : htmlUrl // ignore: cast_nullable_to_non_nullable
               as String,
       avatarUrl: null == avatarUrl
           ? _value.avatarUrl
@@ -72,7 +72,7 @@ abstract class _$$OwnerImplCopyWith<$Res> implements $OwnerCopyWith<$Res> {
       __$$OwnerImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String login, String avatarUrl});
+  $Res call({String htmlUrl, String avatarUrl});
 }
 
 /// @nodoc
@@ -86,13 +86,13 @@ class __$$OwnerImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? login = null,
+    Object? htmlUrl = null,
     Object? avatarUrl = null,
   }) {
     return _then(_$OwnerImpl(
-      login: null == login
-          ? _value.login
-          : login // ignore: cast_nullable_to_non_nullable
+      htmlUrl: null == htmlUrl
+          ? _value.htmlUrl
+          : htmlUrl // ignore: cast_nullable_to_non_nullable
               as String,
       avatarUrl: null == avatarUrl
           ? _value.avatarUrl
@@ -106,19 +106,19 @@ class __$$OwnerImplCopyWithImpl<$Res>
 
 @JsonSerializable(explicitToJson: true, fieldRename: FieldRename.snake)
 class _$OwnerImpl implements _Owner {
-  const _$OwnerImpl({required this.login, required this.avatarUrl});
+  const _$OwnerImpl({required this.htmlUrl, required this.avatarUrl});
 
   factory _$OwnerImpl.fromJson(Map<String, dynamic> json) =>
       _$$OwnerImplFromJson(json);
 
   @override
-  final String login;
+  final String htmlUrl;
   @override
   final String avatarUrl;
 
   @override
   String toString() {
-    return 'Owner(login: $login, avatarUrl: $avatarUrl)';
+    return 'Owner(htmlUrl: $htmlUrl, avatarUrl: $avatarUrl)';
   }
 
   @override
@@ -126,14 +126,14 @@ class _$OwnerImpl implements _Owner {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$OwnerImpl &&
-            (identical(other.login, login) || other.login == login) &&
+            (identical(other.htmlUrl, htmlUrl) || other.htmlUrl == htmlUrl) &&
             (identical(other.avatarUrl, avatarUrl) ||
                 other.avatarUrl == avatarUrl));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, login, avatarUrl);
+  int get hashCode => Object.hash(runtimeType, htmlUrl, avatarUrl);
 
   @JsonKey(ignore: true)
   @override
@@ -151,13 +151,13 @@ class _$OwnerImpl implements _Owner {
 
 abstract class _Owner implements Owner {
   const factory _Owner(
-      {required final String login,
+      {required final String htmlUrl,
       required final String avatarUrl}) = _$OwnerImpl;
 
   factory _Owner.fromJson(Map<String, dynamic> json) = _$OwnerImpl.fromJson;
 
   @override
-  String get login;
+  String get htmlUrl;
   @override
   String get avatarUrl;
   @override
