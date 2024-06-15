@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:yumemi_codecheck_repo_search/model/repo.dart';
 
@@ -39,27 +40,29 @@ class GitHubRepoDetailPage extends StatelessWidget {
                 if (repo.description case final String description)
                   Text(description, style: textTheme.bodyLarge),
                 if (repo.language case final String language)
-                  _IconAndText(iconData: Icons.abc, text: language),
-                Row(
-                  mainAxisSize: MainAxisSize.min,
+                  _SVGAndText(
+                    assetName: 'assets/image/svg/file-code.svg',
+                    text: language,
+                  ),
+                Wrap(
                   children: [
-                    _IconAndText(
-                      iconData: Icons.star,
+                    _SVGAndText(
+                      assetName: 'assets/image/svg/star.svg',
                       text: repo.stargazersCount.toString(),
                     ),
                     const SizedBox(width: 8),
-                    _IconAndText(
-                      iconData: Icons.remove_red_eye,
+                    _SVGAndText(
+                      assetName: 'assets/image/svg/eye.svg',
                       text: repo.watchersCount.toString(),
                     ),
                     const SizedBox(width: 8),
-                    _IconAndText(
-                      iconData: Icons.code,
+                    _SVGAndText(
+                      assetName: 'assets/image/svg/repo-forked.svg',
                       text: repo.forksCount.toString(),
                     ),
                     const SizedBox(width: 8),
-                    _IconAndText(
-                      iconData: Icons.bug_report,
+                    _SVGAndText(
+                      assetName: 'assets/image/svg/issue-opened.svg',
                       text: repo.openIssuesCount.toString(),
                     ),
                   ],
@@ -86,17 +89,21 @@ class GitHubRepoDetailPage extends StatelessWidget {
   }
 }
 
-class _IconAndText extends StatelessWidget {
-  const _IconAndText({required this.iconData, required this.text});
+class _SVGAndText extends StatelessWidget {
+  const _SVGAndText({
+    required this.assetName,
+    required this.text,
+  });
 
-  final IconData iconData;
+  final String assetName;
   final String text;
 
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(iconData),
+        SvgPicture.asset(assetName),
         const SizedBox(width: 4),
         Text(text),
       ],
