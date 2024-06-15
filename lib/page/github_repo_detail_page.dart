@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:yumemi_codecheck_repo_search/common/brightness_adaptive_svg.dart';
 import 'package:yumemi_codecheck_repo_search/common/loading_indicator.dart';
 import 'package:yumemi_codecheck_repo_search/model/owner.dart';
 import 'package:yumemi_codecheck_repo_search/model/repo.dart';
@@ -184,13 +184,7 @@ class _SVGAndText extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        SvgPicture.asset(
-          assetName,
-          colorFilter: ColorFilter.mode(
-            Theme.of(context).colorScheme.onSurface,
-            BlendMode.srcIn,
-          ),
-        ),
+        BrightnessAdaptiveSvg(assetName),
         const SizedBox(width: 4),
         Text(text),
       ],
