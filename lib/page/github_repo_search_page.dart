@@ -64,8 +64,12 @@ class _RepoListView extends ConsumerWidget {
                 },
               );
       },
-      error: (error, stackTrace) =>
-          Text(error.toString()), // TODO: 適切なエラーメッセージを表示,
+      error: (error, stackTrace) => Text(
+        error.toString(),
+        style: TextStyle(
+          color: Theme.of(context).colorScheme.error,
+        ),
+      ), // TODO: 適切なエラーメッセージを表示,
       loading: () => const Center(child: LoadingIndicator()),
     );
   }
@@ -120,7 +124,15 @@ class _SearchBar extends HookConsumerWidget {
       ],
       padding: const WidgetStatePropertyAll(EdgeInsets.only(left: 16)),
       textInputAction: TextInputAction.search,
-      onSubmitted: ref.read(repoSearchQueryProvider.notifier).update,
+      onSubmitted: (text) {
+        final query = ref.read(repoSearchQueryProvider.notifier).update(text);
+
+        if (query != null) {
+          controller.text = query;
+        } else {
+          controller.clear();
+        }
+      },
     );
   }
 }
