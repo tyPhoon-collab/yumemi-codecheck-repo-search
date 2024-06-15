@@ -32,8 +32,9 @@ analyzer:
   exclude:
     - "**/*.g.dart"
     - "**/*.freezed.dart"
-    - "lib/firebase_options.dart"
+    # - "lib/firebase_options.dart"
     - "lib/generated/*"
+    - "lib/generated/intl/*"
   errors:
     invalid_annotation_target: ignore
 

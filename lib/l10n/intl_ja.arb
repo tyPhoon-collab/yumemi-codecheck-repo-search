@@ -1,0 +1,6 @@
+{
+    "@@locale": "ja",
+    "searchPlaceholder": "Repositoryを検索",
+    "noResults": "結果が見つかりませんでした",
+    "failedLaunch": "{url} が開けませんでした"
+}
