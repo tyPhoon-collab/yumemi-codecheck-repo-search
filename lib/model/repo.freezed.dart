@@ -21,7 +21,6 @@ Repo _$RepoFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Repo {
   int get id => throw _privateConstructorUsedError;
-  String get url => throw _privateConstructorUsedError;
   String get createdAt => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get fullName => throw _privateConstructorUsedError;
@@ -46,7 +45,6 @@ abstract class $RepoCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      String url,
       String createdAt,
       String name,
       String fullName,
@@ -76,7 +74,6 @@ class _$RepoCopyWithImpl<$Res, $Val extends Repo>
   @override
   $Res call({
     Object? id = null,
-    Object? url = null,
     Object? createdAt = null,
     Object? name = null,
     Object? fullName = null,
@@ -94,10 +91,6 @@ class _$RepoCopyWithImpl<$Res, $Val extends Repo>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      url: null == url
-          ? _value.url
-          : url // ignore: cast_nullable_to_non_nullable
-              as String,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -163,7 +156,6 @@ abstract class _$$RepoImplCopyWith<$Res> implements $RepoCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      String url,
       String createdAt,
       String name,
       String fullName,
@@ -191,7 +183,6 @@ class __$$RepoImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? url = null,
     Object? createdAt = null,
     Object? name = null,
     Object? fullName = null,
@@ -209,10 +200,6 @@ class __$$RepoImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      url: null == url
-          ? _value.url
-          : url // ignore: cast_nullable_to_non_nullable
-              as String,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -267,7 +254,6 @@ class __$$RepoImplCopyWithImpl<$Res>
 class _$RepoImpl implements _Repo {
   _$RepoImpl(
       {required this.id,
-      required this.url,
       required this.createdAt,
       required this.name,
       required this.fullName,
@@ -285,8 +271,6 @@ class _$RepoImpl implements _Repo {
 
   @override
   final int id;
-  @override
-  final String url;
   @override
   final String createdAt;
   @override
@@ -312,7 +296,7 @@ class _$RepoImpl implements _Repo {
 
   @override
   String toString() {
-    return 'Repo(id: $id, url: $url, createdAt: $createdAt, name: $name, fullName: $fullName, htmlUrl: $htmlUrl, stargazersCount: $stargazersCount, watchersCount: $watchersCount, forksCount: $forksCount, openIssuesCount: $openIssuesCount, owner: $owner, description: $description, language: $language)';
+    return 'Repo(id: $id, createdAt: $createdAt, name: $name, fullName: $fullName, htmlUrl: $htmlUrl, stargazersCount: $stargazersCount, watchersCount: $watchersCount, forksCount: $forksCount, openIssuesCount: $openIssuesCount, owner: $owner, description: $description, language: $language)';
   }
 
   @override
@@ -321,7 +305,6 @@ class _$RepoImpl implements _Repo {
         (other.runtimeType == runtimeType &&
             other is _$RepoImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.url, url) || other.url == url) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.name, name) || other.name == name) &&
@@ -348,7 +331,6 @@ class _$RepoImpl implements _Repo {
   int get hashCode => Object.hash(
       runtimeType,
       id,
-      url,
       createdAt,
       name,
       fullName,
@@ -378,7 +360,6 @@ class _$RepoImpl implements _Repo {
 abstract class _Repo implements Repo {
   factory _Repo(
       {required final int id,
-      required final String url,
       required final String createdAt,
       required final String name,
       required final String fullName,
@@ -395,8 +376,6 @@ abstract class _Repo implements Repo {
 
   @override
   int get id;
-  @override
-  String get url;
   @override
   String get createdAt;
   @override

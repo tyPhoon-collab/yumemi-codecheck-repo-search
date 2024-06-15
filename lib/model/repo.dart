@@ -9,7 +9,6 @@ class Repo with _$Repo {
   @JsonSerializable(explicitToJson: true, fieldRename: FieldRename.snake)
   factory Repo({
     required int id,
-    required String url,
     required String createdAt,
     required String name,
     required String fullName,
