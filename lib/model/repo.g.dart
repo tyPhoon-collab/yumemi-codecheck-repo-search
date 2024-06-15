@@ -8,7 +8,6 @@ part of 'repo.dart';
 
 _$RepoImpl _$$RepoImplFromJson(Map<String, dynamic> json) => _$RepoImpl(
       id: (json['id'] as num).toInt(),
-      url: json['url'] as String,
       createdAt: json['created_at'] as String,
       name: json['name'] as String,
       fullName: json['full_name'] as String,
@@ -25,7 +24,6 @@ _$RepoImpl _$$RepoImplFromJson(Map<String, dynamic> json) => _$RepoImpl(
 Map<String, dynamic> _$$RepoImplToJson(_$RepoImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'url': instance.url,
       'created_at': instance.createdAt,
       'name': instance.name,
       'full_name': instance.fullName,
