@@ -6,29 +6,32 @@ import 'package:yumemi_codecheck_repo_search/model/repo.dart';
 import 'package:yumemi_codecheck_repo_search/page/github_repo_detail_page.dart';
 import 'package:yumemi_codecheck_repo_search/service.dart';
 
-class GitHubRepoSearchPage extends StatefulWidget {
+class GitHubRepoSearchPage extends ConsumerWidget {
   const GitHubRepoSearchPage({super.key});
 
   @override
-  State<GitHubRepoSearchPage> createState() => _GitHubRepoSearchPageState();
-}
-
-class _GitHubRepoSearchPageState extends State<GitHubRepoSearchPage> {
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _LogoWidget(),
-                SizedBox(height: 16),
-                _SearchBar(),
-                SizedBox(height: 16),
-                _RepoList(),
+                const _LogoWidget(),
+                const SizedBox(height: 16),
+                const _SearchBar(),
+                const SizedBox(height: 16),
+                Flexible(
+                  child: AnimatedSize(
+                    duration: Durations.medium2,
+                    curve: Curves.easeInOutQuart,
+                    child: ref.watch(repoSearchQueryProvider) == null
+                        ? const SizedBox()
+                        : const _RepoListView(),
+                  ),
+                ),
               ],
             ),
           ),
@@ -38,8 +41,8 @@ class _GitHubRepoSearchPageState extends State<GitHubRepoSearchPage> {
   }
 }
 
-class _RepoList extends ConsumerWidget {
-  const _RepoList();
+class _RepoListView extends ConsumerWidget {
+  const _RepoListView();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -51,17 +54,15 @@ class _RepoList extends ConsumerWidget {
 
         final items = data.items;
 
-        return Expanded(
-          child: items.isEmpty
-              ? const Center(child: Text('No repositories...'))
-              : ListView.builder(
-                  itemCount: items.length,
-                  itemBuilder: (context, index) {
-                    final item = items[index];
-                    return _RepoListTile(repo: item);
-                  },
-                ),
-        );
+        return items.isEmpty
+            ? const Center(child: Text('No repositories...'))
+            : ListView.builder(
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  final item = items[index];
+                  return _RepoListTile(repo: item);
+                },
+              );
       },
       error: (error, stackTrace) =>
           Text(error.toString()), // TODO: 適切なエラーメッセージを表示,
