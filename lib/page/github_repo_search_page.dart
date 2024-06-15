@@ -49,18 +49,22 @@ class _RepoList extends ConsumerWidget {
       data: (data) {
         if (data == null) return const SizedBox();
 
+        final items = data.items;
+
         return Expanded(
-          child: ListView.builder(
-            itemCount: data.items.length,
-            itemBuilder: (context, index) {
-              final item = data.items[index];
-              return ListTile(
-                title: Text(item.fullName),
-                subtitle: Text(item.description ?? ''),
-                onTap: () => _pushToDetail(context, item),
-              );
-            },
-          ),
+          child: items.isEmpty
+              ? const Center(child: Text('No repositories...'))
+              : ListView.builder(
+                  itemCount: items.length,
+                  itemBuilder: (context, index) {
+                    final item = items[index];
+                    return ListTile(
+                      title: Text(item.fullName),
+                      subtitle: Text(item.description ?? ''),
+                      onTap: () => _pushToDetail(context, item),
+                    );
+                  },
+                ),
         );
       },
       error: (error, stackTrace) =>
