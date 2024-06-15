@@ -93,24 +93,24 @@ class _RepoDescription extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        InkWell(
-          onTap: () => _launchUrl(context, repo.htmlUrl),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Flexible(
-                child: Text(
-                  repo.fullName,
-                  style: textTheme.headlineLarge,
-                ),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Flexible(
+              child: SelectableText(
+                repo.fullName,
+                style: textTheme.headlineLarge,
               ),
-              const SizedBox(width: 8),
-              const Icon(Icons.launch),
-            ],
-          ),
+            ),
+            const SizedBox(width: 8),
+            IconButton(
+              onPressed: () => _launchUrl(context, repo.htmlUrl),
+              icon: const Icon(Icons.launch),
+            ),
+          ],
         ),
         if (repo.description case final String description)
-          Text(description, style: textTheme.bodyLarge),
+          SelectableText(description, style: textTheme.bodyLarge),
         const SizedBox(height: 16),
         if (repo.language case final String language)
           _SVGAndText(
