@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yumemi_codecheck_repo_search/common/loading_indicator.dart';
+import 'package:yumemi_codecheck_repo_search/model/repo.dart';
 import 'package:yumemi_codecheck_repo_search/page/github_repo_detail_page.dart';
 import 'package:yumemi_codecheck_repo_search/service.dart';
 
@@ -43,11 +44,11 @@ class _RepoList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final result = ref.watch(repoSearchResultProvider);
+
     return result.when(
       data: (data) {
-        if (data == null) {
-          return const SizedBox();
-        }
+        if (data == null) return const SizedBox();
+
         return Expanded(
           child: ListView.builder(
             itemCount: data.items.length,
@@ -56,11 +57,7 @@ class _RepoList extends ConsumerWidget {
               return ListTile(
                 title: Text(item.fullName),
                 subtitle: Text(item.description ?? ''),
-                onTap: () => Navigator.of(context).push(
-                  MaterialPageRoute<void>(
-                    builder: (context) => GitHubRepoDetailPage(repo: item),
-                  ),
-                ),
+                onTap: () => _pushToDetail(context, item),
               );
             },
           ),
@@ -69,6 +66,14 @@ class _RepoList extends ConsumerWidget {
       error: (error, stackTrace) =>
           Text(error.toString()), // TODO: 適切なエラーメッセージを表示,
       loading: () => const Center(child: LoadingIndicator()),
+    );
+  }
+
+  void _pushToDetail(BuildContext context, Repo repo) {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (context) => GitHubRepoDetailPage(repo: repo),
+      ),
     );
   }
 }
