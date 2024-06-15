@@ -252,7 +252,7 @@ class __$$RepoImplCopyWithImpl<$Res>
 
 @JsonSerializable(explicitToJson: true, fieldRename: FieldRename.snake)
 class _$RepoImpl implements _Repo {
-  _$RepoImpl(
+  const _$RepoImpl(
       {required this.id,
       required this.createdAt,
       required this.name,
@@ -358,7 +358,7 @@ class _$RepoImpl implements _Repo {
 }
 
 abstract class _Repo implements Repo {
-  factory _Repo(
+  const factory _Repo(
       {required final int id,
       required final String createdAt,
       required final String name,

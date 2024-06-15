@@ -7,7 +7,7 @@ part 'repo.g.dart';
 @freezed
 class Repo with _$Repo {
   @JsonSerializable(explicitToJson: true, fieldRename: FieldRename.snake)
-  factory Repo({
+  const factory Repo({
     required int id,
     required String createdAt,
     required String name,
