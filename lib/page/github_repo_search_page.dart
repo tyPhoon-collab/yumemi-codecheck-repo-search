@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:yumemi_codecheck_repo_search/common/loading_indicator.dart';
 import 'package:yumemi_codecheck_repo_search/page/github_repo_detail_page.dart';
 import 'package:yumemi_codecheck_repo_search/service.dart';
 
@@ -66,7 +67,7 @@ class _RepoList extends ConsumerWidget {
       },
       error: (error, stackTrace) =>
           Text(error.toString()), // TODO: 適切なエラーメッセージを表示,
-      loading: () => const Center(),
+      loading: () => const Center(child: LoadingIndicator()),
     );
   }
 }

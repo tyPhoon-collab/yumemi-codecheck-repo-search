@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:yumemi_codecheck_repo_search/common/loading_indicator.dart';
 import 'package:yumemi_codecheck_repo_search/model/owner.dart';
 import 'package:yumemi_codecheck_repo_search/model/repo.dart';
 
@@ -161,7 +162,7 @@ class _AvatarImage extends StatelessWidget {
         borderRadius: borderRadius,
         child: CachedNetworkImage(
           imageUrl: owner.avatarUrl,
-          placeholder: (context, url) => const CircularProgressIndicator(),
+          placeholder: (context, url) => const LoadingIndicator(),
           errorWidget: (context, url, error) => const Icon(Icons.error),
         ),
       ),
