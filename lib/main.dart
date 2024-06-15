@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yumemi_codecheck_repo_search/page/github_repo_search_page.dart';
+import 'package:yumemi_codecheck_repo_search/theme.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -14,10 +15,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: theme,
+      darkTheme: darkTheme,
       home: const GitHubRepoSearchPage(),
     );
   }
