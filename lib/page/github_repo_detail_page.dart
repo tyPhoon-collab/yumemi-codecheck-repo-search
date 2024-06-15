@@ -183,7 +183,13 @@ class _SVGAndText extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        SvgPicture.asset(assetName),
+        SvgPicture.asset(
+          assetName,
+          colorFilter: ColorFilter.mode(
+            Theme.of(context).colorScheme.onSurface,
+            BlendMode.srcIn,
+          ),
+        ),
         const SizedBox(width: 4),
         Text(text),
       ],
