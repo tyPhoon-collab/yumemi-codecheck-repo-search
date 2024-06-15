@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yumemi_codecheck_repo_search/common/loading_indicator.dart';
 import 'package:yumemi_codecheck_repo_search/page/github_repo_detail_page.dart';
@@ -72,16 +73,27 @@ class _RepoList extends ConsumerWidget {
   }
 }
 
-class _SearchBar extends ConsumerWidget {
+class _SearchBar extends HookConsumerWidget {
   const _SearchBar();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final controller = useTextEditingController();
+
     return SearchBar(
+      controller: controller,
       leading: const Icon(Icons.search),
-      padding: const WidgetStatePropertyAll<EdgeInsets>(
-        EdgeInsets.symmetric(horizontal: 16),
-      ),
+      trailing: [
+        if (ref.watch(repoSearchQueryProvider) != null)
+          IconButton(
+            icon: const Icon(Icons.close),
+            onPressed: () {
+              controller.clear();
+              ref.read(repoSearchQueryProvider.notifier).reset();
+            },
+          ),
+      ],
+      padding: const WidgetStatePropertyAll(EdgeInsets.only(left: 16)),
       textInputAction: TextInputAction.search,
       onSubmitted: ref.read(repoSearchQueryProvider.notifier).update,
     );

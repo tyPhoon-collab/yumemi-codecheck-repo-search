@@ -42,5 +42,5 @@ class RepoSearchQuery extends _$RepoSearchQuery {
     state = value;
   }
 
-  // void reset() {}
+  void reset() => state = null;
 }
