@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yumemi_codecheck_repo_search/common/brightness_adaptive_svg.dart';
 import 'package:yumemi_codecheck_repo_search/common/loading_indicator.dart';
+import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
 import 'package:yumemi_codecheck_repo_search/model/repo.dart';
 import 'package:yumemi_codecheck_repo_search/page/github_repo_detail_page.dart';
 import 'package:yumemi_codecheck_repo_search/service.dart';
@@ -56,7 +57,7 @@ class _RepoListView extends ConsumerWidget {
         final items = data.items;
 
         return items.isEmpty
-            ? const Center(child: Text('No repositories...'))
+            ? Center(child: Text(S.current.noResults))
             : ListView.builder(
                 itemCount: items.length,
                 itemBuilder: (context, index) {
@@ -113,6 +114,7 @@ class _SearchBar extends HookConsumerWidget {
 
     return SearchBar(
       controller: controller,
+      hintText: S.current.searchPlaceholder,
       leading: const Icon(Icons.search),
       trailing: [
         if (ref.watch(repoSearchQueryProvider) != null)
@@ -144,6 +146,7 @@ class _LogoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: ロゴは画像で扱う
     return const Text(
       'GitHub Repository Search',
     );
