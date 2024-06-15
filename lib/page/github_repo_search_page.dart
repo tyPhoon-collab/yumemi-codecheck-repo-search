@@ -58,11 +58,7 @@ class _RepoList extends ConsumerWidget {
                   itemCount: items.length,
                   itemBuilder: (context, index) {
                     final item = items[index];
-                    return ListTile(
-                      title: Text(item.fullName),
-                      subtitle: Text(item.description ?? ''),
-                      onTap: () => _pushToDetail(context, item),
-                    );
+                    return _RepoListTile(repo: item);
                   },
                 ),
         );
@@ -72,8 +68,27 @@ class _RepoList extends ConsumerWidget {
       loading: () => const Center(child: LoadingIndicator()),
     );
   }
+}
 
-  void _pushToDetail(BuildContext context, Repo repo) {
+class _RepoListTile extends StatelessWidget {
+  const _RepoListTile({required this.repo});
+
+  final Repo repo;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(repo.fullName),
+      subtitle: Text(
+        repo.description ?? '',
+        maxLines: 3,
+        overflow: TextOverflow.ellipsis,
+      ),
+      onTap: () => _pushToDetail(context),
+    );
+  }
+
+  void _pushToDetail(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (context) => GitHubRepoDetailPage(repo: repo),
