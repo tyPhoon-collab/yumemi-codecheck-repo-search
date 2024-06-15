@@ -37,10 +37,17 @@ class RepoSearchQuery extends _$RepoSearchQuery {
     return null;
   }
 
-  // ignore: use_setters_to_change_properties
-  void update(String value) {
-    state = value;
+  /// 戻り値は整形後のクエリの文字列とする
+  String? update(String value) {
+    final query = value.trim();
+    if (query.isEmpty) {
+      state = null;
+      return null;
+    }
+    state = query;
+
+    return query;
   }
 
-  // void reset() {}
+  void reset() => state = null;
 }

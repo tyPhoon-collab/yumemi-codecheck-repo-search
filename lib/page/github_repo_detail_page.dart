@@ -1,7 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:yumemi_codecheck_repo_search/common/brightness_adaptive_svg.dart';
+import 'package:yumemi_codecheck_repo_search/common/loading_indicator.dart';
 import 'package:yumemi_codecheck_repo_search/model/owner.dart';
 import 'package:yumemi_codecheck_repo_search/model/repo.dart';
 
@@ -13,7 +14,7 @@ class GitHubRepoDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(repo.fullName)),
+      appBar: AppBar(title: Text(repo.name)),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -92,24 +93,24 @@ class _RepoDescription extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        InkWell(
-          onTap: () => _launchUrl(context, repo.htmlUrl),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Flexible(
-                child: Text(
-                  repo.fullName,
-                  style: textTheme.headlineLarge,
-                ),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Flexible(
+              child: SelectableText(
+                repo.fullName,
+                style: textTheme.headlineLarge,
               ),
-              const SizedBox(width: 8),
-              const Icon(Icons.launch),
-            ],
-          ),
+            ),
+            const SizedBox(width: 8),
+            IconButton(
+              onPressed: () => _launchUrl(context, repo.htmlUrl),
+              icon: const Icon(Icons.launch),
+            ),
+          ],
         ),
         if (repo.description case final String description)
-          Text(description, style: textTheme.bodyLarge),
+          SelectableText(description, style: textTheme.bodyLarge),
         const SizedBox(height: 16),
         if (repo.language case final String language)
           _SVGAndText(
@@ -161,7 +162,7 @@ class _AvatarImage extends StatelessWidget {
         borderRadius: borderRadius,
         child: CachedNetworkImage(
           imageUrl: owner.avatarUrl,
-          placeholder: (context, url) => const CircularProgressIndicator(),
+          placeholder: (context, url) => const LoadingIndicator(),
           errorWidget: (context, url, error) => const Icon(Icons.error),
         ),
       ),
@@ -183,13 +184,7 @@ class _SVGAndText extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        SvgPicture.asset(
-          assetName,
-          colorFilter: ColorFilter.mode(
-            Theme.of(context).colorScheme.onSurface,
-            BlendMode.srcIn,
-          ),
-        ),
+        BrightnessAdaptiveSvg(assetName),
         const SizedBox(width: 4),
         Text(text),
       ],

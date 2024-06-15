@@ -60,12 +60,12 @@ void main() {
 
       expect(
         find.ancestor(
-          of: find.text(repo.fullName),
+          of: find.text(repo.name),
           matching: find.byType(AppBar),
         ),
         findsOneWidget,
       );
-      expect(find.text(repo.fullName), findsWidgets);
+      expect(find.text(repo.fullName), findsOneWidget);
       expect(find.text(repo.description!), findsOneWidget);
     },
   );
