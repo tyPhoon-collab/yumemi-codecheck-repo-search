@@ -7,7 +7,7 @@ part 'owner.g.dart';
 class Owner with _$Owner {
   @JsonSerializable(explicitToJson: true, fieldRename: FieldRename.snake)
   const factory Owner({
-    required String login,
+    required String htmlUrl,
     required String avatarUrl,
   }) = _Owner;
 
