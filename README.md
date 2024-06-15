@@ -33,3 +33,8 @@ Tools • Dart 3.4.3 • DevTools 2.34.3
 - GitHub REST API 構築のために、retrofitとfreezedを使用することにした。
   - 良くテストされているはずの既存のREST API Wrapperを使用することで、負担を軽減する。
   - freezedを使用することにより、immutableかつ、便利なモデルクラスを構築する。
+
+- UIは以下のサイトを参考にする
+  - <https://sevendex.com/post/11190/>
+  - FlutterにはSearchDelegateという機能があるが、挙動を柔軟にカスタマイズしたいかつ、showSearchを呼び出してTextFieldを表示する仕様のため、検索が主体のアプリでは適していないと考え、使用しない。
+  - デザインはTextFieldをカスタマイズしてもよいが、SearchBarやSearchAnchorが完成されたデザインを提供しているので、こちらを使用する。

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:yumemi_codecheck_repo_search/page/github_repo_detail_page.dart';
 import 'package:yumemi_codecheck_repo_search/service.dart';
 
 class GitHubRepoSearchPage extends StatefulWidget {
@@ -53,6 +54,11 @@ class _RepoList extends ConsumerWidget {
               return ListTile(
                 title: Text(item.fullName),
                 subtitle: Text(item.description ?? ''),
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute<void>(
+                    builder: (context) => GitHubRepoDetailPage(repo: item),
+                  ),
+                ),
               );
             },
           ),
