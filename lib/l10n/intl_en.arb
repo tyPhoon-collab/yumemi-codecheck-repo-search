@@ -1,0 +1,6 @@
+{
+    "@@locale": "en",
+    "searchPlaceholder": "Search Repositories",
+    "noResults": "No results found",
+    "failedLaunch": "Failed to launch {url}"
+}
