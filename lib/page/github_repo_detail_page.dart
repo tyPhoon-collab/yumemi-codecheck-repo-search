@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -21,6 +22,12 @@ class GitHubRepoDetailPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Center(
+                  child: _AvatarImage(
+                    avatarUrl: repo.owner.avatarUrl,
+                  ),
+                ),
+                const SizedBox(height: 16),
                 InkWell(
                   onTap: () => _launchUrl(context, repo.htmlUrl),
                   child: Row(
@@ -39,6 +46,7 @@ class GitHubRepoDetailPage extends StatelessWidget {
                 ),
                 if (repo.description case final String description)
                   Text(description, style: textTheme.bodyLarge),
+                const SizedBox(height: 16),
                 if (repo.language case final String language)
                   _SVGAndText(
                     assetName: 'assets/image/svg/file-code.svg',
@@ -86,6 +94,25 @@ class GitHubRepoDetailPage extends StatelessWidget {
         SnackBar(content: Text('Failed to launch $uri')),
       );
     }
+  }
+}
+
+class _AvatarImage extends StatelessWidget {
+  const _AvatarImage({
+    required this.avatarUrl,
+  });
+
+  final String avatarUrl;
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(32),
+      child: CachedNetworkImage(
+        imageUrl: avatarUrl,
+        placeholder: (context, url) => const CircularProgressIndicator(),
+        errorWidget: (context, url, error) => const Icon(Icons.error),
+      ),
+    );
   }
 }
 
