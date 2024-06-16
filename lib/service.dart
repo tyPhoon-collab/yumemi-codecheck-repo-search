@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -29,7 +31,21 @@ Future<RepoSearchResult?> repoSearchResult(RepoSearchResultRef ref) {
     return Future.value();
   }
 
-  return service.searchRepositories(query);
+  try {
+    return service.searchRepositories(query);
+  } catch (e) {
+    final errorMessage = switch (e) {
+      final DioException e => switch (e.response?.statusCode) {
+          422 => 'Validation failed, or the endpoint has been spammed.',
+          503 => 'GitHub service is temporarily unavailable.',
+          _ => 'Unexpected error occurred.',
+        },
+      final SocketException _ => 'No internet connection.',
+      _ => 'Unexpected error occurred.',
+    };
+
+    throw GitHubRepoServiceException(errorMessage, e);
+  }
 }
 
 @riverpod
