@@ -22,7 +22,7 @@ Future<void> testWidgetFromSearchPage(
   WidgetTesterCallbackWithService callback, {
   List<String>? history,
 }) async {
-  final searchService = MockGtHubRepoService();
+  final searchService = MockGitHubRepoService();
   final queryHistoryService = MockQueryHistoryService();
 
   when(

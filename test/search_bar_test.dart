@@ -51,7 +51,7 @@ Future<void> _buildWidget(WidgetTester tester) async {
   await tester.pumpWidget(
     ProviderScope(
       overrides: [
-        gitHubRepoServiceProvider.overrideWithValue(MockGtHubRepoService()),
+        gitHubRepoServiceProvider.overrideWithValue(MockGitHubRepoService()),
       ],
       child: const MaterialApp(
         localizationsDelegates: [S.delegate],

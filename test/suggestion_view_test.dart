@@ -89,7 +89,7 @@ Future<void> _buildWidget(
           }
           return service;
         }),
-        gitHubRepoServiceProvider.overrideWithValue(MockGtHubRepoService()),
+        gitHubRepoServiceProvider.overrideWithValue(MockGitHubRepoService()),
       ],
       child: const MaterialApp(
         localizationsDelegates: [S.delegate],
