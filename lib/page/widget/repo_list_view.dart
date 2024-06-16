@@ -29,7 +29,7 @@ class SearchedRepoListView extends ConsumerWidget {
                 itemCount: items.length,
                 itemBuilder: (context, index) {
                   final item = items[index];
-                  return _RepoListTile(repo: item);
+                  return RepoListTile(repo: item);
                 },
               );
       },
@@ -47,8 +47,8 @@ class SearchedRepoListView extends ConsumerWidget {
   }
 }
 
-class _RepoListTile extends StatelessWidget {
-  const _RepoListTile({required this.repo});
+class RepoListTile extends StatelessWidget {
+  const RepoListTile({required this.repo, super.key});
 
   final Repo repo;
 
