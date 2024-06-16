@@ -37,7 +37,38 @@ final repoSearchResultProvider =
 );
 
 typedef RepoSearchResultRef = AutoDisposeFutureProviderRef<RepoSearchResult?>;
-String _$repoSearchQueryHash() => r'852acb8a0516330f2ef0a370f1797220ff48f603';
+String _$queryHistoryServiceHash() =>
+    r'576fcec6f9d9403a5427b43fcad61e1e8f4b5f69';
+
+/// See also [queryHistoryService].
+@ProviderFor(queryHistoryService)
+final queryHistoryServiceProvider =
+    AutoDisposeProvider<QueryHistoryService>.internal(
+  queryHistoryService,
+  name: r'queryHistoryServiceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$queryHistoryServiceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef QueryHistoryServiceRef = AutoDisposeProviderRef<QueryHistoryService>;
+String _$queryHistoryHash() => r'4476479e7089ba56cac733edba3f9edbd916f78d';
+
+/// See also [queryHistory].
+@ProviderFor(queryHistory)
+final queryHistoryProvider = AutoDisposeFutureProvider<List<String>>.internal(
+  queryHistory,
+  name: r'queryHistoryProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$queryHistoryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef QueryHistoryRef = AutoDisposeFutureProviderRef<List<String>>;
+String _$repoSearchQueryHash() => r'96f1113bc8cea6b11097df9ea35e3baf1ccf9534';
 
 /// See also [RepoSearchQuery].
 @ProviderFor(RepoSearchQuery)

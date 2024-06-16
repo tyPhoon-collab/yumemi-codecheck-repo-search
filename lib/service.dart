@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:yumemi_codecheck_repo_search/model/repo_search_result.dart';
 import 'package:yumemi_codecheck_repo_search/service/github_repo_service.dart';
+import 'package:yumemi_codecheck_repo_search/service/query_history_service.dart';
 
 part 'service.g.dart';
 
@@ -45,9 +46,20 @@ class RepoSearchQuery extends _$RepoSearchQuery {
       return null;
     }
     state = query;
+    ref.read(queryHistoryServiceProvider).add(query);
 
     return query;
   }
 
   void reset() => state = null;
+}
+
+@riverpod
+QueryHistoryService queryHistoryService(QueryHistoryServiceRef ref) {
+  return QueryHistoryService();
+}
+
+@riverpod
+Future<List<String>> queryHistory(QueryHistoryRef ref) {
+  return ref.watch(queryHistoryServiceProvider).getAll();
 }
