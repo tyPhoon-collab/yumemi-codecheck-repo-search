@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:yumemi_codecheck_repo_search/service/github_repo_service.dart';
 
@@ -17,7 +16,7 @@ void main() {
 
     final result = await service.searchRepositories('flutter');
 
-    debugPrint(result.toString());
+    // debugPrint(result.toString());
 
     expect(result, isNotNull);
     expect(result.items.length, lessThanOrEqualTo(30));
