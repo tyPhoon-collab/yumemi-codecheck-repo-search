@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yumemi_codecheck_repo_search/common/brightness_adaptive_svg.dart';
 import 'package:yumemi_codecheck_repo_search/common/loading_indicator.dart';
@@ -30,7 +29,7 @@ class GitHubRepoSearchPage extends ConsumerWidget {
                     duration: Durations.medium2,
                     curve: Curves.easeInOutQuart,
                     child: ref.watch(repoSearchQueryProvider) == null
-                        ? const SizedBox()
+                        ? const _SuggestionsView()
                         : const _RepoListView(),
                   ),
                 ),
@@ -105,39 +104,56 @@ class _RepoListTile extends StatelessWidget {
   }
 }
 
-class _SearchBar extends HookConsumerWidget {
+class _SearchBar extends ConsumerStatefulWidget {
   const _SearchBar();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final controller = useTextEditingController();
+  ConsumerState<_SearchBar> createState() => _SearchBarState();
+}
+
+class _SearchBarState extends ConsumerState<_SearchBar> {
+  final _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    ref.listen(repoSearchQueryProvider, (_, query) {
+      if (query == null) {
+        _controller.clear();
+      } else {
+        _controller.text = query;
+      }
+    });
 
     return SearchBar(
-      controller: controller,
+      controller: _controller,
       hintText: S.current.searchPlaceholder,
       leading: const Icon(Icons.search),
       trailing: [
         if (ref.watch(repoSearchQueryProvider) != null)
           IconButton(
             icon: const Icon(Icons.close),
-            onPressed: () {
-              controller.clear();
-              ref.read(repoSearchQueryProvider.notifier).reset();
-            },
+            onPressed: ref.read(repoSearchQueryProvider.notifier).reset,
           ),
       ],
       padding: const WidgetStatePropertyAll(EdgeInsets.only(left: 16)),
       textInputAction: TextInputAction.search,
-      onSubmitted: (text) {
-        final query = ref.read(repoSearchQueryProvider.notifier).update(text);
-
-        if (query != null) {
-          controller.text = query;
-        } else {
-          controller.clear();
-        }
-      },
+      onSubmitted: ref.read(repoSearchQueryProvider.notifier).update,
     );
+  }
+}
+
+class _SuggestionsView extends ConsumerWidget {
+  const _SuggestionsView();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return const SizedBox();
   }
 }
 
