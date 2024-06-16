@@ -103,7 +103,6 @@ class _RepoDescription extends StatelessWidget {
                 style: textTheme.headlineLarge,
               ),
             ),
-            const SizedBox(width: 8),
             IconButton(
               onPressed: () => launchUrlSafe(context, repo.htmlUrl),
               icon: const Icon(Icons.launch),
@@ -118,28 +117,39 @@ class _RepoDescription extends StatelessWidget {
             assetName: SvgAssets.code,
             text: language,
           ),
-        Wrap(
-          children: [
-            _SVGAndText(
-              assetName: SvgAssets.star,
-              text: repo.stargazersCount.toString(),
-            ),
-            const SizedBox(width: 8),
-            _SVGAndText(
-              assetName: SvgAssets.watch,
-              text: repo.watchersCount.toString(),
-            ),
-            const SizedBox(width: 8),
-            _SVGAndText(
-              assetName: SvgAssets.fork,
-              text: repo.forksCount.toString(),
-            ),
-            const SizedBox(width: 8),
-            _SVGAndText(
-              assetName: SvgAssets.issue,
-              text: repo.openIssuesCount.toString(),
-            ),
-          ],
+        _RepoPopularitySummaryView(repo: repo),
+      ],
+    );
+  }
+}
+
+class _RepoPopularitySummaryView extends StatelessWidget {
+  const _RepoPopularitySummaryView({
+    required this.repo,
+  });
+
+  final Repo repo;
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      spacing: 12,
+      children: [
+        _SVGAndText(
+          assetName: SvgAssets.star,
+          text: repo.stargazersCount.toString(),
+        ),
+        _SVGAndText(
+          assetName: SvgAssets.watch,
+          text: repo.watchersCount.toString(),
+        ),
+        _SVGAndText(
+          assetName: SvgAssets.fork,
+          text: repo.forksCount.toString(),
+        ),
+        _SVGAndText(
+          assetName: SvgAssets.issue,
+          text: repo.openIssuesCount.toString(),
         ),
       ],
     );
