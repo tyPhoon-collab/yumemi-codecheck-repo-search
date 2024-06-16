@@ -33,7 +33,7 @@ class SuggestionsView extends ConsumerWidget {
             );
           },
           error: (error, stackTrace) =>
-              ErrorText(text: error.toString()), // TODO: 適切なエラーメッセージを表示,
+              const ErrorText(text: 'Could not fetch query history'),
           loading: () => const SizedBox(),
         );
   }
