@@ -8,7 +8,7 @@ import 'package:yumemi_codecheck_repo_search/service.dart';
 import '../integration_test/custom_test_widgets.dart';
 
 void main() {
-  testWidgets('displays search bar correctly', (WidgetTester tester) async {
+  testWidgets('shows search bar correctly', (WidgetTester tester) async {
     await _buildWidget(tester);
 
     expect(find.byType(SearchBar), findsOneWidget);
