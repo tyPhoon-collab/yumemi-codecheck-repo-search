@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:yumemi_codecheck_repo_search/common/error_text.dart';
 import 'package:yumemi_codecheck_repo_search/service.dart';
 
 class SuggestionsView extends ConsumerWidget {
@@ -31,13 +32,8 @@ class SuggestionsView extends ConsumerWidget {
               ),
             );
           },
-
-          error: (error, stackTrace) => Text(
-            error.toString(),
-            style: TextStyle(
-              color: Theme.of(context).colorScheme.error,
-            ),
-          ), // TODO: 適切なエラーメッセージを表示,
+          error: (error, stackTrace) =>
+              ErrorText(text: error.toString()), // TODO: 適切なエラーメッセージを表示,
           loading: () => const SizedBox(),
         );
   }
