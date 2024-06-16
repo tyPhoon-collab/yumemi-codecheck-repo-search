@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yumemi_codecheck_repo_search/common/brightness_adaptive_svg.dart';
 import 'package:yumemi_codecheck_repo_search/common/loading_indicator.dart';
+import 'package:yumemi_codecheck_repo_search/const.dart';
 import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
 import 'package:yumemi_codecheck_repo_search/model/repo.dart';
 import 'package:yumemi_codecheck_repo_search/page/github_repo_detail_page.dart';
@@ -85,7 +86,7 @@ class _RepoListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(repo.fullName),
-      leading: const BrightnessAdaptiveSvg('assets/image/svg/repo.svg'),
+      leading: const BrightnessAdaptiveSvg(SvgAssets.repo),
       subtitle: Text(
         repo.description ?? '',
         maxLines: 3,
