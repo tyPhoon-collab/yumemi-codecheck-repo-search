@@ -153,7 +153,39 @@ class _SuggestionsView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const SizedBox();
+    return ref.watch(queryHistoryStreamProvider).when(
+          data: (data) {
+            if (data.isEmpty) return const SizedBox();
+
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  for (final query in data)
+                    ListTile(
+                      title: Text(query),
+                      leading: const Icon(Icons.history),
+                      trailing: GestureDetector(
+                        onTap: () =>
+                            ref.read(queryHistoryServiceProvider).remove(query),
+                        child: const Icon(Icons.delete),
+                      ),
+                      onTap: () => ref
+                          .read(repoSearchQueryProvider.notifier)
+                          .update(query),
+                    ),
+                ],
+              ),
+            );
+          },
+
+          error: (error, stackTrace) => Text(
+            error.toString(),
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.error,
+            ),
+          ), // TODO: 適切なエラーメッセージを表示,
+          loading: () => const SizedBox(),
+        );
   }
 }
 

@@ -3,11 +3,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yumemi_codecheck_repo_search/service/query_history_service.dart';
 
 void main() {
-  late QueryHistoryService queryHistoryService;
+  late PrefsQueryHistoryService queryHistoryService;
 
   setUp(() async {
     SharedPreferences.setMockInitialValues({});
-    queryHistoryService = QueryHistoryService();
+    queryHistoryService = PrefsQueryHistoryService();
   });
 
   test('Initial query list is empty', () async {
@@ -25,7 +25,7 @@ void main() {
     await queryHistoryService.add('test query 1');
     await queryHistoryService.add('test query 2');
     final queries = await queryHistoryService.getAll();
-    expect(queries, ['test query 1', 'test query 2']);
+    expect(queries, ['test query 2', 'test query 1']);
   });
 
   test('Add a duplicate query', () async {
@@ -38,7 +38,7 @@ void main() {
   test('Remove a query', () async {
     await queryHistoryService.add('test query 1');
     await queryHistoryService.add('test query 2');
-    await queryHistoryService.remove(0);
+    await queryHistoryService.remove('test query 1');
     final queries = await queryHistoryService.getAll();
     expect(queries, ['test query 2']);
   });
@@ -61,6 +61,6 @@ void main() {
 
     final queries = await queryHistoryService.getAll();
     expect(queries.length, 5);
-    expect(queries, ['query 2', 'query 3', 'query 4', 'query 5', 'query 6']);
+    expect(queries, ['query 6', 'query 5', 'query 4', 'query 3', 'query 2']);
   });
 }

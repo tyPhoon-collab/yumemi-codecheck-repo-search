@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:yumemi_codecheck_repo_search/model/repo_search_result.dart';
 import 'package:yumemi_codecheck_repo_search/service/github_repo_service.dart';
@@ -54,12 +55,23 @@ class RepoSearchQuery extends _$RepoSearchQuery {
   void reset() => state = null;
 }
 
-@riverpod
-QueryHistoryService queryHistoryService(QueryHistoryServiceRef ref) {
-  return QueryHistoryService();
+@Riverpod(keepAlive: true)
+@visibleForTesting
+QueryHistoryService queryHistoryServiceImpl(
+  QueryHistoryServiceImplRef ref,
+) {
+  return PrefsQueryHistoryService();
 }
 
-@riverpod
-Future<List<String>> queryHistory(QueryHistoryRef ref) {
-  return ref.watch(queryHistoryServiceProvider).getAll();
+@Riverpod(keepAlive: true)
+ReactiveQueryHistoryService queryHistoryService(QueryHistoryServiceRef ref) {
+  final impl = ref.watch(queryHistoryServiceImplProvider);
+  final service = ReactiveQueryHistoryService(impl);
+  ref.onDispose(service.dispose);
+  return service;
+}
+
+@Riverpod(keepAlive: true)
+Stream<List<String>> queryHistoryStream(QueryHistoryStreamRef ref) {
+  return ref.watch(queryHistoryServiceProvider).stream;
 }
