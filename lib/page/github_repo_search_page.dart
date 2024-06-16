@@ -28,7 +28,7 @@ class GitHubRepoSearchPage extends ConsumerWidget {
                     curve: Curves.easeInOutQuart,
                     child: ref.watch(repoSearchQueryProvider) == null
                         ? const SuggestionsView()
-                        : const RepoListView(),
+                        : const SearchedRepoListView(),
                   ),
                 ),
               ],

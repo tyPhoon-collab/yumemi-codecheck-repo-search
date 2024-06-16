@@ -14,3 +14,10 @@ abstract class GitHubRepoService {
     @Query('page') int page = 1,
   });
 }
+
+class GitHubRepoServiceException implements Exception {
+  GitHubRepoServiceException(this.message, [this.error]);
+
+  final String message;
+  final Object? error;
+}

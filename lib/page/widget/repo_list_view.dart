@@ -8,9 +8,10 @@ import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
 import 'package:yumemi_codecheck_repo_search/model/repo.dart';
 import 'package:yumemi_codecheck_repo_search/page/github_repo_detail_page.dart';
 import 'package:yumemi_codecheck_repo_search/service.dart';
+import 'package:yumemi_codecheck_repo_search/service/github_repo_service.dart';
 
-class RepoListView extends ConsumerWidget {
-  const RepoListView({super.key});
+class SearchedRepoListView extends ConsumerWidget {
+  const SearchedRepoListView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -32,8 +33,15 @@ class RepoListView extends ConsumerWidget {
                 },
               );
       },
-      error: (error, stackTrace) =>
-          ErrorText(text: error.toString()), // TODO: 適切なエラーメッセージを表示,
+      error: (error, stackTrace) {
+        if (error is GitHubRepoServiceException) {
+          return ErrorText(text: error.message);
+        }
+
+        // 予期しない例外は、どこかにレコードして管理する。今回は省略
+        // FirebaseCrashlytics.instance.recordError(error, stackTrace);
+        return ErrorText(text: error.toString());
+      },
       loading: () => const Center(child: LoadingIndicator()),
     );
   }

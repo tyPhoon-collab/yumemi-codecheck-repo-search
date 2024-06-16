@@ -36,7 +36,7 @@ class PrefsQueryHistoryService implements QueryHistoryService {
     final queries = await getAll();
     if (!queries.contains(query)) {
       if (queries.length >= maxQueries) {
-        queries.removeLast(); // 先頭のクエリを削除
+        queries.removeLast();
       }
       queries.insert(0, query);
       await _saveQueries(queries);
