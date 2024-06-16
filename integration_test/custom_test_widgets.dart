@@ -7,50 +7,54 @@ import 'package:yumemi_codecheck_repo_search/main.dart';
 import 'package:yumemi_codecheck_repo_search/model/repo_search_result.dart';
 import 'package:yumemi_codecheck_repo_search/page/github_repo_search_page.dart';
 import 'package:yumemi_codecheck_repo_search/service.dart';
-import 'package:yumemi_codecheck_repo_search/service/github_repo_service.dart';
 
 import '../test/mocks.dart';
 import 'extension.dart';
 
 typedef WidgetTesterCallbackWithService = Future<void> Function(
   WidgetTester tester,
-  ServiceContainer repo,
+  ProviderContainer container,
 );
-
-class ServiceContainer {
-  ServiceContainer({required this.service}) {
-    when(() => service.searchRepositories(any(), page: any(named: 'page')))
-        .thenAnswer(
-      (_) async => RepoSearchResult.empty(),
-    );
-  }
-  final GitHubRepoService service;
-}
 
 @isTest
 Future<void> testWidgetFromSearchPage(
   String description,
-  WidgetTesterCallbackWithService callback,
-) async {
-  final service = MockGtHubRepoService();
+  WidgetTesterCallbackWithService callback, {
+  List<String>? history,
+}) async {
+  final searchService = MockGtHubRepoService();
+  final queryHistoryService = MockQueryHistoryService();
+
+  when(
+    () => searchService.searchRepositories(any()),
+  ).thenAnswer(
+    (_) async => RepoSearchResult.empty(),
+  );
+
+  registerMockQueryHistoryServiceWhens(queryHistoryService, history ?? []);
+
+  final container = ProviderContainer(
+    overrides: [
+      gitHubRepoServiceProvider.overrideWithValue(searchService),
+      queryHistoryServiceImplProvider.overrideWithValue(queryHistoryService),
+    ],
+  );
 
   testWidgets(description, (tester) async {
     runApp(
-      ProviderScope(
-        overrides: [
-          gitHubRepoServiceProvider.overrideWithValue(service),
-        ],
+      UncontrolledProviderScope(
+        container: container,
         child: const MyApp(),
       ),
     );
 
     await tester.pumpUntilFound(find.byType(GitHubRepoSearchPage));
 
-    final container = ServiceContainer(service: service);
-
     await callback(
       tester,
       container,
     );
+
+    container.dispose();
   });
 }

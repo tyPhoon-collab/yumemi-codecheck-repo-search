@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -16,7 +14,7 @@ void main() {
       (WidgetTester tester) async {
     await _buildWidget(
       tester,
-      historyBuilder: () => [
+      history: [
         'flutter',
         'dart',
         'hooks',
@@ -38,14 +36,14 @@ void main() {
   });
 
   testWidgets('shows error text when error', (WidgetTester tester) async {
-    await _buildWidget(tester, historyBuilder: () => Future.error('Error'));
+    await _buildWidget(tester, throwError: true);
 
     expect(find.byType(ErrorText), findsOneWidget);
     expect(find.text('Could not fetch query history'), findsOneWidget);
   });
 
   testWidgets('removes item on delete icon tap', (WidgetTester tester) async {
-    await _buildWidget(tester, historyBuilder: () => ['flutter']);
+    await _buildWidget(tester, history: ['flutter']);
 
     expect(find.byType(ListTile), findsOneWidget);
     expect(find.text('flutter'), findsOneWidget);
@@ -76,27 +74,19 @@ void main() {
 
 Future<void> _buildWidget(
   WidgetTester tester, {
-  FutureOr<List<String>> Function()? historyBuilder,
+  List<String>? history,
+  bool throwError = false,
 }) async {
   await tester.pumpWidget(
     ProviderScope(
       overrides: [
         queryHistoryServiceImplProvider.overrideWith((_) {
           final service = MockQueryHistoryService();
-
-          final history = historyBuilder?.call() ?? [];
-          when(service.getAll).thenAnswer((_) async => history);
-          when(() => service.remove(any())).thenAnswer((inv) async {
-            if (history is List<String>) {
-              history.remove(inv.positionalArguments[0] as String);
-            }
-          });
-          when(service.clearAll).thenAnswer((_) async => []);
-          when(() => service.add(any())).thenAnswer((inv) async {
-            if (history is List<String>) {
-              history.add(inv.positionalArguments[0] as String);
-            }
-          });
+          if (throwError) {
+            when(service.getAll).thenThrow('Error from _buildWidget()');
+          } else {
+            registerMockQueryHistoryServiceWhens(service, history ?? []);
+          }
           return service;
         }),
         gitHubRepoServiceProvider.overrideWithValue(MockGtHubRepoService()),
