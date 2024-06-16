@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:yumemi_codecheck_repo_search/common/brightness_adaptive_svg.dart';
+import 'package:yumemi_codecheck_repo_search/common/launch_url.dart';
 import 'package:yumemi_codecheck_repo_search/common/loading_indicator.dart';
-import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
+import 'package:yumemi_codecheck_repo_search/const.dart';
 import 'package:yumemi_codecheck_repo_search/model/owner.dart';
 import 'package:yumemi_codecheck_repo_search/model/repo.dart';
 
@@ -103,9 +103,8 @@ class _RepoDescription extends StatelessWidget {
                 style: textTheme.headlineLarge,
               ),
             ),
-            const SizedBox(width: 8),
             IconButton(
-              onPressed: () => _launchUrl(context, repo.htmlUrl),
+              onPressed: () => launchUrlSafe(context, repo.htmlUrl),
               icon: const Icon(Icons.launch),
             ),
           ],
@@ -115,31 +114,42 @@ class _RepoDescription extends StatelessWidget {
         const SizedBox(height: 16),
         if (repo.language case final String language)
           _SVGAndText(
-            assetName: 'assets/image/svg/file-code.svg',
+            assetName: SvgAssets.code,
             text: language,
           ),
-        Wrap(
-          children: [
-            _SVGAndText(
-              assetName: 'assets/image/svg/star.svg',
-              text: repo.stargazersCount.toString(),
-            ),
-            const SizedBox(width: 8),
-            _SVGAndText(
-              assetName: 'assets/image/svg/eye.svg',
-              text: repo.watchersCount.toString(),
-            ),
-            const SizedBox(width: 8),
-            _SVGAndText(
-              assetName: 'assets/image/svg/repo-forked.svg',
-              text: repo.forksCount.toString(),
-            ),
-            const SizedBox(width: 8),
-            _SVGAndText(
-              assetName: 'assets/image/svg/issue-opened.svg',
-              text: repo.openIssuesCount.toString(),
-            ),
-          ],
+        _RepoPopularitySummaryView(repo: repo),
+      ],
+    );
+  }
+}
+
+class _RepoPopularitySummaryView extends StatelessWidget {
+  const _RepoPopularitySummaryView({
+    required this.repo,
+  });
+
+  final Repo repo;
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      spacing: 12,
+      children: [
+        _SVGAndText(
+          assetName: SvgAssets.star,
+          text: repo.stargazersCount.toString(),
+        ),
+        _SVGAndText(
+          assetName: SvgAssets.watch,
+          text: repo.watchersCount.toString(),
+        ),
+        _SVGAndText(
+          assetName: SvgAssets.fork,
+          text: repo.forksCount.toString(),
+        ),
+        _SVGAndText(
+          assetName: SvgAssets.issue,
+          text: repo.openIssuesCount.toString(),
         ),
       ],
     );
@@ -157,7 +167,7 @@ class _AvatarImage extends StatelessWidget {
   Widget build(BuildContext context) {
     final borderRadius = BorderRadius.circular(32);
     return InkWell(
-      onTap: () => _launchUrl(context, owner.htmlUrl),
+      onTap: () => launchUrlSafe(context, owner.htmlUrl),
       borderRadius: borderRadius,
       child: ClipRRect(
         borderRadius: borderRadius,
@@ -189,19 +199,6 @@ class _SVGAndText extends StatelessWidget {
         const SizedBox(width: 4),
         Text(text),
       ],
-    );
-  }
-}
-
-Future<void> _launchUrl(BuildContext context, String url) async {
-  final uri = Uri.parse(url);
-  try {
-    await launchUrl(uri);
-  } catch (e) {
-    if (!context.mounted) return;
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(S.current.failedLaunch(url))),
     );
   }
 }
