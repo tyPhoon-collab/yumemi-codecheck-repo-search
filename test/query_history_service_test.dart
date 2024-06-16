@@ -10,32 +10,32 @@ void main() {
     queryHistoryService = PrefsQueryHistoryService();
   });
 
-  test('Initial query list is empty', () async {
+  test('initial query list is empty', () async {
     final queries = await queryHistoryService.getAll();
     expect(queries, isEmpty);
   });
 
-  test('Add a query', () async {
+  test('add a query', () async {
     await queryHistoryService.add('test query');
     final queries = await queryHistoryService.getAll();
     expect(queries, ['test query']);
   });
 
-  test('Add another query', () async {
+  test('add another query', () async {
     await queryHistoryService.add('test query 1');
     await queryHistoryService.add('test query 2');
     final queries = await queryHistoryService.getAll();
     expect(queries, ['test query 2', 'test query 1']);
   });
 
-  test('Add a duplicate query', () async {
+  test('add a duplicate query', () async {
     await queryHistoryService.add('test query');
     await queryHistoryService.add('test query');
     final queries = await queryHistoryService.getAll();
     expect(queries, ['test query']);
   });
 
-  test('Remove a query', () async {
+  test('remove a query', () async {
     await queryHistoryService.add('test query 1');
     await queryHistoryService.add('test query 2');
     await queryHistoryService.remove('test query 1');
@@ -43,7 +43,7 @@ void main() {
     expect(queries, ['test query 2']);
   });
 
-  test('Clear all queries', () async {
+  test('clear all queries', () async {
     await queryHistoryService.add('test query 1');
     await queryHistoryService.add('test query 2');
     await queryHistoryService.clearAll();
@@ -51,7 +51,7 @@ void main() {
     expect(queries, isEmpty);
   });
 
-  test('Limit queries to 5', () async {
+  test('limit queries to 5', () async {
     await queryHistoryService.add('query 1');
     await queryHistoryService.add('query 2');
     await queryHistoryService.add('query 3');
