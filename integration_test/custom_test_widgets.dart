@@ -8,18 +8,14 @@ import 'package:yumemi_codecheck_repo_search/model/repo_search_result.dart';
 import 'package:yumemi_codecheck_repo_search/page/github_repo_search_page.dart';
 import 'package:yumemi_codecheck_repo_search/service.dart';
 import 'package:yumemi_codecheck_repo_search/service/github_repo_service.dart';
-import 'package:yumemi_codecheck_repo_search/service/query_history_service.dart';
 
+import '../test/mocks.dart';
 import 'extension.dart';
 
 typedef WidgetTesterCallbackWithService = Future<void> Function(
   WidgetTester tester,
   ServiceContainer repo,
 );
-
-class MockGtHubRepoService extends Mock implements GitHubRepoService {}
-
-class MockQueryHistoryService extends Mock implements QueryHistoryService {}
 
 class ServiceContainer {
   ServiceContainer({required this.service}) {

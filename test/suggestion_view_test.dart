@@ -9,7 +9,7 @@ import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
 import 'package:yumemi_codecheck_repo_search/page/widget/suggestion_view.dart';
 import 'package:yumemi_codecheck_repo_search/service.dart';
 
-import '../integration_test/custom_test_widgets.dart';
+import 'mocks.dart';
 
 void main() {
   testWidgets('shows suggestions when data is available',
