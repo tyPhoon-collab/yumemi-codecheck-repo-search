@@ -21,4 +21,10 @@ class RepoSearchResult with _$RepoSearchResult {
         incompleteResults: false,
         items: items,
       );
+
+  factory RepoSearchResult.empty() => const RepoSearchResult(
+        totalCount: 0,
+        incompleteResults: true,
+        items: [],
+      );
 }

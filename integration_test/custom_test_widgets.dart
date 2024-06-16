@@ -21,11 +21,7 @@ class ServiceContainer {
   ServiceContainer({required this.service}) {
     when(() => service.searchRepositories(any(), page: any(named: 'page')))
         .thenAnswer(
-      (_) async => const RepoSearchResult(
-        totalCount: 0,
-        incompleteResults: true,
-        items: [],
-      ),
+      (_) async => RepoSearchResult.empty(),
     );
   }
   final GitHubRepoService service;
