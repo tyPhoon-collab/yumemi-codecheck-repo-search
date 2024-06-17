@@ -23,13 +23,18 @@ class _GitHubRepoService implements GitHubRepoService {
   @override
   Future<RepoSearchResult> searchRepositories(
     String query, {
-    int page = 1,
+    int? page,
+    int? perPage,
+    String? sort,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'q': query,
       r'page': page,
+      r'per_page': perPage,
+      r'sort': sort,
     };
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _result = await _dio
