@@ -128,8 +128,6 @@ class RepoSearchPage extends _$RepoSearchPage {
   int build() => 1;
 
   /// 呼び出す前は、validate()を呼び出してチェックする前提とする
-  /// 本来は、ここでRepoSearchResultのtotalCountを取得するのが良いが
-  /// CircularDependencyErrorが発生する
   /// UIの表示の際にvalidate()を呼び出すことが多いので、クライアントコードに責務を移す
   void add(int delta) {
     state = state + delta;
