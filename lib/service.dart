@@ -207,6 +207,12 @@ class RepoSearchLastPage extends _$RepoSearchLastPage {
 class RepoSearchPerPage extends _$RepoSearchPerPage {
   @override
   int build() => 30;
+
+  @visibleForTesting
+  void update(int value) {
+    assert(0 < value && value <= 100, 'invalid value: $value');
+    state = value;
+  }
 }
 
 @riverpod

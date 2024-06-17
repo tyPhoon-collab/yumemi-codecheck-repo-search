@@ -5,10 +5,12 @@ import 'package:yumemi_codecheck_repo_search/service.dart';
 void main() {
   late ProviderContainer container;
   late RepoSearchPage repoSearchPage;
+  late RepoSearchPerPage repoSearchPerPage;
 
   setUp(() {
     container = ProviderContainer();
     repoSearchPage = container.read(repoSearchPageProvider.notifier);
+    repoSearchPerPage = container.read(repoSearchPerPageProvider.notifier);
   });
 
   tearDown(() {
@@ -52,6 +54,8 @@ void main() {
   });
 
   test('validate method works correctly', () {
+    repoSearchPerPage.update(10);
+
     expect(repoSearchPage.validate(1, 100), isTrue); // 1ページ目、100件
     expect(repoSearchPage.validate(10, 100), isTrue); // 10ページ目、100件
     expect(repoSearchPage.validate(11, 100), isFalse); // 11ページ目、100件以上
@@ -63,6 +67,8 @@ void main() {
 
   test('validateDelta method works correctly', () {
     repoSearchPage.update(5); // 現在のページを5に設定
+    repoSearchPerPage.update(10);
+
     expect(repoSearchPage.validateDelta(1, 100), isTrue); // 6ページ目、100件
     expect(repoSearchPage.validateDelta(5, 100), isTrue); // 10ページ目、100件
     expect(repoSearchPage.validateDelta(6, 100), isFalse); // 11ページ目、100件以上
