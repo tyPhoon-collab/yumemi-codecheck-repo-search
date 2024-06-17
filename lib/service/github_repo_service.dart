@@ -11,7 +11,9 @@ abstract class GitHubRepoService {
   @GET('/search/repositories')
   Future<RepoSearchResult> searchRepositories(
     @Query('q') String query, {
-    @Query('page') int page = 1,
+    @Query('page') int? page,
+    @Query('per_page') int? perPage,
+    @Query('sort') String? sort,
   });
 }
 
