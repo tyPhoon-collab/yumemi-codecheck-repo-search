@@ -18,12 +18,12 @@ class PageNumberChangeIconButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final totalCount =
-        ref.watch(repoSearchResultProvider).value?.totalCount ?? 0;
+    final realTotalCount = ref.watch(realTotalCountProvider) ?? 0;
+    final _ = ref.watch(repoSearchPageProvider); // ページの変更を監視する
     final notifier = ref.watch(repoSearchPageProvider.notifier);
 
     return IconButton(
-      onPressed: !notifier.validateDelta(delta, totalCount)
+      onPressed: !notifier.validateDelta(delta, realTotalCount)
           ? null
           : () => notifier.add(delta),
       icon: Icon(iconData),
