@@ -130,6 +130,12 @@ class RepoSearchPage extends _$RepoSearchPage {
     state = state + delta;
   }
 
+  /// addと同様、呼び出す前は、validate()を呼び出してチェックする前提とする
+  void update(int value) {
+    if (value == state) return;
+    state = value;
+  }
+
   void reset() => state = 1;
 
   bool validateDelta(int delta, int totalCount) {
@@ -137,7 +143,8 @@ class RepoSearchPage extends _$RepoSearchPage {
   }
 
   bool validate(int value, int totalCount) {
-    return value > 0 && (value + 1) * 10 <= totalCount;
+    final perPage = ref.watch(repoSearchPerPageProvider);
+    return value > 0 && (value - 1) * perPage < totalCount;
   }
 }
 

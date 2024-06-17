@@ -31,6 +31,7 @@
     "*.freezed.dart",
   ],
   "cSpell.words": [
+    "autofocus",
     "codecheck",
     "Cupertino",
     "fullscreen",

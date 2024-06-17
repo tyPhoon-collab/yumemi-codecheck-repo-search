@@ -122,7 +122,7 @@ final repoSearchSortTypeProvider =
 );
 
 typedef _$RepoSearchSortType = AutoDisposeNotifier<SortType>;
-String _$repoSearchPageHash() => r'89690258464d1d9e7107f3fe57ed4e04b1d3efbc';
+String _$repoSearchPageHash() => r'c488ad2250549782c5ce73ea4fcf9da47a515c3f';
 
 /// See also [RepoSearchPage].
 @ProviderFor(RepoSearchPage)
