@@ -89,6 +89,46 @@ class S {
       args: [url],
     );
   }
+
+  /// `Unexpected error occurred`
+  String get errorUnexpected {
+    return Intl.message(
+      'Unexpected error occurred',
+      name: 'errorUnexpected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `GitHub service is temporarily unavailable`
+  String get errorServiceUnavailable {
+    return Intl.message(
+      'GitHub service is temporarily unavailable',
+      name: 'errorServiceUnavailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No internet connection`
+  String get errorNoInternet {
+    return Intl.message(
+      'No internet connection',
+      name: 'errorNoInternet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Validation failed, or the endpoint has been spammed.`
+  String get errorValidation {
+    return Intl.message(
+      'Validation failed, or the endpoint has been spammed.',
+      name: 'errorValidation',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

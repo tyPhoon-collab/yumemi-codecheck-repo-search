@@ -3,5 +3,9 @@
     "title": "Github Repos Search",
     "searchPlaceholder": "Repositoryを検索",
     "noResults": "結果が見つかりませんでした",
-    "failedLaunch": "{url} が開けませんでした"
+    "failedLaunch": "{url} が開けませんでした",
+    "errorUnexpected": "予期しないエラーが発生しました",
+    "errorServiceUnavailable": "GitHubサーバが一時的に利用できない状態です",
+    "errorNoInternet": "インターネットに接続できません",
+    "errorValidation": "検証に失敗しました。またはAPIのレート制限です"
 }
