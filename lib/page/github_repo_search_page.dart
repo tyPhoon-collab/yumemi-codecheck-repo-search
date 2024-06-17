@@ -3,6 +3,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yumemi_codecheck_repo_search/const.dart';
 import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
 import 'package:yumemi_codecheck_repo_search/page/settings_page.dart';
+import 'package:yumemi_codecheck_repo_search/page/widget/current_page_number.dart';
+import 'package:yumemi_codecheck_repo_search/page/widget/page_number_change_icon_button.dart';
 import 'package:yumemi_codecheck_repo_search/page/widget/repo_list_view.dart';
 import 'package:yumemi_codecheck_repo_search/page/widget/search_bar.dart';
 import 'package:yumemi_codecheck_repo_search/page/widget/sort_type_selection.dart';
@@ -55,6 +57,16 @@ class GitHubRepoSearchPage extends ConsumerWidget {
         ),
         child: const Icon(Icons.settings),
       ),
+      persistentFooterButtons: switch (ref.watch(repoSearchResultProvider)) {
+        AsyncData(:final value) => value == null
+            ? null
+            : [
+                const PageNumberChangeIconButton.prev(),
+                const CurrentPageNumber(),
+                const PageNumberChangeIconButton.next(),
+              ],
+        _ => null,
+      },
     );
   }
 }

@@ -30,14 +30,21 @@ GitHubRepoService gitHubRepoService(GitHubRepoServiceRef ref) {
 Future<RepoSearchResult?> repoSearchResult(RepoSearchResultRef ref) {
   final service = ref.watch(gitHubRepoServiceProvider);
   final query = ref.watch(repoSearchQueryProvider);
-  final sortType = ref.watch(sortTypeValueProvider);
+  final sortType = ref.watch(repoSearchSortTypeProvider);
+  final page = ref.watch(repoSearchPageProvider);
+  final perPage = ref.watch(repoSearchPerPageProvider);
 
   if (query == null) {
     return Future.value();
   }
 
   try {
-    return service.searchRepositories(query, sort: sortType.query);
+    return service.searchRepositories(
+      query,
+      sort: sortType.query,
+      page: page,
+      perPage: perPage,
+    );
   } catch (e) {
     final errorMessage = switch (e) {
       final DioException e => switch (e.response?.statusCode) {
@@ -98,10 +105,29 @@ Stream<List<String>> queryHistoryStream(QueryHistoryStreamRef ref) {
 }
 
 @riverpod
-class SortTypeValue extends _$SortTypeValue {
+class RepoSearchSortType extends _$RepoSearchSortType {
   @override
   SortType build() => SortType.bestMatch;
 
-  // ignore: use_setters_to_change_properties
-  void update(SortType value) => state = value;
+  void update(SortType value) {
+    if (value == state) return;
+
+    ref.read(repoSearchPageProvider.notifier).reset();
+    state = value;
+  }
+}
+
+@riverpod
+class RepoSearchPage extends _$RepoSearchPage {
+  @override
+  int build() => 1;
+
+  void add(int delta) => state = state + delta;
+  void reset() => state = 1;
+}
+
+@riverpod
+class RepoSearchPerPage extends _$RepoSearchPerPage {
+  @override
+  int build() => 10;
 }

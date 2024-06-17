@@ -33,7 +33,7 @@ class SortTypeSelection extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: DropdownButton2(
-        value: ref.watch(sortTypeValueProvider),
+        value: ref.watch(repoSearchSortTypeProvider),
         isExpanded: true,
         selectedItemBuilder: (context) => _buildSelectedItems(context).toList(),
         items: _buildItems(context).toList(),
@@ -44,7 +44,7 @@ class SortTypeSelection extends ConsumerWidget {
         ),
         onChanged: (value) {
           if (value != null) {
-            ref.read(sortTypeValueProvider.notifier).update(value);
+            ref.read(repoSearchSortTypeProvider.notifier).update(value);
           }
         },
       ),

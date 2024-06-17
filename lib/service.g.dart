@@ -21,7 +21,7 @@ final gitHubRepoServiceProvider = Provider<GitHubRepoService>.internal(
 );
 
 typedef GitHubRepoServiceRef = ProviderRef<GitHubRepoService>;
-String _$repoSearchResultHash() => r'7c46add83d9dc7097576a36564cbaf2721fdec2f';
+String _$repoSearchResultHash() => r'495fe7114e7028831f62bc99c872150f13654f1b';
 
 /// エラー時は必ずGitHubRepoServiceExceptionをthrowする
 /// Sが初期化されている必要があり、やや責務が大きいが、一旦おいておく
@@ -105,21 +105,54 @@ final repoSearchQueryProvider =
 );
 
 typedef _$RepoSearchQuery = AutoDisposeNotifier<String?>;
-String _$sortTypeValueHash() => r'8e1018e254dc1d709d05e98b03a04afc1544524c';
+String _$repoSearchSortTypeHash() =>
+    r'57e8245c7a9947a6f55aedb00ae4dd6884fd6f8d';
 
-/// See also [SortTypeValue].
-@ProviderFor(SortTypeValue)
-final sortTypeValueProvider =
-    AutoDisposeNotifierProvider<SortTypeValue, SortType>.internal(
-  SortTypeValue.new,
-  name: r'sortTypeValueProvider',
+/// See also [RepoSearchSortType].
+@ProviderFor(RepoSearchSortType)
+final repoSearchSortTypeProvider =
+    AutoDisposeNotifierProvider<RepoSearchSortType, SortType>.internal(
+  RepoSearchSortType.new,
+  name: r'repoSearchSortTypeProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$sortTypeValueHash,
+      : _$repoSearchSortTypeHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$SortTypeValue = AutoDisposeNotifier<SortType>;
+typedef _$RepoSearchSortType = AutoDisposeNotifier<SortType>;
+String _$repoSearchPageHash() => r'119136eb2ff3acbcb9963eabae1a2dab9195fa91';
+
+/// See also [RepoSearchPage].
+@ProviderFor(RepoSearchPage)
+final repoSearchPageProvider =
+    AutoDisposeNotifierProvider<RepoSearchPage, int>.internal(
+  RepoSearchPage.new,
+  name: r'repoSearchPageProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$repoSearchPageHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$RepoSearchPage = AutoDisposeNotifier<int>;
+String _$repoSearchPerPageHash() => r'bbc4586db38b6f4857c7d50292d3d3a5be1ea39b';
+
+/// See also [RepoSearchPerPage].
+@ProviderFor(RepoSearchPerPage)
+final repoSearchPerPageProvider =
+    AutoDisposeNotifierProvider<RepoSearchPerPage, int>.internal(
+  RepoSearchPerPage.new,
+  name: r'repoSearchPerPageProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$repoSearchPerPageHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$RepoSearchPerPage = AutoDisposeNotifier<int>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
