@@ -60,6 +60,13 @@ class _CurrentPageNumberState extends ConsumerState<CurrentPageNumber> {
     int totalCount,
   ) async {
     final formKey = GlobalKey<FormState>();
+    final notifier = ref.read(repoSearchPageProvider.notifier);
+
+    void submit(String text) {
+      if (formKey.currentState!.validate()) {
+        Navigator.of(context).pop(int.parse(text));
+      }
+    }
 
     final result = await showDialog<int>(
       context: context,
@@ -72,7 +79,17 @@ class _CurrentPageNumberState extends ConsumerState<CurrentPageNumber> {
               controller: textController,
               autofocus: true,
               keyboardType: TextInputType.number,
-              decoration: const InputDecoration(hintText: 'Page Number'),
+              textInputAction: TextInputAction.go,
+              decoration: InputDecoration(
+                hintText: 'Page Number. 1 ~ ${notifier.maxPage(totalCount)}',
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.clear),
+                  onPressed: textController.clear,
+                ),
+                border: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(32)),
+                ),
+              ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter a number';
@@ -81,13 +98,12 @@ class _CurrentPageNumberState extends ConsumerState<CurrentPageNumber> {
                 if (pageNum == null) {
                   return 'Please enter a valid number';
                 }
-                if (!ref
-                    .read(repoSearchPageProvider.notifier)
-                    .validate(pageNum, totalCount)) {
+                if (!notifier.validate(pageNum, totalCount)) {
                   return 'Page number is out of range';
                 }
                 return null;
               },
+              onFieldSubmitted: submit,
             ),
           ),
           actions: [
@@ -98,17 +114,14 @@ class _CurrentPageNumberState extends ConsumerState<CurrentPageNumber> {
               },
             ),
             TextButton(
+              onPressed: () => submit(textController.text),
               child: const Text('OK'),
-              onPressed: () {
-                if (formKey.currentState!.validate()) {
-                  Navigator.of(context).pop(int.parse(textController.text));
-                }
-              },
             ),
           ],
         );
       },
     );
+
     return result;
   }
 }

@@ -146,10 +146,15 @@ class RepoSearchPage extends _$RepoSearchPage {
     final perPage = ref.watch(repoSearchPerPageProvider);
     return value > 0 && (value - 1) * perPage < totalCount;
   }
+
+  int maxPage(int totalCount) {
+    final perPage = ref.watch(repoSearchPerPageProvider);
+    return (totalCount - 1) ~/ perPage + 1;
+  }
 }
 
 @riverpod
 class RepoSearchPerPage extends _$RepoSearchPerPage {
   @override
-  int build() => 10;
+  int build() => 30;
 }
