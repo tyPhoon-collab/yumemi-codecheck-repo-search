@@ -16,7 +16,12 @@ class GitHubRepoSearchPage extends ConsumerWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: EdgeInsets.symmetric(
+            horizontal:
+                MediaQuery.of(context).orientation == Orientation.portrait
+                    ? 16
+                    : 64,
+          ),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
