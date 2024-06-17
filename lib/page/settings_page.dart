@@ -1,6 +1,8 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -14,6 +16,7 @@ class SettingsPage extends StatelessWidget {
           children: [
             _LanguageListTile(),
             _ThemeListTile(),
+            _AboutListTile(),
           ],
         ),
       ),
@@ -102,5 +105,46 @@ class _ThemeListTileState extends State<_ThemeListTile> {
     setState(() {
       AdaptiveTheme.of(context).setThemeMode(newMode);
     });
+  }
+}
+
+class _AboutListTile extends StatelessWidget {
+  const _AboutListTile();
+
+  @override
+  Widget build(BuildContext context) {
+    final applicationName = S.current.title;
+
+    // AboutListTileがあるが、バージョンを非同期的に取得するため、独自で実装する
+    return ListTile(
+      leading: const Icon(Icons.info_outline),
+      title: Text(
+        MaterialLocalizations.of(context).aboutListTileTitle(
+          applicationName,
+        ),
+      ),
+      trailing: const Icon(Icons.navigate_next_outlined),
+      onTap: () async {
+        final version =
+            await PackageInfo.fromPlatform().then((value) => value.version);
+
+        if (!context.mounted) return;
+
+        showAboutDialog(
+          context: context,
+          applicationName: applicationName,
+          applicationVersion: version,
+          applicationLegalese: '''Copyright 2024 Hiroaki Osawa''',
+          children: [
+            const SizedBox(height: 16),
+            const Text('''
+This app is a GitHub Repository Search API wrapper.
+
+For yumemi codecheck.
+'''),
+          ],
+        );
+      },
+    );
   }
 }

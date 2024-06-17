@@ -33,7 +33,7 @@ void main() {
   testWidgets('shows error text when error', (WidgetTester tester) async {
     await _buildWidget(
       tester,
-      (_) => Future.error(GitHubRepoServiceException('Error message')),
+      (_) => Future.error(const GitHubRepoServiceException('Error message')),
     );
 
     await tester.pumpAndSettle();
