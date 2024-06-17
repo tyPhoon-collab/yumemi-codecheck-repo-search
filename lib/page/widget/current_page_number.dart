@@ -83,7 +83,8 @@ class _CurrentPageNumberState extends ConsumerState<CurrentPageNumber> {
               keyboardType: TextInputType.number,
               textInputAction: TextInputAction.go,
               decoration: InputDecoration(
-                hintText: 'Page Number. 1 ~ ${notifier.maxPage(totalCount)}',
+                hintText: 'Page: 1 ~ ${notifier.maxPage(totalCount)}',
+                prefixIcon: const Icon(Icons.numbers_outlined),
                 suffixIcon: IconButton(
                   icon: const Icon(Icons.clear),
                   onPressed: textController.clear,
