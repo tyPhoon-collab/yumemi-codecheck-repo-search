@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
 import 'package:yumemi_codecheck_repo_search/model/repo_search_result.dart';
 import 'package:yumemi_codecheck_repo_search/service/github_repo_service.dart';
 import 'package:yumemi_codecheck_repo_search/service/query_history_service.dart';
@@ -23,6 +24,7 @@ GitHubRepoService gitHubRepoService(GitHubRepoServiceRef ref) {
 }
 
 /// エラー時は必ずGitHubRepoServiceExceptionをthrowする
+/// Sが初期化されている必要があり、やや責務が大きいが、一旦おいておく
 @riverpod
 Future<RepoSearchResult?> repoSearchResult(RepoSearchResultRef ref) {
   final service = ref.watch(gitHubRepoServiceProvider);
@@ -37,12 +39,12 @@ Future<RepoSearchResult?> repoSearchResult(RepoSearchResultRef ref) {
   } catch (e) {
     final errorMessage = switch (e) {
       final DioException e => switch (e.response?.statusCode) {
-          422 => 'Validation failed, or the endpoint has been spammed.',
-          503 => 'GitHub service is temporarily unavailable.',
-          _ => 'Unexpected error occurred.',
+          422 => S.current.errorValidation,
+          503 => S.current.errorServiceUnavailable,
+          _ => S.current.errorUnexpected,
         },
-      final SocketException _ => 'No internet connection.',
-      _ => 'Unexpected error occurred.',
+      final SocketException _ => S.current.errorNoInternet,
+      _ => S.current.errorUnexpected,
     };
 
     throw GitHubRepoServiceException(errorMessage, e);

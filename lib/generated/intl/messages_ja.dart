@@ -24,6 +24,14 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "errorNoInternet":
+            MessageLookupByLibrary.simpleMessage("インターネットに接続できません"),
+        "errorServiceUnavailable":
+            MessageLookupByLibrary.simpleMessage("GitHubサーバが一時的に利用できない状態です"),
+        "errorUnexpected":
+            MessageLookupByLibrary.simpleMessage("予期しないエラーが発生しました"),
+        "errorValidation":
+            MessageLookupByLibrary.simpleMessage("検証に失敗しました。またはAPIのレート制限です"),
         "failedLaunch": m0,
         "noResults": MessageLookupByLibrary.simpleMessage("結果が見つかりませんでした"),
         "searchPlaceholder":
