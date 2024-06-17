@@ -24,9 +24,13 @@ class SuggestionsView extends ConsumerWidget {
                             ref.read(queryHistoryServiceProvider).remove(query),
                         child: const Icon(Icons.delete),
                       ),
-                      onTap: () => ref
-                          .read(repoSearchQueryProvider.notifier)
-                          .update(query),
+                      onTap: () {
+                        FocusScope.of(context).unfocus();
+
+                        ref
+                            .read(repoSearchQueryProvider.notifier)
+                            .update(query);
+                      },
                     ),
                 ],
               ),
