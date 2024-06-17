@@ -11,6 +11,8 @@ import 'package:yumemi_codecheck_repo_search/model/repo_search_result.dart';
 import 'package:yumemi_codecheck_repo_search/service.dart';
 import 'package:yumemi_codecheck_repo_search/service/github_repo_service.dart';
 
+import 'mocks.dart';
+
 class MockGitHubRepoService extends Mock implements GitHubRepoService {}
 
 /// クエリプロバイダーの更新→リザルトプロバイダーの更新の流れを確認する
@@ -35,6 +37,55 @@ void main() {
     container.dispose();
   });
 
+  void expectExceptionMessage(
+    String message,
+  ) {
+    expect(
+      () => container.read(repoSearchResultProvider.future),
+      throwsA(
+        isA<GitHubRepoServiceException>().having(
+          (e) => e.message,
+          'message',
+          message,
+        ),
+      ),
+    );
+  }
+
+  void testExceptionMessage(
+    Exception exception,
+    String message,
+  ) {
+    registerMockGitHubRepoServiceWhen(
+      mockGitHubRepoService,
+      exception: exception,
+    );
+
+    container.read(repoSearchQueryProvider.notifier).state = 'flutter';
+
+    expectExceptionMessage(message);
+  }
+
+  void testDioExceptionMessage(
+    int statusCode,
+    String message,
+  ) {
+    registerMockGitHubRepoServiceWhen(
+      mockGitHubRepoService,
+      exception: DioException(
+        requestOptions: RequestOptions(),
+        response: Response(
+          requestOptions: RequestOptions(),
+          statusCode: statusCode,
+        ),
+      ),
+    );
+
+    container.read(repoSearchQueryProvider.notifier).state = 'flutter';
+
+    expectExceptionMessage(message);
+  }
+
   test('returns null when query is null', () async {
     container.read(repoSearchQueryProvider.notifier).state = null;
 
@@ -44,12 +95,14 @@ void main() {
   });
 
   test('returns search result when searchRepositories succeeds', () async {
-    const query = 'flutter';
     final expectedResult = RepoSearchResult.items([Repo.mock()]);
-    container.read(repoSearchQueryProvider.notifier).state = query;
+    registerMockGitHubRepoServiceWhen(
+      mockGitHubRepoService,
+      result: expectedResult,
+    );
 
-    when(() => mockGitHubRepoService.searchRepositories(query))
-        .thenAnswer((_) async => expectedResult);
+    const query = 'flutter';
+    container.read(repoSearchQueryProvider.notifier).state = query;
 
     final result = await container.read(repoSearchResultProvider.future);
 
@@ -57,108 +110,28 @@ void main() {
   });
 
   test('throws with correct message for 422 error', () async {
-    const query = 'flutter';
-    container.read(repoSearchQueryProvider.notifier).state = query;
-
-    when(() => mockGitHubRepoService.searchRepositories(query)).thenThrow(
-      DioException(
-        response: Response(requestOptions: RequestOptions(), statusCode: 422),
-        requestOptions: RequestOptions(),
-      ),
-    );
-
-    expect(
-      () => container.read(repoSearchResultProvider.future),
-      throwsA(
-        isA<GitHubRepoServiceException>().having(
-          (e) => e.message,
-          'message',
-          S.current.errorValidation,
-        ),
-      ),
-    );
+    testDioExceptionMessage(422, S.current.errorValidation);
   });
 
   test('throws with correct message for 503 error', () async {
-    const query = 'flutter';
-    container.read(repoSearchQueryProvider.notifier).state = query;
-
-    when(() => mockGitHubRepoService.searchRepositories(query)).thenThrow(
-      DioException(
-        response: Response(requestOptions: RequestOptions(), statusCode: 503),
-        requestOptions: RequestOptions(),
-      ),
-    );
-    expect(
-      () => container.read(repoSearchResultProvider.future),
-      throwsA(
-        isA<GitHubRepoServiceException>().having(
-          (e) => e.message,
-          'message',
-          S.current.errorServiceUnavailable,
-        ),
-      ),
-    );
+    testDioExceptionMessage(503, S.current.errorServiceUnavailable);
   });
 
   test('throws with correct message for unexpected DioException', () async {
-    const query = 'flutter';
-    container.read(repoSearchQueryProvider.notifier).state = query;
-
-    when(() => mockGitHubRepoService.searchRepositories(query)).thenThrow(
-      DioException(
-        response: Response(requestOptions: RequestOptions(), statusCode: 500),
-        requestOptions: RequestOptions(),
-      ),
-    );
-
-    expect(
-      () => container.read(repoSearchResultProvider.future),
-      throwsA(
-        isA<GitHubRepoServiceException>().having(
-          (e) => e.message,
-          'message',
-          S.current.errorUnexpected,
-        ),
-      ),
-    );
+    testDioExceptionMessage(500, S.current.errorUnexpected);
   });
 
   test('throws with correct message for SocketException', () async {
-    const query = 'flutter';
-    container.read(repoSearchQueryProvider.notifier).state = query;
-
-    when(() => mockGitHubRepoService.searchRepositories(query))
-        .thenThrow(const SocketException('No internet'));
-
-    expect(
-      () => container.read(repoSearchResultProvider.future),
-      throwsA(
-        isA<GitHubRepoServiceException>().having(
-          (e) => e.message,
-          'message',
-          S.current.errorNoInternet,
-        ),
-      ),
+    testExceptionMessage(
+      const SocketException('No Internet'),
+      S.current.errorNoInternet,
     );
   });
 
   test('throws with correct message for unexpected error', () async {
-    const query = 'flutter';
-    container.read(repoSearchQueryProvider.notifier).state = query;
-
-    when(() => mockGitHubRepoService.searchRepositories(query))
-        .thenThrow(Exception('Unknown error'));
-
-    expect(
-      () => container.read(repoSearchResultProvider.future),
-      throwsA(
-        isA<GitHubRepoServiceException>().having(
-          (e) => e.message,
-          'message',
-          S.current.errorUnexpected,
-        ),
-      ),
+    testExceptionMessage(
+      Exception('Unknown error'),
+      S.current.errorUnexpected,
     );
   });
 }

@@ -1,4 +1,5 @@
 import 'package:mocktail/mocktail.dart';
+import 'package:yumemi_codecheck_repo_search/model/repo_search_result.dart';
 import 'package:yumemi_codecheck_repo_search/service/github_repo_service.dart';
 import 'package:yumemi_codecheck_repo_search/service/query_history_service.dart';
 
@@ -21,4 +22,25 @@ void registerMockQueryHistoryServiceWhens(
   when(mock.clearAll).thenAnswer((_) async {
     history.clear();
   });
+}
+
+void registerMockGitHubRepoServiceWhen(
+  GitHubRepoService mock, {
+  RepoSearchResult? result,
+  Exception? exception,
+}) {
+  final whenObj = when(
+    () => mock.searchRepositories(
+      any(),
+      sort: any(named: 'sort'),
+      page: any(named: 'page'),
+      perPage: any(named: 'perPage'),
+    ),
+  );
+
+  if (exception != null) {
+    whenObj.thenThrow(exception);
+  } else {
+    whenObj.thenAnswer((_) async => result ?? RepoSearchResult.empty());
+  }
 }

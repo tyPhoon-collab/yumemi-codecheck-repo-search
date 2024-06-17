@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:mocktail/mocktail.dart';
 import 'package:yumemi_codecheck_repo_search/model/repo.dart';
 import 'package:yumemi_codecheck_repo_search/model/repo_search_result.dart';
 import 'package:yumemi_codecheck_repo_search/page/widget/suggestion_view.dart';
 import 'package:yumemi_codecheck_repo_search/service.dart';
 
+import '../test/mocks.dart';
 import 'custom_test_widgets.dart';
 import 'extension.dart';
 
@@ -22,12 +22,9 @@ void main() {
         fullName: 'flutter/flutter',
         description: 'Flutter SDK',
       );
-
-      when(
-        () =>
-            container.read(gitHubRepoServiceProvider).searchRepositories(query),
-      ).thenAnswer(
-        (_) async => RepoSearchResult.items([repo]),
+      registerMockGitHubRepoServiceWhen(
+        container.read(gitHubRepoServiceProvider),
+        result: RepoSearchResult.items([repo]),
       );
 
       await tester.enterTextAndSettle(find.byType(TextField), 'flutter');
@@ -77,11 +74,9 @@ void main() {
         description: 'Flutter SDK',
       );
 
-      when(
-        () =>
-            container.read(gitHubRepoServiceProvider).searchRepositories(query),
-      ).thenAnswer(
-        (_) async => RepoSearchResult.items([repo]),
+      registerMockGitHubRepoServiceWhen(
+        container.read(gitHubRepoServiceProvider),
+        result: RepoSearchResult.items([repo]),
       );
 
       await tester.pumpAndSettle();

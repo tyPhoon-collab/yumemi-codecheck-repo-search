@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:meta/meta.dart';
-import 'package:mocktail/mocktail.dart';
 import 'package:yumemi_codecheck_repo_search/main.dart';
-import 'package:yumemi_codecheck_repo_search/model/repo_search_result.dart';
 import 'package:yumemi_codecheck_repo_search/page/github_repo_search_page.dart';
 import 'package:yumemi_codecheck_repo_search/service.dart';
 
@@ -25,12 +23,7 @@ Future<void> testWidgetFromSearchPage(
   final searchService = MockGitHubRepoService();
   final queryHistoryService = MockQueryHistoryService();
 
-  when(
-    () => searchService.searchRepositories(any()),
-  ).thenAnswer(
-    (_) async => RepoSearchResult.empty(),
-  );
-
+  registerMockGitHubRepoServiceWhen(searchService);
   registerMockQueryHistoryServiceWhens(queryHistoryService, history ?? []);
 
   final container = ProviderContainer(
