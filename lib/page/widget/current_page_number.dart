@@ -6,7 +6,9 @@ import 'package:yumemi_codecheck_repo_search/common/loading_indicator.dart';
 import 'package:yumemi_codecheck_repo_search/service.dart';
 
 class CurrentPageNumber extends ConsumerStatefulWidget {
-  const CurrentPageNumber({super.key});
+  const CurrentPageNumber({
+    super.key,
+  });
 
   @override
   ConsumerState<CurrentPageNumber> createState() => _CurrentPageNumberState();
@@ -23,16 +25,16 @@ class _CurrentPageNumberState extends ConsumerState<CurrentPageNumber> {
 
   @override
   Widget build(BuildContext context) {
-    final totalCount = ref.watch(repoSearchResultProvider).value?.totalCount;
+    final realTotalCount = ref.watch(realTotalCountProvider);
     final currentPage = ref.watch(repoSearchPageProvider);
     final perPage = ref.watch(repoSearchPerPageProvider);
 
-    if (totalCount == null) {
+    if (realTotalCount == null) {
       return const LoadingIndicator();
     }
 
     int upperCount() {
-      return min(currentPage * perPage, totalCount);
+      return min(currentPage * perPage, realTotalCount);
     }
 
     int lowerCount() {
@@ -45,9 +47,9 @@ class _CurrentPageNumberState extends ConsumerState<CurrentPageNumber> {
           decoration: TextDecoration.underline,
         ),
       ),
-      child: Text('${lowerCount()} ~ ${upperCount()} of $totalCount'),
+      child: Text('${lowerCount()} ~ ${upperCount()} of $realTotalCount'),
       onPressed: () async {
-        final page = await _showPageNumberInputDialog(context, totalCount);
+        final page = await _showPageNumberInputDialog(context, realTotalCount);
         if (page != null) {
           ref.read(repoSearchPageProvider.notifier).update(page);
         }

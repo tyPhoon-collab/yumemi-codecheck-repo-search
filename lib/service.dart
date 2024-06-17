@@ -1,7 +1,9 @@
-import 'dart:io';
+import 'dart:io' show SocketException;
+import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:retrofit/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
 import 'package:yumemi_codecheck_repo_search/model/repo_search_result.dart';
@@ -27,7 +29,7 @@ GitHubRepoService gitHubRepoService(GitHubRepoServiceRef ref) {
 /// エラー時は必ずGitHubRepoServiceExceptionをthrowする
 /// Sが初期化されている必要があり、やや責務が大きいが、一旦おいておく
 @riverpod
-Future<RepoSearchResult?> repoSearchResult(RepoSearchResultRef ref) {
+Future<RepoSearchResult?> repoSearchResult(RepoSearchResultRef ref) async {
   final service = ref.watch(gitHubRepoServiceProvider);
   final query = ref.watch(repoSearchQueryProvider);
   final sortType = ref.watch(repoSearchSortTypeProvider);
@@ -39,12 +41,15 @@ Future<RepoSearchResult?> repoSearchResult(RepoSearchResultRef ref) {
   }
 
   try {
-    return service.searchRepositories(
+    final response = await service.searchRepositories(
       query,
       sort: sortType.query,
       page: page,
       perPage: perPage,
     );
+
+    ref.read(repoSearchLastPageProvider.notifier).setFromResponse(response);
+    return response.data;
   } catch (e) {
     final errorMessage = switch (e) {
       final DioException e => switch (e.response?.statusCode) {
@@ -154,7 +159,67 @@ class RepoSearchPage extends _$RepoSearchPage {
 }
 
 @riverpod
+class RepoSearchLastPage extends _$RepoSearchLastPage {
+  @override
+  int? build() => null;
+
+  /// https://docs.github.com/ja/rest/using-the-rest-api/using-pagination-in-the-rest-api?apiVersion=2022-11-28
+  /// 改ページのために必要な情報は応答ヘッダーに含まれる。それを抽出し、モデルに落とし込む
+  void setFromResponse(HttpResponse<RepoSearchResult> response) {
+    final linkString = response.response.headers.map['link']?.first ?? '';
+
+    final lastPage = _getLastPage(linkString);
+    state = lastPage;
+  }
+
+  int _getLastPage(String linkHeader) {
+    // サンプル
+    // https://api.github.com/repositories/1300192/issues?page=2; rel="prev",
+    // https://api.github.com/repositories/1300192/issues?page=4; rel="next",
+    // https://api.github.com/repositories/1300192/issues?page=515; rel="last",
+    // https://api.github.com/repositories/1300192/issues?page=1; rel="first"
+    // 実際はサブセットになる。つまり、今回欲しいlastは無いときもある
+    // 例としては、現状が最後のページの時。
+    // そのときは、ページプロバイダーの値を使用する
+
+    final currentPage = ref.read(repoSearchPageProvider);
+
+    // , で分割してリンクとrelを取得
+    final links = linkHeader.split(', ');
+
+    for (final link in links) {
+      if (link.contains('rel="last"')) {
+        // URLを抽出
+        final start = link.indexOf('<') + 1;
+        final end = link.indexOf('>');
+        final url = link.substring(start, end);
+
+        // pageの値を抽出
+        final uri = Uri.parse(url);
+        final page = uri.queryParameters['page'];
+        return page != null ? int.parse(page) : currentPage;
+      }
+    }
+
+    return currentPage;
+  }
+}
+
+@riverpod
 class RepoSearchPerPage extends _$RepoSearchPerPage {
   @override
   int build() => 30;
+}
+
+@riverpod
+int? realTotalCount(RealTotalCountRef ref) {
+  final lastPage = ref.watch(repoSearchLastPageProvider);
+  final totalCount = ref.watch(repoSearchResultProvider).value?.totalCount;
+  final perPage = ref.watch(repoSearchPerPageProvider);
+
+  if (lastPage == null || totalCount == null) {
+    return null;
+  }
+
+  return min(perPage * lastPage, totalCount);
 }

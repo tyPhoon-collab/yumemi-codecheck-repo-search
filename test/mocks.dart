@@ -1,4 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:retrofit/retrofit.dart';
 import 'package:yumemi_codecheck_repo_search/model/repo_search_result.dart';
 import 'package:yumemi_codecheck_repo_search/service/github_repo_service.dart';
 import 'package:yumemi_codecheck_repo_search/service/query_history_service.dart';
@@ -41,6 +43,11 @@ void registerMockGitHubRepoServiceWhen(
   if (exception != null) {
     whenObj.thenThrow(exception);
   } else {
-    whenObj.thenAnswer((_) async => result ?? RepoSearchResult.empty());
+    whenObj.thenAnswer(
+      (_) async => HttpResponse(
+        result ?? RepoSearchResult.empty(),
+        Response(requestOptions: RequestOptions(), statusCode: 200),
+      ),
+    );
   }
 }

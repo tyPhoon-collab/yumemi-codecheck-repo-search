@@ -19,6 +19,6 @@ void main() {
     // debugPrint(result.toString());
 
     expect(result, isNotNull);
-    expect(result.items.length, lessThanOrEqualTo(30));
+    expect(result.data.items.length, lessThanOrEqualTo(30));
   });
 }

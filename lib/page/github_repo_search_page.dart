@@ -57,16 +57,13 @@ class GitHubRepoSearchPage extends ConsumerWidget {
         ),
         child: const Icon(Icons.settings),
       ),
-      persistentFooterButtons: switch (ref.watch(repoSearchResultProvider)) {
-        AsyncData(:final value) => value == null
-            ? null
-            : [
-                const PageNumberChangeIconButton.prev(),
-                const CurrentPageNumber(),
-                const PageNumberChangeIconButton.next(),
-              ],
-        _ => null,
-      },
+      persistentFooterButtons: ref.watch(repoSearchQueryProvider) == null
+          ? null
+          : [
+              const PageNumberChangeIconButton.prev(),
+              const CurrentPageNumber(),
+              const PageNumberChangeIconButton.next(),
+            ],
     );
   }
 }

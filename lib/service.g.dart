@@ -21,7 +21,7 @@ final gitHubRepoServiceProvider = Provider<GitHubRepoService>.internal(
 );
 
 typedef GitHubRepoServiceRef = ProviderRef<GitHubRepoService>;
-String _$repoSearchResultHash() => r'495fe7114e7028831f62bc99c872150f13654f1b';
+String _$repoSearchResultHash() => r'84123cf9d96e7115dd045233e4b458986cab58a9';
 
 /// エラー時は必ずGitHubRepoServiceExceptionをthrowする
 /// Sが初期化されている必要があり、やや責務が大きいが、一旦おいておく
@@ -89,6 +89,21 @@ final queryHistoryStreamProvider = StreamProvider<List<String>>.internal(
 );
 
 typedef QueryHistoryStreamRef = StreamProviderRef<List<String>>;
+String _$realTotalCountHash() => r'a54879c7d86a639dd6648e88c4e3331bfc131ab2';
+
+/// See also [realTotalCount].
+@ProviderFor(realTotalCount)
+final realTotalCountProvider = AutoDisposeProvider<int?>.internal(
+  realTotalCount,
+  name: r'realTotalCountProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$realTotalCountHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef RealTotalCountRef = AutoDisposeProviderRef<int?>;
 String _$repoSearchQueryHash() => r'96f1113bc8cea6b11097df9ea35e3baf1ccf9534';
 
 /// See also [RepoSearchQuery].
@@ -122,7 +137,7 @@ final repoSearchSortTypeProvider =
 );
 
 typedef _$RepoSearchSortType = AutoDisposeNotifier<SortType>;
-String _$repoSearchPageHash() => r'c488ad2250549782c5ce73ea4fcf9da47a515c3f';
+String _$repoSearchPageHash() => r'd340c779a0829d98bae3a6afe965113903b6ca60';
 
 /// See also [RepoSearchPage].
 @ProviderFor(RepoSearchPage)
@@ -138,7 +153,24 @@ final repoSearchPageProvider =
 );
 
 typedef _$RepoSearchPage = AutoDisposeNotifier<int>;
-String _$repoSearchPerPageHash() => r'bbc4586db38b6f4857c7d50292d3d3a5be1ea39b';
+String _$repoSearchLastPageHash() =>
+    r'3c66736aa13497ff080d85153ef56456321f63a1';
+
+/// See also [RepoSearchLastPage].
+@ProviderFor(RepoSearchLastPage)
+final repoSearchLastPageProvider =
+    AutoDisposeNotifierProvider<RepoSearchLastPage, int?>.internal(
+  RepoSearchLastPage.new,
+  name: r'repoSearchLastPageProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$repoSearchLastPageHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$RepoSearchLastPage = AutoDisposeNotifier<int?>;
+String _$repoSearchPerPageHash() => r'8380c2f320ee4ee7c734ef7ccf23664756aa91fe';
 
 /// See also [RepoSearchPerPage].
 @ProviderFor(RepoSearchPerPage)
