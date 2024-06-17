@@ -141,10 +141,6 @@ class RepoSearchPage extends _$RepoSearchPage {
 
   void reset() => state = 1;
 
-  bool validateDelta(int delta, int totalCount) {
-    return validate(state + delta, totalCount);
-  }
-
   bool validate(int value, int totalCount) {
     final perPage = ref.watch(repoSearchPerPageProvider);
     return value > 0 && (value - 1) * perPage < totalCount;

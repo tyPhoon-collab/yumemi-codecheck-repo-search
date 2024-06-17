@@ -2,31 +2,61 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yumemi_codecheck_repo_search/service.dart';
 
-class PageNumberChangeIconButton extends ConsumerWidget {
-  const PageNumberChangeIconButton(this.iconData, this.delta, {super.key});
+class ChangePageNumberIconButton extends ConsumerWidget {
+  const ChangePageNumberIconButton(this.iconData, this.modifier, {super.key});
 
-  const PageNumberChangeIconButton.next({super.key})
-      : iconData = Icons.navigate_next,
-        delta = 1;
+  factory ChangePageNumberIconButton.next() {
+    return ChangePageNumberIconButton(
+      Icons.navigate_next,
+      (current, totalCount) => current + 1,
+    );
+  }
 
-  const PageNumberChangeIconButton.prev({super.key})
-      : iconData = Icons.navigate_before,
-        delta = -1;
+  factory ChangePageNumberIconButton.prev() {
+    return ChangePageNumberIconButton(
+      Icons.navigate_before,
+      (current, totalCount) => current - 1,
+    );
+  }
+
+  factory ChangePageNumberIconButton.first() {
+    return ChangePageNumberIconButton(
+      Icons.first_page,
+      (current, totalCount) => 1,
+    );
+  }
+
+  factory ChangePageNumberIconButton.last(int lastPage) {
+    return ChangePageNumberIconButton(
+      Icons.last_page,
+      (current, totalCount) => lastPage,
+    );
+  }
 
   final IconData iconData;
-  final int delta;
+  final int Function(int current, int totalCount) modifier;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final realTotalCount = ref.watch(realTotalCountProvider) ?? 0;
-    final _ = ref.watch(repoSearchPageProvider); // ページの変更を監視する
+    final totalCount = ref.watch(realTotalCountProvider) ?? 0;
+    final current = ref.watch(repoSearchPageProvider); // ページの変更を監視する
     final notifier = ref.watch(repoSearchPageProvider.notifier);
 
     return IconButton(
-      onPressed: !notifier.validateDelta(delta, realTotalCount)
-          ? null
-          : () => notifier.add(delta),
+      onPressed: isAvailable(notifier, current, totalCount)
+          ? () => notifier.update(getNextPageNumber(current, totalCount))
+          : null,
       icon: Icon(iconData),
     );
+  }
+
+  bool isAvailable(RepoSearchPage notifier, int current, int totalCount) {
+    final next = getNextPageNumber(current, totalCount);
+    if (next == current) return false;
+    return notifier.validate(next, totalCount);
+  }
+
+  int getNextPageNumber(int current, int totalCount) {
+    return modifier(current, totalCount);
   }
 }

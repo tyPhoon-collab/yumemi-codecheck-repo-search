@@ -57,12 +57,17 @@ class GitHubRepoSearchPage extends ConsumerWidget {
         ),
         child: const Icon(Icons.settings),
       ),
+      persistentFooterAlignment: AlignmentDirectional.center,
       persistentFooterButtons: ref.watch(repoSearchQueryProvider) == null
           ? null
           : [
-              const PageNumberChangeIconButton.prev(),
+              ChangePageNumberIconButton.first(),
+              ChangePageNumberIconButton.prev(),
               const CurrentPageNumber(),
-              const PageNumberChangeIconButton.next(),
+              ChangePageNumberIconButton.next(),
+              ChangePageNumberIconButton.last(
+                ref.watch(realTotalCountProvider) ?? 0,
+              ),
             ],
     );
   }

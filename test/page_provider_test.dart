@@ -65,18 +65,6 @@ void main() {
     expect(repoSearchPage.validate(-1, 100), isFalse); // -1ページ目（無効）
   });
 
-  test('validateDelta method works correctly', () {
-    repoSearchPage.update(5); // 現在のページを5に設定
-    repoSearchPerPage.update(10);
-
-    expect(repoSearchPage.validateDelta(1, 100), isTrue); // 6ページ目、100件
-    expect(repoSearchPage.validateDelta(5, 100), isTrue); // 10ページ目、100件
-    expect(repoSearchPage.validateDelta(6, 100), isFalse); // 11ページ目、100件以上
-    expect(repoSearchPage.validateDelta(-4, 100), isTrue); // 1ページ目、100件
-    expect(repoSearchPage.validateDelta(-5, 100), isFalse); // 0ページ目（無効）
-    expect(repoSearchPage.validateDelta(-10, 100), isFalse); // 負のページ数超過
-  });
-
   test('add method with large value', () {
     repoSearchPage.add(1000000);
     expect(repoSearchPage.state, 1000001);
