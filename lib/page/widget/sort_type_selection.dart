@@ -34,47 +34,48 @@ class SortTypeSelection extends ConsumerWidget {
       borderRadius: const BorderRadius.all(Radius.circular(8)),
       isExpanded: true,
       padding: const EdgeInsets.all(8),
-      selectedItemBuilder: (context) {
-        return SortType.values
-            .map(
-              (sortType) => Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(sortType.iconData),
-                  const SizedBox(width: 8),
-                  DefaultTextStyle.merge(
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.outline,
-                    ),
-                    child: const Text('Sort by: '),
-                  ),
-                  Text(sortType.displayName),
-                ],
-              ),
-            )
-            .toList();
-      },
-      items: SortType.values
-          .map(
-            (sortType) => DropdownMenuItem<SortType>(
-              value: sortType,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const SizedBox(width: 8),
-                  Icon(sortType.iconData),
-                  const SizedBox(width: 8),
-                  Text(sortType.displayName),
-                ],
-              ),
-            ),
-          )
-          .toList(),
+      selectedItemBuilder: (context) => _buildSelectedItems(context).toList(),
+      items: _buildItems(context).toList(),
       onChanged: (value) {
         if (value != null) {
           ref.read(sortTypeValueProvider.notifier).update(value);
         }
       },
     );
+  }
+
+  Iterable<DropdownMenuItem<SortType>> _buildItems(BuildContext context) sync* {
+    for (final sortType in SortType.values) {
+      yield DropdownMenuItem(
+        value: sortType,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(sortType.iconData),
+            const SizedBox(width: 8),
+            Text(sortType.displayName),
+          ],
+        ),
+      );
+    }
+  }
+
+  Iterable<Widget> _buildSelectedItems(BuildContext context) sync* {
+    for (final sortType in SortType.values) {
+      yield Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(sortType.iconData),
+          const SizedBox(width: 8),
+          DefaultTextStyle.merge(
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.outline,
+            ),
+            child: const Text('Sort by: '),
+          ),
+          Text(sortType.displayName),
+        ],
+      );
+    }
   }
 }
