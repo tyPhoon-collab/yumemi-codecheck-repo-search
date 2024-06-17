@@ -16,7 +16,7 @@ abstract class GitHubRepoService {
 }
 
 class GitHubRepoServiceException implements Exception {
-  GitHubRepoServiceException(this.message, [this.error]);
+  const GitHubRepoServiceException(this.message, [this.error]);
 
   final String message;
   final Object? error;
