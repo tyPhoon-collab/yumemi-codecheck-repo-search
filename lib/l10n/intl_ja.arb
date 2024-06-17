@@ -4,8 +4,14 @@
     "searchPlaceholder": "Repositoryを検索",
     "noResults": "結果が見つかりませんでした",
     "failedLaunch": "{url} が開けませんでした",
+    "language": "言語",
+    "theme": "テーマ",
+    "system": "システム",
+    "light": "ライト",
+    "dark": "ダーク",
     "errorUnexpected": "予期しないエラーが発生しました",
     "errorServiceUnavailable": "GitHubサーバが一時的に利用できない状態です",
     "errorNoInternet": "インターネットに接続できません",
-    "errorValidation": "検証に失敗しました。またはAPIのレート制限です"
+    "errorValidation": "検証に失敗しました。またはAPIのレート制限です",
+    "description": "このアプリはGitHubのリポジトリ検索APIラッパーです。\n\nyumemi codecheck 用に作成されました。"
 }

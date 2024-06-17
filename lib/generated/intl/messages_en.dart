@@ -24,6 +24,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "dark": MessageLookupByLibrary.simpleMessage("Dark"),
+        "description": MessageLookupByLibrary.simpleMessage(
+            "This app is a GitHub Repository Search API wrapper.\n\nFor yumemi codecheck."),
         "errorNoInternet":
             MessageLookupByLibrary.simpleMessage("No internet connection"),
         "errorServiceUnavailable": MessageLookupByLibrary.simpleMessage(
@@ -33,9 +36,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "errorValidation": MessageLookupByLibrary.simpleMessage(
             "Validation failed, or the endpoint has been spammed."),
         "failedLaunch": m0,
+        "language": MessageLookupByLibrary.simpleMessage("Language"),
+        "light": MessageLookupByLibrary.simpleMessage("Light"),
         "noResults": MessageLookupByLibrary.simpleMessage("No results found"),
         "searchPlaceholder":
             MessageLookupByLibrary.simpleMessage("Search Repositories"),
+        "system": MessageLookupByLibrary.simpleMessage("System"),
+        "theme": MessageLookupByLibrary.simpleMessage("Theme"),
         "title": MessageLookupByLibrary.simpleMessage("Github Repos Search")
       };
 }

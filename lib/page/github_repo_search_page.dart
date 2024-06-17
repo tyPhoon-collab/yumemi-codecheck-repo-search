@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yumemi_codecheck_repo_search/const.dart';
 import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
+import 'package:yumemi_codecheck_repo_search/page/settings_page.dart';
 import 'package:yumemi_codecheck_repo_search/page/widget/repo_list_view.dart';
 import 'package:yumemi_codecheck_repo_search/page/widget/search_bar.dart';
 import 'package:yumemi_codecheck_repo_search/page/widget/suggestion_view.dart';
@@ -15,7 +16,12 @@ class GitHubRepoSearchPage extends ConsumerWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: EdgeInsets.symmetric(
+            horizontal:
+                MediaQuery.of(context).orientation == Orientation.portrait
+                    ? 16
+                    : 64,
+          ),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -37,6 +43,15 @@ class GitHubRepoSearchPage extends ConsumerWidget {
             ),
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton.small(
+        onPressed: () => Navigator.of(context).push(
+          MaterialPageRoute<void>(
+            builder: (context) => const SettingsPage(),
+            fullscreenDialog: true,
+          ),
+        ),
+        child: const Icon(Icons.settings),
       ),
     );
   }
