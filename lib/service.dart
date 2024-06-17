@@ -122,8 +122,23 @@ class RepoSearchPage extends _$RepoSearchPage {
   @override
   int build() => 1;
 
-  void add(int delta) => state = state + delta;
+  /// 呼び出す前は、validate()を呼び出してチェックする前提とする
+  /// 本来は、ここでRepoSearchResultのtotalCountを取得するのが良いが
+  /// CircularDependencyErrorが発生する
+  /// UIの表示の際にvalidate()を呼び出すことが多いので、クライアントコードに責務を移す
+  void add(int delta) {
+    state = state + delta;
+  }
+
   void reset() => state = 1;
+
+  bool validateDelta(int delta, int totalCount) {
+    return validate(state + delta, totalCount);
+  }
+
+  bool validate(int value, int totalCount) {
+    return value > 0 && (value + 1) * 10 <= totalCount;
+  }
 }
 
 @riverpod

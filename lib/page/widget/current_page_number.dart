@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yumemi_codecheck_repo_search/common/loading_indicator.dart';
@@ -16,9 +18,16 @@ class CurrentPageNumber extends ConsumerWidget {
       return const LoadingIndicator();
     }
 
+    int upperCount() {
+      return min(currentPage * perPage, totalCount);
+    }
+
+    int lowerCount() {
+      return (currentPage - 1) * perPage + 1;
+    }
+
     return Text(
-      '${(currentPage - 1) * perPage + 1} ~ ${currentPage * perPage} '
-      'of $totalCount',
+      '${lowerCount()} ~ ${upperCount()} of $totalCount',
     );
   }
 }
