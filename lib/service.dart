@@ -22,6 +22,7 @@ GitHubRepoService gitHubRepoService(GitHubRepoServiceRef ref) {
   return GitHubRepoService(dio);
 }
 
+/// エラー時は必ずGitHubRepoServiceExceptionをthrowする
 @riverpod
 Future<RepoSearchResult?> repoSearchResult(RepoSearchResultRef ref) {
   final service = ref.watch(gitHubRepoServiceProvider);

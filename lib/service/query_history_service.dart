@@ -76,24 +76,49 @@ class ReactiveQueryHistoryService implements QueryHistoryService {
 
   @override
   Future<void> add(String query) async {
-    await service.add(query);
-    await _notify();
+    try {
+      await service.add(query);
+      await _notify();
+    } catch (_) {
+      rethrow;
+    }
   }
 
   @override
   Future<void> clearAll() async {
-    await service.clearAll();
-    await _notify();
+    try {
+      await service.clearAll();
+      await _notify();
+    } catch (_) {
+      rethrow;
+    }
   }
 
   @override
-  Future<List<String>> getAll() => service.getAll();
+  Future<List<String>> getAll() async {
+    try {
+      return await service.getAll();
+    } catch (_) {
+      rethrow;
+    }
+  }
 
   @override
   Future<void> remove(String query) async {
-    await service.remove(query);
-    await _notify();
+    try {
+      await service.remove(query);
+      await _notify();
+    } catch (_) {
+      rethrow;
+    }
   }
 
-  Future<void> _notify() async => _controller.add(await service.getAll());
+  Future<void> _notify() async {
+    try {
+      final result = await getAll();
+      _controller.add(result);
+    } catch (e, stackTrace) {
+      _controller.addError(e, stackTrace);
+    }
+  }
 }

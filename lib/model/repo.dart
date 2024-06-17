@@ -23,4 +23,33 @@ class Repo with _$Repo {
   }) = _Repo;
 
   factory Repo.fromJson(Map<String, dynamic> json) => _$RepoFromJson(json);
+
+  factory Repo.mock({
+    int? id,
+    String? createdAt,
+    String? name,
+    String? fullName,
+    String? htmlUrl,
+    int? stargazersCount,
+    int? watchersCount,
+    int? forksCount,
+    int? openIssuesCount,
+    Owner? owner,
+    String? description,
+    String? language,
+  }) =>
+      Repo(
+        id: id ?? 1,
+        createdAt: createdAt ?? '2022-01-01T00:00:00.000Z',
+        name: name ?? 'repo1',
+        fullName: fullName ?? 'repo1/repo1',
+        htmlUrl: htmlUrl ?? 'https://github.com/repo1/repo1',
+        stargazersCount: stargazersCount ?? 1,
+        watchersCount: watchersCount ?? 1,
+        forksCount: forksCount ?? 1,
+        openIssuesCount: openIssuesCount ?? 1,
+        owner: owner ?? const Owner(avatarUrl: '', htmlUrl: ''),
+        description: description ?? 'description1',
+        language: language ?? 'language1',
+      );
 }

@@ -15,4 +15,16 @@ class RepoSearchResult with _$RepoSearchResult {
 
   factory RepoSearchResult.fromJson(Map<String, dynamic> json) =>
       _$RepoSearchResultFromJson(json);
+
+  factory RepoSearchResult.items(List<Repo> items) => RepoSearchResult(
+        totalCount: items.length,
+        incompleteResults: false,
+        items: items,
+      );
+
+  factory RepoSearchResult.empty() => const RepoSearchResult(
+        totalCount: 0,
+        incompleteResults: true,
+        items: [],
+      );
 }

@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:yumemi_codecheck_repo_search/model/owner.dart';
 import 'package:yumemi_codecheck_repo_search/model/repo.dart';
 import 'package:yumemi_codecheck_repo_search/model/repo_search_result.dart';
+import 'package:yumemi_codecheck_repo_search/page/widget/suggestion_view.dart';
+import 'package:yumemi_codecheck_repo_search/service.dart';
 
 import 'custom_test_widgets.dart';
 import 'extension.dart';
@@ -16,31 +17,17 @@ void main() {
     'search and tap first repo',
     (tester, container) async {
       const query = 'flutter';
-      const repo = Repo(
-        id: 1,
-        createdAt: '',
+      final repo = Repo.mock(
         name: 'flutter',
         fullName: 'flutter/flutter',
         description: 'Flutter SDK',
-        htmlUrl: '',
-        stargazersCount: 0,
-        watchersCount: 0,
-        forksCount: 0,
-        openIssuesCount: 0,
-        owner: Owner(
-          avatarUrl: '',
-          htmlUrl: '',
-        ),
       );
 
       when(
-        () => container.service.searchRepositories(query),
+        () =>
+            container.read(gitHubRepoServiceProvider).searchRepositories(query),
       ).thenAnswer(
-        (_) async => const RepoSearchResult(
-          totalCount: 1,
-          incompleteResults: false,
-          items: [repo],
-        ),
+        (_) async => RepoSearchResult.items([repo]),
       );
 
       await tester.enterTextAndSettle(find.byType(TextField), 'flutter');
@@ -67,6 +54,42 @@ void main() {
       );
       expect(find.text(repo.fullName), findsOneWidget);
       expect(find.text(repo.description!), findsOneWidget);
+
+      await tester.pageBackSafe();
+      await tester.tapAndSettle(find.byIcon(Icons.close));
+      expect(
+        find.ancestor(
+          of: find.text(query),
+          matching: find.byType(SuggestionsView),
+        ),
+        findsOneWidget,
+      );
     },
+  );
+
+  testWidgetFromSearchPage(
+    'search from suggestion',
+    (tester, container) async {
+      const query = 'flutter';
+      final repo = Repo.mock(
+        name: 'flutter',
+        fullName: 'flutter/flutter',
+        description: 'Flutter SDK',
+      );
+
+      when(
+        () =>
+            container.read(gitHubRepoServiceProvider).searchRepositories(query),
+      ).thenAnswer(
+        (_) async => RepoSearchResult.items([repo]),
+      );
+
+      await tester.pumpAndSettle();
+      await tester.tapAndSettle(find.text(query));
+      await tester.pumpAndSettle();
+      expect(find.text(repo.fullName), findsOneWidget);
+      expect(find.text(repo.description!), findsOneWidget);
+    },
+    history: ['flutter'],
   );
 }

@@ -23,15 +23,7 @@ class SearchedRepoListView extends ConsumerWidget {
 
         final items = data.items;
 
-        return items.isEmpty
-            ? Center(child: Text(S.current.noResults))
-            : ListView.builder(
-                itemCount: items.length,
-                itemBuilder: (context, index) {
-                  final item = items[index];
-                  return _RepoListTile(repo: item);
-                },
-              );
+        return RepoListView(items: items);
       },
       error: (error, stackTrace) {
         if (error is GitHubRepoServiceException) {
@@ -47,8 +39,27 @@ class SearchedRepoListView extends ConsumerWidget {
   }
 }
 
-class _RepoListTile extends StatelessWidget {
-  const _RepoListTile({required this.repo});
+class RepoListView extends StatelessWidget {
+  const RepoListView({required this.items, super.key});
+
+  final List<Repo> items;
+
+  @override
+  Widget build(BuildContext context) {
+    return items.isEmpty
+        ? Center(child: Text(S.current.noResults))
+        : ListView.builder(
+            itemCount: items.length,
+            itemBuilder: (context, index) {
+              final item = items[index];
+              return RepoListTile(repo: item);
+            },
+          );
+  }
+}
+
+class RepoListTile extends StatelessWidget {
+  const RepoListTile({required this.repo, super.key});
 
   final Repo repo;
 
