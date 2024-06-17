@@ -50,6 +50,16 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
+  /// `Github Repos Search`
+  String get title {
+    return Intl.message(
+      'Github Repos Search',
+      name: 'title',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Search Repositories`
   String get searchPlaceholder {
     return Intl.message(

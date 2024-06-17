@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yumemi_codecheck_repo_search/const.dart';
+import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
 import 'package:yumemi_codecheck_repo_search/page/widget/repo_list_view.dart';
 import 'package:yumemi_codecheck_repo_search/page/widget/search_bar.dart';
 import 'package:yumemi_codecheck_repo_search/page/widget/suggestion_view.dart';
@@ -56,9 +57,7 @@ class _TitleWidget extends ConsumerWidget {
             .copyWith(fontWeight: FontWeight.bold),
         duration: Animations.searched.duration,
         curve: Animations.searched.curve,
-        child: const Text(
-          'GitHub Repository Search',
-        ),
+        child: Text(S.current.title),
       ),
     );
   }
