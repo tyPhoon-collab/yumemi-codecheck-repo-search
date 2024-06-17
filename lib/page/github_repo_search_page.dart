@@ -19,17 +19,17 @@ class GitHubRepoSearchPage extends ConsumerWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const _LogoWidget(),
-                const SizedBox(height: 16),
+                const _TitleWidget(),
                 const RepoSearchBar(),
-                const SizedBox(height: 16),
                 Flexible(
                   child: AnimatedSize(
                     duration: Animations.searched.duration,
                     curve: Animations.searched.curve,
                     child: ref.watch(repoSearchQueryProvider) == null
                         ? const SuggestionsView()
-                        : const SearchedRepoListView(),
+                        : const SearchedRepoListView(
+                            padding: EdgeInsets.symmetric(vertical: 16),
+                          ),
                   ),
                 ),
               ],
@@ -41,21 +41,24 @@ class GitHubRepoSearchPage extends ConsumerWidget {
   }
 }
 
-class _LogoWidget extends ConsumerWidget {
-  const _LogoWidget();
+class _TitleWidget extends ConsumerWidget {
+  const _TitleWidget();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final textTheme = Theme.of(context).textTheme;
-    return AnimatedDefaultTextStyle(
-      style: (ref.watch(repoSearchQueryProvider) == null
-              ? textTheme.headlineMedium!
-              : textTheme.titleMedium!)
-          .copyWith(fontWeight: FontWeight.bold),
-      duration: Animations.searched.duration,
-      curve: Animations.searched.curve,
-      child: const Text(
-        'GitHub Repository Search',
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: AnimatedDefaultTextStyle(
+        style: (ref.watch(repoSearchQueryProvider) == null
+                ? textTheme.headlineMedium!
+                : textTheme.titleMedium!)
+            .copyWith(fontWeight: FontWeight.bold),
+        duration: Animations.searched.duration,
+        curve: Animations.searched.curve,
+        child: const Text(
+          'GitHub Repository Search',
+        ),
       ),
     );
   }
