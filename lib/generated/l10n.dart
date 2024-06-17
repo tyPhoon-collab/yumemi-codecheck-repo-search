@@ -90,6 +90,56 @@ class S {
     );
   }
 
+  /// `Language`
+  String get language {
+    return Intl.message(
+      'Language',
+      name: 'language',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Theme`
+  String get theme {
+    return Intl.message(
+      'Theme',
+      name: 'theme',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `System`
+  String get system {
+    return Intl.message(
+      'System',
+      name: 'system',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Light`
+  String get light {
+    return Intl.message(
+      'Light',
+      name: 'light',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dark`
+  String get dark {
+    return Intl.message(
+      'Dark',
+      name: 'dark',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Unexpected error occurred`
   String get errorUnexpected {
     return Intl.message(
@@ -125,6 +175,16 @@ class S {
     return Intl.message(
       'Validation failed, or the endpoint has been spammed.',
       name: 'errorValidation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This app is a GitHub Repository Search API wrapper.\n\nFor yumemi codecheck.`
+  String get description {
+    return Intl.message(
+      'This app is a GitHub Repository Search API wrapper.\n\nFor yumemi codecheck.',
+      name: 'description',
       desc: '',
       args: [],
     );

@@ -34,7 +34,7 @@ class _LanguageListTile extends StatelessWidget {
       onTap: () => AppSettings.openAppSettings(
         type: AppSettingsType.appLocale,
       ), // 言語設定は本体設定から行うのが普通（LINEなどを参照）
-      title: const Text('Language'),
+      title: Text(S.current.language),
       subtitle: Text(
         _getLanguageName(
           Localizations.localeOf(context),
@@ -48,7 +48,7 @@ class _LanguageListTile extends StatelessWidget {
     return switch (locale.languageCode) {
       'en' => 'English',
       'ja' => '日本語',
-      _ => 'Unknown',
+      _ => locale.languageCode,
     };
   }
 }
@@ -73,7 +73,7 @@ class _ThemeListTileState extends State<_ThemeListTile> {
 
     return ListTile(
       leading: const Icon(Icons.color_lens_outlined),
-      title: const Text('Theme'),
+      title: Text(S.current.theme),
       subtitle: Text(_getThemeModeName(currentThemeMode)),
       trailing: ToggleButtons(
         isSelected: modes.map((theme) => theme == currentThemeMode).toList(),
@@ -86,9 +86,9 @@ class _ThemeListTileState extends State<_ThemeListTile> {
 
   String _getThemeModeName(AdaptiveThemeMode mode) {
     return switch (mode) {
-      AdaptiveThemeMode.system => 'System',
-      AdaptiveThemeMode.light => 'Light',
-      AdaptiveThemeMode.dark => 'Dark',
+      AdaptiveThemeMode.system => S.current.system,
+      AdaptiveThemeMode.light => S.current.light,
+      AdaptiveThemeMode.dark => S.current.dark,
     };
   }
 
@@ -137,11 +137,7 @@ class _AboutListTile extends StatelessWidget {
           applicationLegalese: '''Copyright 2024 Hiroaki Osawa''',
           children: [
             const SizedBox(height: 16),
-            const Text('''
-This app is a GitHub Repository Search API wrapper.
-
-For yumemi codecheck.
-'''),
+            Text(S.current.description),
           ],
         );
       },
