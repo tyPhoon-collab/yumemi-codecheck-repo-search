@@ -21,9 +21,12 @@ final gitHubRepoServiceProvider = Provider<GitHubRepoService>.internal(
 );
 
 typedef GitHubRepoServiceRef = ProviderRef<GitHubRepoService>;
-String _$repoSearchResultHash() => r'8d88a1045efc46dd9d08413d939ee4b86b54989d';
+String _$repoSearchResultHash() => r'7c46add83d9dc7097576a36564cbaf2721fdec2f';
 
-/// See also [repoSearchResult].
+/// エラー時は必ずGitHubRepoServiceExceptionをthrowする
+/// Sが初期化されている必要があり、やや責務が大きいが、一旦おいておく
+///
+/// Copied from [repoSearchResult].
 @ProviderFor(repoSearchResult)
 final repoSearchResultProvider =
     AutoDisposeFutureProvider<RepoSearchResult?>.internal(
@@ -102,5 +105,21 @@ final repoSearchQueryProvider =
 );
 
 typedef _$RepoSearchQuery = AutoDisposeNotifier<String?>;
+String _$sortTypeValueHash() => r'8e1018e254dc1d709d05e98b03a04afc1544524c';
+
+/// See also [SortTypeValue].
+@ProviderFor(SortTypeValue)
+final sortTypeValueProvider =
+    AutoDisposeNotifierProvider<SortTypeValue, SortType>.internal(
+  SortTypeValue.new,
+  name: r'sortTypeValueProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$sortTypeValueHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$SortTypeValue = AutoDisposeNotifier<SortType>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

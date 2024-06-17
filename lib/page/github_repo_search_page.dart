@@ -5,6 +5,7 @@ import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
 import 'package:yumemi_codecheck_repo_search/page/settings_page.dart';
 import 'package:yumemi_codecheck_repo_search/page/widget/repo_list_view.dart';
 import 'package:yumemi_codecheck_repo_search/page/widget/search_bar.dart';
+import 'package:yumemi_codecheck_repo_search/page/widget/sort_type_selection.dart';
 import 'package:yumemi_codecheck_repo_search/page/widget/suggestion_view.dart';
 import 'package:yumemi_codecheck_repo_search/service.dart';
 
@@ -28,6 +29,7 @@ class GitHubRepoSearchPage extends ConsumerWidget {
               children: [
                 const _TitleWidget(),
                 const RepoSearchBar(),
+                const SortTypeSelection(),
                 Flexible(
                   child: AnimatedSize(
                     duration: Animations.searched.duration,
@@ -35,7 +37,7 @@ class GitHubRepoSearchPage extends ConsumerWidget {
                     child: ref.watch(repoSearchQueryProvider) == null
                         ? const SuggestionsView()
                         : const SearchedRepoListView(
-                            padding: EdgeInsets.symmetric(vertical: 16),
+                            padding: EdgeInsets.only(top: 4, bottom: 32),
                           ),
                   ),
                 ),

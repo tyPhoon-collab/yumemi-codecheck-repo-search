@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
 import 'package:yumemi_codecheck_repo_search/model/repo_search_result.dart';
+import 'package:yumemi_codecheck_repo_search/page/widget/sort_type_selection.dart';
 import 'package:yumemi_codecheck_repo_search/service/github_repo_service.dart';
 import 'package:yumemi_codecheck_repo_search/service/query_history_service.dart';
 
@@ -29,13 +30,14 @@ GitHubRepoService gitHubRepoService(GitHubRepoServiceRef ref) {
 Future<RepoSearchResult?> repoSearchResult(RepoSearchResultRef ref) {
   final service = ref.watch(gitHubRepoServiceProvider);
   final query = ref.watch(repoSearchQueryProvider);
+  final sortType = ref.watch(sortTypeValueProvider);
 
   if (query == null) {
     return Future.value();
   }
 
   try {
-    return service.searchRepositories(query);
+    return service.searchRepositories(query, sort: sortType.query);
   } catch (e) {
     final errorMessage = switch (e) {
       final DioException e => switch (e.response?.statusCode) {
@@ -93,4 +95,13 @@ ReactiveQueryHistoryService queryHistoryService(QueryHistoryServiceRef ref) {
 @Riverpod(keepAlive: true)
 Stream<List<String>> queryHistoryStream(QueryHistoryStreamRef ref) {
   return ref.watch(queryHistoryServiceProvider).stream;
+}
+
+@riverpod
+class SortTypeValue extends _$SortTypeValue {
+  @override
+  SortType build() => SortType.bestMatch;
+
+  // ignore: use_setters_to_change_properties
+  void update(SortType value) => state = value;
 }
