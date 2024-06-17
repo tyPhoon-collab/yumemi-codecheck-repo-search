@@ -4,11 +4,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yumemi_codecheck_repo_search/service.dart';
 
 enum SortType {
-  bestMatch('best-match', Icons.sort_by_alpha),
-  stars('stars', Icons.star),
-  forks('forks', Icons.fork_right),
-  helpWantedIssues('help-wanted-issues', Icons.help),
-  updated('updated', Icons.update),
+  bestMatch('best-match', Icons.sort_by_alpha_outlined),
+  stars('stars', Icons.star_outline),
+  forks('forks', Icons.fork_right_outlined),
+  helpWantedIssues('help-wanted-issues', Icons.help_outline),
+  updated('updated', Icons.update_outlined),
   ;
 
   const SortType(this.query, this.iconData);
