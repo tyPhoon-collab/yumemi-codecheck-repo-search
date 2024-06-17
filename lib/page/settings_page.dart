@@ -30,6 +30,7 @@ class _LanguageListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      key: const Key('language_list_tile'),
       leading: const Icon(Icons.language_outlined),
       onTap: () => AppSettings.openAppSettings(
         type: AppSettingsType.appLocale,
@@ -72,6 +73,7 @@ class _ThemeListTileState extends State<_ThemeListTile> {
     ];
 
     return ListTile(
+      key: const Key('theme_list_tile'),
       leading: const Icon(Icons.color_lens_outlined),
       title: Text(S.current.theme),
       subtitle: Text(_getThemeModeName(currentThemeMode)),
@@ -117,6 +119,7 @@ class _AboutListTile extends StatelessWidget {
 
     // AboutListTileがあるが、バージョンを非同期的に取得するため、独自で実装する
     return ListTile(
+      key: const Key('about_list_tile'),
       leading: const Icon(Icons.info_outline),
       title: Text(
         MaterialLocalizations.of(context).aboutListTileTitle(
