@@ -1,3 +1,4 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yumemi_codecheck_repo_search/service.dart';
@@ -29,18 +30,24 @@ class SortTypeSelection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return DropdownButton(
-      value: ref.watch(sortTypeValueProvider),
-      borderRadius: const BorderRadius.all(Radius.circular(8)),
-      isExpanded: true,
-      padding: const EdgeInsets.all(8),
-      selectedItemBuilder: (context) => _buildSelectedItems(context).toList(),
-      items: _buildItems(context).toList(),
-      onChanged: (value) {
-        if (value != null) {
-          ref.read(sortTypeValueProvider.notifier).update(value);
-        }
-      },
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: DropdownButton2(
+        value: ref.watch(sortTypeValueProvider),
+        isExpanded: true,
+        selectedItemBuilder: (context) => _buildSelectedItems(context).toList(),
+        items: _buildItems(context).toList(),
+        dropdownStyleData: DropdownStyleData(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(32),
+          ),
+        ),
+        onChanged: (value) {
+          if (value != null) {
+            ref.read(sortTypeValueProvider.notifier).update(value);
+          }
+        },
+      ),
     );
   }
 
