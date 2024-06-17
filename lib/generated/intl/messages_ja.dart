@@ -27,6 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "failedLaunch": m0,
         "noResults": MessageLookupByLibrary.simpleMessage("結果が見つかりませんでした"),
         "searchPlaceholder":
-            MessageLookupByLibrary.simpleMessage("Repositoryを検索")
+            MessageLookupByLibrary.simpleMessage("Repositoryを検索"),
+        "title": MessageLookupByLibrary.simpleMessage("Github Repos Search")
       };
 }

@@ -1,5 +1,6 @@
 {
     "@@locale": "ja",
+    "title": "Github Repos Search",
     "searchPlaceholder": "Repositoryを検索",
     "noResults": "結果が見つかりませんでした",
     "failedLaunch": "{url} が開けませんでした"

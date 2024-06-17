@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:yumemi_codecheck_repo_search/const.dart';
+import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
 import 'package:yumemi_codecheck_repo_search/page/widget/repo_list_view.dart';
 import 'package:yumemi_codecheck_repo_search/page/widget/search_bar.dart';
 import 'package:yumemi_codecheck_repo_search/page/widget/suggestion_view.dart';
@@ -18,17 +20,17 @@ class GitHubRepoSearchPage extends ConsumerWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const _LogoWidget(),
-                const SizedBox(height: 16),
+                const _TitleWidget(),
                 const RepoSearchBar(),
-                const SizedBox(height: 16),
                 Flexible(
                   child: AnimatedSize(
-                    duration: Durations.medium2,
-                    curve: Curves.easeInOutQuart,
+                    duration: Animations.searched.duration,
+                    curve: Animations.searched.curve,
                     child: ref.watch(repoSearchQueryProvider) == null
                         ? const SuggestionsView()
-                        : const SearchedRepoListView(),
+                        : const SearchedRepoListView(
+                            padding: EdgeInsets.symmetric(vertical: 16),
+                          ),
                   ),
                 ),
               ],
@@ -40,14 +42,23 @@ class GitHubRepoSearchPage extends ConsumerWidget {
   }
 }
 
-class _LogoWidget extends StatelessWidget {
-  const _LogoWidget();
+class _TitleWidget extends ConsumerWidget {
+  const _TitleWidget();
 
   @override
-  Widget build(BuildContext context) {
-    // TODO: ロゴは画像で扱う
-    return const Text(
-      'GitHub Repository Search',
+  Widget build(BuildContext context, WidgetRef ref) {
+    final textTheme = Theme.of(context).textTheme;
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: AnimatedDefaultTextStyle(
+        style: (ref.watch(repoSearchQueryProvider) == null
+                ? textTheme.headlineMedium!
+                : textTheme.titleMedium!)
+            .copyWith(fontWeight: FontWeight.bold),
+        duration: Animations.searched.duration,
+        curve: Animations.searched.curve,
+        child: Text(S.current.title),
+      ),
     );
   }
 }

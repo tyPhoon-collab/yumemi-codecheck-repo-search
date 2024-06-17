@@ -11,7 +11,12 @@ import 'package:yumemi_codecheck_repo_search/service.dart';
 import 'package:yumemi_codecheck_repo_search/service/github_repo_service.dart';
 
 class SearchedRepoListView extends ConsumerWidget {
-  const SearchedRepoListView({super.key});
+  const SearchedRepoListView({
+    super.key,
+    this.padding,
+  });
+
+  final EdgeInsets? padding;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,7 +28,7 @@ class SearchedRepoListView extends ConsumerWidget {
 
         final items = data.items;
 
-        return RepoListView(items: items);
+        return RepoListView(items: items, padding: padding);
       },
       error: (error, stackTrace) {
         if (error is GitHubRepoServiceException) {
@@ -40,9 +45,10 @@ class SearchedRepoListView extends ConsumerWidget {
 }
 
 class RepoListView extends StatelessWidget {
-  const RepoListView({required this.items, super.key});
+  const RepoListView({required this.items, this.padding, super.key});
 
   final List<Repo> items;
+  final EdgeInsets? padding;
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +56,7 @@ class RepoListView extends StatelessWidget {
         ? Center(child: Text(S.current.noResults))
         : ListView.builder(
             itemCount: items.length,
+            padding: padding,
             itemBuilder: (context, index) {
               final item = items[index];
               return RepoListTile(repo: item);

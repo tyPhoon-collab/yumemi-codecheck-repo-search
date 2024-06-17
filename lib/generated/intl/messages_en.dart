@@ -27,6 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "failedLaunch": m0,
         "noResults": MessageLookupByLibrary.simpleMessage("No results found"),
         "searchPlaceholder":
-            MessageLookupByLibrary.simpleMessage("Search Repositories")
+            MessageLookupByLibrary.simpleMessage("Search Repositories"),
+        "title": MessageLookupByLibrary.simpleMessage("Github Repos Search")
       };
 }

@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class SvgAssets {
   static const String _basePath = 'assets/image/svg';
 
@@ -7,4 +9,18 @@ class SvgAssets {
   static const String star = '$_basePath/star.svg';
   static const String watch = '$_basePath/eye.svg';
   static const String code = '$_basePath/file-code.svg';
+}
+
+class AnimationData {
+  const AnimationData({required this.duration, required this.curve});
+
+  final Duration duration;
+  final Curve curve;
+}
+
+class Animations {
+  static const searched = AnimationData(
+    duration: Durations.medium3,
+    curve: Curves.easeInOutQuart,
+  );
 }
