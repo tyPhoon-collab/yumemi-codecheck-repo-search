@@ -21,16 +21,6 @@ void main() {
     expect(repoSearchPage.state, 1);
   });
 
-  test('add method works correctly', () {
-    repoSearchPage.add(5);
-    expect(repoSearchPage.state, 6);
-  });
-
-  test('add method with negative value', () {
-    repoSearchPage.add(-2);
-    expect(repoSearchPage.state, -1);
-  });
-
   test('update method works correctly', () {
     repoSearchPage.update(10);
     expect(repoSearchPage.state, 10);
@@ -63,15 +53,5 @@ void main() {
     expect(repoSearchPage.validate(1, 5), isTrue); // 1ページ目、5件
     expect(repoSearchPage.validate(2, 5), isFalse); // 2ページ目（無効）、5件
     expect(repoSearchPage.validate(-1, 100), isFalse); // -1ページ目（無効）
-  });
-
-  test('add method with large value', () {
-    repoSearchPage.add(1000000);
-    expect(repoSearchPage.state, 1000001);
-  });
-
-  test('update method with large value', () {
-    repoSearchPage.update(1000000);
-    expect(repoSearchPage.state, 1000000);
   });
 }

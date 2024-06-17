@@ -127,13 +127,8 @@ class RepoSearchPage extends _$RepoSearchPage {
   @override
   int build() => 1;
 
-  /// 呼び出す前は、validate()を呼び出してチェックする前提とする
-  /// UIの表示の際にvalidate()を呼び出すことが多いので、クライアントコードに責務を移す
-  void add(int delta) {
-    state = state + delta;
-  }
-
-  /// addと同様、呼び出す前は、validate()を呼び出してチェックする前提とする
+  /// validate()を呼び出してチェックする前提とする
+  /// この関数内でチェックしない理由は、不要な引数が増えるため
   void update(int value) {
     if (value == state) return;
     state = value;

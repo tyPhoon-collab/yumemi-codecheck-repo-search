@@ -137,7 +137,7 @@ final repoSearchSortTypeProvider =
 );
 
 typedef _$RepoSearchSortType = AutoDisposeNotifier<SortType>;
-String _$repoSearchPageHash() => r'd340c779a0829d98bae3a6afe965113903b6ca60';
+String _$repoSearchPageHash() => r'481958d391b492121f28efcc94bda9b387662a69';
 
 /// See also [RepoSearchPage].
 @ProviderFor(RepoSearchPage)
@@ -170,7 +170,7 @@ final repoSearchLastPageProvider =
 );
 
 typedef _$RepoSearchLastPage = AutoDisposeNotifier<int?>;
-String _$repoSearchPerPageHash() => r'8380c2f320ee4ee7c734ef7ccf23664756aa91fe';
+String _$repoSearchPerPageHash() => r'593f94a994f61d38c85cbe02031496fcd9d34e6f';
 
 /// See also [RepoSearchPerPage].
 @ProviderFor(RepoSearchPerPage)
