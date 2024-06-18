@@ -1,11 +1,9 @@
 import 'dart:io';
-import 'dart:ui';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
 import 'package:yumemi_codecheck_repo_search/model/repo_search_result.dart';
 import 'package:yumemi_codecheck_repo_search/provider/search_query_provider.dart';
 import 'package:yumemi_codecheck_repo_search/provider/search_result_provider.dart';
@@ -21,7 +19,6 @@ void main() {
   late MockGitHubRepoService mockGitHubRepoService;
 
   setUp(() async {
-    await S.delegate.load(const Locale('en'));
     mockGitHubRepoService = MockGitHubRepoService();
     final mockQueryHistoryService = MockQueryHistoryService();
 
