@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
-import 'package:yumemi_codecheck_repo_search/model/repo.dart';
 import 'package:yumemi_codecheck_repo_search/page/github_repo_detail_page.dart';
+
+import 'mocks.dart';
 
 Future<void> main() async {
   final binding = TestWidgetsFlutterBinding.ensureInitialized();
@@ -29,7 +30,7 @@ Future<void> main() async {
   testWidgets('shows landscape details', (WidgetTester tester) async {
     await buildWidget(tester, () {
       return GitHubRepoDetailPage(
-        repo: Repo.mock(),
+        repo: generateRepo(),
       );
     });
 

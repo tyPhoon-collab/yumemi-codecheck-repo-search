@@ -6,7 +6,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
-import 'package:yumemi_codecheck_repo_search/model/repo.dart';
 import 'package:yumemi_codecheck_repo_search/model/repo_search_result.dart';
 import 'package:yumemi_codecheck_repo_search/provider/search_query_provider.dart';
 import 'package:yumemi_codecheck_repo_search/provider/search_result_provider.dart';
@@ -95,7 +94,7 @@ void main() {
   });
 
   test('returns search result when searchRepositories succeeds', () async {
-    final expectedResult = RepoSearchResult.items([Repo.mock()]);
+    final expectedResult = RepoSearchResult.items([generateRepo()]);
     registerMockGitHubRepoServiceWhen(
       mockGitHubRepoService,
       result: expectedResult,

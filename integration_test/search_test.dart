@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:yumemi_codecheck_repo_search/model/repo.dart';
 import 'package:yumemi_codecheck_repo_search/model/repo_search_result.dart';
 import 'package:yumemi_codecheck_repo_search/page/widget/suggestion_view.dart';
 import 'package:yumemi_codecheck_repo_search/provider/service_provider.dart';
@@ -17,7 +16,7 @@ void main() {
     'search and tap first repo',
     (tester, container) async {
       const query = 'flutter';
-      final repo = Repo.mock(
+      final repo = generateRepo(
         name: 'flutter',
         fullName: 'flutter/flutter',
         description: 'Flutter SDK',
@@ -68,7 +67,7 @@ void main() {
     'search from suggestion',
     (tester, container) async {
       const query = 'flutter';
-      final repo = Repo.mock(
+      final repo = generateRepo(
         name: 'flutter',
         fullName: 'flutter/flutter',
         description: 'Flutter SDK',
