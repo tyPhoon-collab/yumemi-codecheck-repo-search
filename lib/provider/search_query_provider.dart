@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:yumemi_codecheck_repo_search/page/widget/sort_type_selection.dart';
-import 'package:yumemi_codecheck_repo_search/provider/service_provider.dart';
 
 part 'search_query_provider.g.dart';
 
@@ -20,7 +19,6 @@ class Query extends _$Query {
       return null;
     }
     state = query;
-    ref.read(queryHistoryServiceProvider).add(query);
 
     return query;
   }

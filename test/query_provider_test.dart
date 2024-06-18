@@ -23,9 +23,16 @@ void main() {
   setUp(() async {
     await S.delegate.load(const Locale('en'));
     mockGitHubRepoService = MockGitHubRepoService();
+    final mockQueryHistoryService = MockQueryHistoryService();
+
+    registerMockQueryHistoryServiceWhens(mockQueryHistoryService, []);
+    registerMockGitHubRepoServiceWhen(mockGitHubRepoService);
+
     container = ProviderContainer(
       overrides: [
         gitHubRepoServiceProvider.overrideWithValue(mockGitHubRepoService),
+        queryHistoryServiceImplProvider
+            .overrideWithValue(mockQueryHistoryService),
       ],
     );
 
@@ -36,38 +43,25 @@ void main() {
     container.dispose();
   });
 
-  void expectExceptionMessage(
-    String message,
-  ) {
-    expect(
-      () => container.read(resultProvider.future),
-      throwsA(
-        isA<GitHubRepoServiceException>().having(
-          (e) => e.message,
-          'message',
-          message,
-        ),
-      ),
-    );
+  void updateQuery(String query) {
+    container.read(queryProvider.notifier).update(query);
   }
 
-  void testExceptionMessage(
+  void testExceptionMessage<T extends Exception>(
     Exception exception,
-    String message,
   ) {
     registerMockGitHubRepoServiceWhen(
       mockGitHubRepoService,
       exception: exception,
     );
 
-    container.read(queryProvider.notifier).state = 'flutter';
+    updateQuery('flutter');
 
-    expectExceptionMessage(message);
+    _expectException<T>(container);
   }
 
-  void testDioExceptionMessage(
+  void testDioExceptionMessage<T extends Exception>(
     int statusCode,
-    String message,
   ) {
     registerMockGitHubRepoServiceWhen(
       mockGitHubRepoService,
@@ -80,9 +74,9 @@ void main() {
       ),
     );
 
-    container.read(queryProvider.notifier).state = 'flutter';
+    updateQuery('flutter');
 
-    expectExceptionMessage(message);
+    _expectException<T>(container);
   }
 
   test('returns null when query is null', () async {
@@ -101,36 +95,80 @@ void main() {
     );
 
     const query = 'flutter';
-    container.read(queryProvider.notifier).state = query;
+
+    updateQuery(query);
 
     final result = await container.read(resultProvider.future);
 
     expect(result, equals(expectedResult));
   });
 
+  test('returns null when only spaces', () async {
+    registerMockGitHubRepoServiceWhen(
+      mockGitHubRepoService,
+      result: RepoSearchResult.empty(),
+    );
+    updateQuery('   ');
+
+    _expectQuery(container, null);
+  });
+
+  test('returns null when only whole spaces', () async {
+    registerMockGitHubRepoServiceWhen(
+      mockGitHubRepoService,
+      result: RepoSearchResult.empty(),
+    );
+    updateQuery('　　');
+
+    _expectQuery(container, null);
+  });
+
+  test('returns trimmed query', () async {
+    registerMockGitHubRepoServiceWhen(
+      mockGitHubRepoService,
+      result: RepoSearchResult.empty(),
+    );
+    updateQuery(' flutter ');
+
+    _expectQuery(container, 'flutter');
+  });
+
   test('throws with correct message for 422 error', () async {
-    testDioExceptionMessage(422, S.current.errorValidation);
+    testDioExceptionMessage<ValidationGRSException>(422);
   });
 
   test('throws with correct message for 503 error', () async {
-    testDioExceptionMessage(503, S.current.errorServiceUnavailable);
+    testDioExceptionMessage<ServiceUnavailableGRSException>(503);
   });
 
   test('throws with correct message for unexpected DioException', () async {
-    testDioExceptionMessage(500, S.current.errorUnexpected);
+    testDioExceptionMessage<UnexpectedGRSException>(500);
   });
 
   test('throws with correct message for SocketException', () async {
-    testExceptionMessage(
+    testExceptionMessage<NoInternetGRSException>(
       const SocketException('No Internet'),
-      S.current.errorNoInternet,
     );
   });
 
   test('throws with correct message for unexpected error', () async {
-    testExceptionMessage(
+    testExceptionMessage<GRSException>(
       Exception('Unknown error'),
-      S.current.errorUnexpected,
     );
   });
+}
+
+void _expectException<T extends Exception>(
+  ProviderContainer container,
+) {
+  expect(
+    () => container.read(resultProvider.future),
+    throwsA(
+      isA<T>(),
+    ),
+  );
+}
+
+void _expectQuery(ProviderContainer container, String? query) {
+  expect(container.read(queryProvider), equals(query));
 }
