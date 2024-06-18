@@ -48,15 +48,49 @@ void main() {
     expect(find.byType(LoadingIndicator), findsNothing);
   });
 
-  testWidgets('shows error text when error', (WidgetTester tester) async {
+  testWidgets('shows error text when unexpected', (WidgetTester tester) async {
     await buildWidget(
       tester,
-      (_) => Future.error(const GitHubRepoServiceException('Error message')),
+      (_) => Future.error(const UnexpectedGRSException()),
     );
 
     await tester.pumpAndSettle();
     expect(find.byType(ErrorText), findsOneWidget);
-    expect(find.text('Error message'), findsOneWidget);
+    expect(find.text(S.current.errorUnexpected), findsOneWidget);
+  });
+
+  testWidgets('shows error text when no internet', (WidgetTester tester) async {
+    await buildWidget(
+      tester,
+      (_) => Future.error(const NoInternetGRSException()),
+    );
+
+    await tester.pumpAndSettle();
+    expect(find.byType(ErrorText), findsOneWidget);
+    expect(find.text(S.current.errorNoInternet), findsOneWidget);
+  });
+
+  testWidgets('shows error text when service unavailable',
+      (WidgetTester tester) async {
+    await buildWidget(
+      tester,
+      (_) => Future.error(const ServiceUnavailableGRSException()),
+    );
+
+    await tester.pumpAndSettle();
+    expect(find.byType(ErrorText), findsOneWidget);
+    expect(find.text(S.current.errorServiceUnavailable), findsOneWidget);
+  });
+
+  testWidgets('shows error text when validation', (WidgetTester tester) async {
+    await buildWidget(
+      tester,
+      (_) => Future.error(const ValidationGRSException()),
+    );
+
+    await tester.pumpAndSettle();
+    expect(find.byType(ErrorText), findsOneWidget);
+    expect(find.text(S.current.errorValidation), findsOneWidget);
   });
 
   testWidgets('shows list of repos when data is available',
