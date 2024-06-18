@@ -21,7 +21,7 @@ final gitHubRepoServiceProvider = Provider<GitHubRepoService>.internal(
 );
 
 typedef GitHubRepoServiceRef = ProviderRef<GitHubRepoService>;
-String _$repoSearchResultHash() => r'7c46add83d9dc7097576a36564cbaf2721fdec2f';
+String _$repoSearchResultHash() => r'84123cf9d96e7115dd045233e4b458986cab58a9';
 
 /// エラー時は必ずGitHubRepoServiceExceptionをthrowする
 /// Sが初期化されている必要があり、やや責務が大きいが、一旦おいておく
@@ -89,6 +89,21 @@ final queryHistoryStreamProvider = StreamProvider<List<String>>.internal(
 );
 
 typedef QueryHistoryStreamRef = StreamProviderRef<List<String>>;
+String _$realTotalCountHash() => r'a54879c7d86a639dd6648e88c4e3331bfc131ab2';
+
+/// See also [realTotalCount].
+@ProviderFor(realTotalCount)
+final realTotalCountProvider = AutoDisposeProvider<int?>.internal(
+  realTotalCount,
+  name: r'realTotalCountProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$realTotalCountHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef RealTotalCountRef = AutoDisposeProviderRef<int?>;
 String _$repoSearchQueryHash() => r'96f1113bc8cea6b11097df9ea35e3baf1ccf9534';
 
 /// See also [RepoSearchQuery].
@@ -105,21 +120,71 @@ final repoSearchQueryProvider =
 );
 
 typedef _$RepoSearchQuery = AutoDisposeNotifier<String?>;
-String _$sortTypeValueHash() => r'8e1018e254dc1d709d05e98b03a04afc1544524c';
+String _$repoSearchSortTypeHash() =>
+    r'57e8245c7a9947a6f55aedb00ae4dd6884fd6f8d';
 
-/// See also [SortTypeValue].
-@ProviderFor(SortTypeValue)
-final sortTypeValueProvider =
-    AutoDisposeNotifierProvider<SortTypeValue, SortType>.internal(
-  SortTypeValue.new,
-  name: r'sortTypeValueProvider',
+/// See also [RepoSearchSortType].
+@ProviderFor(RepoSearchSortType)
+final repoSearchSortTypeProvider =
+    AutoDisposeNotifierProvider<RepoSearchSortType, SortType>.internal(
+  RepoSearchSortType.new,
+  name: r'repoSearchSortTypeProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$sortTypeValueHash,
+      : _$repoSearchSortTypeHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$SortTypeValue = AutoDisposeNotifier<SortType>;
+typedef _$RepoSearchSortType = AutoDisposeNotifier<SortType>;
+String _$repoSearchPageHash() => r'481958d391b492121f28efcc94bda9b387662a69';
+
+/// See also [RepoSearchPage].
+@ProviderFor(RepoSearchPage)
+final repoSearchPageProvider =
+    AutoDisposeNotifierProvider<RepoSearchPage, int>.internal(
+  RepoSearchPage.new,
+  name: r'repoSearchPageProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$repoSearchPageHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$RepoSearchPage = AutoDisposeNotifier<int>;
+String _$repoSearchLastPageHash() =>
+    r'3c66736aa13497ff080d85153ef56456321f63a1';
+
+/// See also [RepoSearchLastPage].
+@ProviderFor(RepoSearchLastPage)
+final repoSearchLastPageProvider =
+    AutoDisposeNotifierProvider<RepoSearchLastPage, int?>.internal(
+  RepoSearchLastPage.new,
+  name: r'repoSearchLastPageProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$repoSearchLastPageHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$RepoSearchLastPage = AutoDisposeNotifier<int?>;
+String _$repoSearchPerPageHash() => r'593f94a994f61d38c85cbe02031496fcd9d34e6f';
+
+/// See also [RepoSearchPerPage].
+@ProviderFor(RepoSearchPerPage)
+final repoSearchPerPageProvider =
+    AutoDisposeNotifierProvider<RepoSearchPerPage, int>.internal(
+  RepoSearchPerPage.new,
+  name: r'repoSearchPerPageProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$repoSearchPerPageHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$RepoSearchPerPage = AutoDisposeNotifier<int>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

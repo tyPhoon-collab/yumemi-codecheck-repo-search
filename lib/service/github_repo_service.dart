@@ -9,7 +9,7 @@ abstract class GitHubRepoService {
   factory GitHubRepoService(Dio dio, {String baseUrl}) = _GitHubRepoService;
 
   @GET('/search/repositories')
-  Future<RepoSearchResult> searchRepositories(
+  Future<HttpResponse<RepoSearchResult>> searchRepositories(
     @Query('q') String query, {
     @Query('page') int? page,
     @Query('per_page') int? perPage,

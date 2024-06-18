@@ -21,7 +21,7 @@ class _GitHubRepoService implements GitHubRepoService {
   String? baseUrl;
 
   @override
-  Future<RepoSearchResult> searchRepositories(
+  Future<HttpResponse<RepoSearchResult>> searchRepositories(
     String query, {
     int? page,
     int? perPage,
@@ -37,8 +37,8 @@ class _GitHubRepoService implements GitHubRepoService {
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<RepoSearchResult>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<RepoSearchResult>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -55,7 +55,8 @@ class _GitHubRepoService implements GitHubRepoService {
               baseUrl,
             ))));
     final value = RepoSearchResult.fromJson(_result.data!);
-    return value;
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
