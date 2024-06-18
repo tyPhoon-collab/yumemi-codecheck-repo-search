@@ -39,7 +39,7 @@ void main() {
     await _buildWidget(tester, throwError: true);
 
     expect(find.byType(ErrorText), findsOneWidget);
-    expect(find.text('Could not fetch query history'), findsOneWidget);
+    expect(find.text(S.current.errorFetchQueryHistory), findsOneWidget);
   });
 
   testWidgets('removes item on delete icon tap', (WidgetTester tester) async {

@@ -44,6 +44,7 @@ class ChangePageNumberIconButton extends ConsumerWidget {
     final notifier = ref.watch(pageNumberProvider.notifier);
 
     return IconButton(
+      visualDensity: VisualDensity.compact,
       onPressed: _isAvailable(notifier, current, totalCount)
           ? () => notifier.update(_getNextPageNumber(current, totalCount))
           : null,

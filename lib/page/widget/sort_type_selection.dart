@@ -1,6 +1,7 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
 import 'package:yumemi_codecheck_repo_search/provider/search_query_provider.dart';
 
 enum RepoSearchSortType {
@@ -17,11 +18,12 @@ enum RepoSearchSortType {
   final IconData iconData;
 
   String get displayName => switch (this) {
-        RepoSearchSortType.bestMatch => 'Best Match',
-        RepoSearchSortType.stars => 'Stars',
-        RepoSearchSortType.forks => 'Forks',
-        RepoSearchSortType.helpWantedIssues => 'Help Wanted Issues',
-        RepoSearchSortType.updated => 'Updated',
+        RepoSearchSortType.bestMatch => S.current.sortTypeBestMatch,
+        RepoSearchSortType.stars => S.current.sortTypeStars,
+        RepoSearchSortType.forks => S.current.sortTypeForks,
+        RepoSearchSortType.helpWantedIssues =>
+          S.current.sortTypeHelpWantedIssues,
+        RepoSearchSortType.updated => S.current.sortTypeUpdated,
       };
 }
 
@@ -80,7 +82,7 @@ class SortTypeSelection extends ConsumerWidget {
             style: TextStyle(
               color: Theme.of(context).colorScheme.outline,
             ),
-            child: const Text('Sort by: '),
+            child: Text(S.current.sortBy),
           ),
           Text(sortType.displayName),
         ],

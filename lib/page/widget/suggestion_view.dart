@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yumemi_codecheck_repo_search/common/error_text.dart';
+import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
 import 'package:yumemi_codecheck_repo_search/provider/search_query_provider.dart';
 import 'package:yumemi_codecheck_repo_search/provider/service_provider.dart';
 
@@ -36,7 +37,7 @@ class SuggestionsView extends ConsumerWidget {
             );
           },
           error: (error, stackTrace) =>
-              const ErrorText(text: 'Could not fetch query history'),
+              ErrorText(text: S.current.errorFetchQueryHistory),
           loading: () => const SizedBox(),
         );
   }

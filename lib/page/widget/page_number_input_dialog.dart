@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
 import 'package:yumemi_codecheck_repo_search/provider/search_query_provider.dart';
 
 Future<int?> showPageNumberInputDialog(
@@ -46,7 +47,7 @@ class _PageNumberInputDialogState extends ConsumerState<PageNumberInputDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Input Page Number'),
+      title: Text(S.current.inputPageNumberDialogTitle),
       content: Form(
         key: formKey,
         child: TextFormField(
@@ -55,7 +56,7 @@ class _PageNumberInputDialogState extends ConsumerState<PageNumberInputDialog> {
           keyboardType: TextInputType.number,
           textInputAction: TextInputAction.go,
           decoration: InputDecoration(
-            hintText: 'Page: 1 ~ ${widget.maxPage}',
+            hintText: S.current.inputPageNumberDialogHint(widget.maxPage),
             prefixIcon: const Icon(Icons.numbers_outlined),
             suffixIcon: IconButton(
               icon: const Icon(Icons.clear),
@@ -67,17 +68,17 @@ class _PageNumberInputDialogState extends ConsumerState<PageNumberInputDialog> {
           ),
           validator: (value) {
             if (value == null || value.isEmpty) {
-              return 'Please enter a number';
+              return S.current.validationPleaseEnterANumber;
             }
             final pageNum = int.tryParse(value);
             if (pageNum == null) {
-              return 'Please enter a valid number';
+              return S.current.validationPleaseEnterAValidNumber;
             }
             if (!ref.read(pageNumberProvider.notifier).validate(
                   pageNum,
                   widget.totalCount,
                 )) {
-              return 'Page number is out of range';
+              return S.current.validationPageNumberIsOutOfRange;
             }
             return null;
           },
@@ -87,11 +88,11 @@ class _PageNumberInputDialogState extends ConsumerState<PageNumberInputDialog> {
       actions: [
         TextButton(
           onPressed: Navigator.of(context).pop,
-          child: const Text('Cancel'),
+          child: Text(S.current.cancel),
         ),
         TextButton(
           onPressed: () => submit(textController.text),
-          child: const Text('OK'),
+          child: Text(S.current.ok),
         ),
       ],
     );
