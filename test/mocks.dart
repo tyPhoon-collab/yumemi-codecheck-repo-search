@@ -74,7 +74,7 @@ Repo generateRepo({
       createdAt: createdAt ?? faker.date.dateTime().toIso8601String(),
       name: name ?? faker.lorem.word(),
       fullName: fullName ?? '${faker.lorem.word()}/${faker.lorem.word()}',
-      htmlUrl: htmlUrl ?? faker.internet.httpsUrl(),
+      htmlUrl: htmlUrl ?? '',
       stargazersCount: stargazersCount ?? faker.randomGenerator.integer(10000),
       watchersCount: watchersCount ?? faker.randomGenerator.integer(10000),
       forksCount: forksCount ?? faker.randomGenerator.integer(10000),
@@ -85,8 +85,8 @@ Repo generateRepo({
     );
 
 Owner generateOwner() {
-  return Owner(
-    avatarUrl: faker.internet.httpsUrl(),
-    htmlUrl: faker.internet.httpsUrl(),
+  return const Owner(
+    avatarUrl: '',
+    htmlUrl: '',
   );
 }
