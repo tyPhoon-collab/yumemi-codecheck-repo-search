@@ -77,3 +77,8 @@ class PerPageNumber extends _$PerPageNumber {
     state = value;
   }
 }
+
+@riverpod
+bool hasQuery(HasQueryRef ref) {
+  return ref.watch(queryProvider) != null;
+}

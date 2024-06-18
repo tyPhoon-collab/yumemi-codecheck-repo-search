@@ -35,7 +35,7 @@ class _RepoSearchBarState extends ConsumerState<RepoSearchBar> {
       hintText: S.current.searchPlaceholder,
       leading: const Icon(Icons.search),
       trailing: [
-        if (ref.watch(queryProvider) != null)
+        if (ref.watch(hasQueryProvider))
           IconButton(
             icon: const Icon(Icons.close),
             onPressed: ref.read(queryProvider.notifier).reset,

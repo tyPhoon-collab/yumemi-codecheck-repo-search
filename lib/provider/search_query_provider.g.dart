@@ -6,6 +6,20 @@ part of 'search_query_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+String _$hasQueryHash() => r'470b050c647a98879563ed36d659729522b5bd40';
+
+/// See also [hasQuery].
+@ProviderFor(hasQuery)
+final hasQueryProvider = AutoDisposeProvider<bool>.internal(
+  hasQuery,
+  name: r'hasQueryProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$hasQueryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef HasQueryRef = AutoDisposeProviderRef<bool>;
 String _$queryHash() => r'd00bd4d37fdebf55ae926f1af0672a606d3351f2';
 
 /// See also [Query].

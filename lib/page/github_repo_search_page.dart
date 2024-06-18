@@ -37,11 +37,11 @@ class GitHubRepoSearchPage extends ConsumerWidget {
                   child: AnimatedSize(
                     duration: Animations.searched.duration,
                     curve: Animations.searched.curve,
-                    child: ref.watch(queryProvider) == null
-                        ? const SuggestionsView()
-                        : const SearchedRepoListView(
+                    child: ref.watch(hasQueryProvider)
+                        ? const SearchedRepoListView(
                             padding: EdgeInsets.only(top: 4, bottom: 32),
-                          ),
+                          )
+                        : const SuggestionsView(),
                   ),
                 ),
               ],
@@ -59,9 +59,8 @@ class GitHubRepoSearchPage extends ConsumerWidget {
         child: const Icon(Icons.settings),
       ),
       persistentFooterAlignment: AlignmentDirectional.center,
-      persistentFooterButtons: ref.watch(queryProvider) == null
-          ? null
-          : [
+      persistentFooterButtons: ref.watch(hasQueryProvider)
+          ? [
               ChangePageNumberIconButton.first(),
               ChangePageNumberIconButton.prev(),
               const CurrentPageNumber(),
@@ -69,7 +68,8 @@ class GitHubRepoSearchPage extends ConsumerWidget {
               ChangePageNumberIconButton.last(
                 ref.watch(totalCountProvider) ?? 0,
               ),
-            ],
+            ]
+          : null,
     );
   }
 }
@@ -83,9 +83,9 @@ class _TitleWidget extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: AnimatedDefaultTextStyle(
-        style: (ref.watch(queryProvider) == null
-                ? textTheme.headlineMedium!
-                : textTheme.titleMedium!)
+        style: (ref.watch(hasQueryProvider)
+                ? textTheme.titleMedium!
+                : textTheme.headlineMedium!)
             .copyWith(fontWeight: FontWeight.bold),
         duration: Animations.searched.duration,
         curve: Animations.searched.curve,
