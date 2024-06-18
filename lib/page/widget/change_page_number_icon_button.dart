@@ -44,20 +44,20 @@ class ChangePageNumberIconButton extends ConsumerWidget {
     final notifier = ref.watch(pageNumberProvider.notifier);
 
     return IconButton(
-      onPressed: isAvailable(notifier, current, totalCount)
-          ? () => notifier.update(getNextPageNumber(current, totalCount))
+      onPressed: _isAvailable(notifier, current, totalCount)
+          ? () => notifier.update(_getNextPageNumber(current, totalCount))
           : null,
       icon: Icon(iconData),
     );
   }
 
-  bool isAvailable(PageNumber notifier, int current, int totalCount) {
-    final next = getNextPageNumber(current, totalCount);
+  bool _isAvailable(PageNumber notifier, int current, int totalCount) {
+    final next = _getNextPageNumber(current, totalCount);
     if (next == current) return false;
     return notifier.validate(next, totalCount);
   }
 
-  int getNextPageNumber(int current, int totalCount) {
+  int _getNextPageNumber(int current, int totalCount) {
     return modifier(current, totalCount);
   }
 }

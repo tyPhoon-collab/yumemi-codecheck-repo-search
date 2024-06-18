@@ -66,7 +66,7 @@ class GitHubRepoSearchPage extends ConsumerWidget {
               const CurrentPageNumber(),
               ChangePageNumberIconButton.next(),
               ChangePageNumberIconButton.last(
-                ref.watch(totalCountProvider) ?? 0,
+                ref.watch(lastPageNumberProvider) ?? 0,
               ),
             ]
           : null,
