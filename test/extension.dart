@@ -26,7 +26,19 @@ extension Settle on WidgetTester {
   /// WidgetTester.pageBackが失敗することがある。
   /// そこで、オリジナルのページを戻るためのメソッドを追加。
   Future<void> pageBackSafe() {
-    return tapAndSettle(find.byType(BackButtonIcon));
+    return tapAndSettle(_findBackIcon());
+  }
+
+  Finder _findBackIcon() {
+    var icon = _findInAppBar(find.byType(BackButton));
+    if (icon.evaluate().isEmpty) {
+      icon = _findInAppBar(find.byType(CloseButton));
+    }
+    return icon;
+  }
+
+  Finder _findInAppBar(Finder finder) {
+    return find.descendant(of: find.byType(AppBar), matching: finder);
   }
 
   Future<void> pumpUntilFound(
