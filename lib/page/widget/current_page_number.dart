@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yumemi_codecheck_repo_search/common/loading_indicator.dart';
+import 'package:yumemi_codecheck_repo_search/page/widget/page_number_input_dialog.dart';
 import 'package:yumemi_codecheck_repo_search/provider/search_query_provider.dart';
 import 'package:yumemi_codecheck_repo_search/provider/search_result_provider.dart';
 
@@ -50,82 +51,14 @@ class _CurrentPageNumberState extends ConsumerState<CurrentPageNumber> {
       ),
       child: Text('${lowerCount()} ~ ${upperCount()} of $totalCount'),
       onPressed: () async {
-        final page = await _showPageNumberInputDialog(context, totalCount);
-        if (page != null) {
-          ref.read(pageNumberProvider.notifier).update(page);
-        }
-      },
-    );
-  }
-
-  Future<int?> _showPageNumberInputDialog(
-    BuildContext context,
-    int totalCount,
-  ) async {
-    final formKey = GlobalKey<FormState>();
-    final notifier = ref.read(pageNumberProvider.notifier);
-
-    void submit(String text) {
-      if (formKey.currentState!.validate()) {
-        Navigator.of(context).pop(int.parse(text));
-      }
-    }
-
-    final result = await showDialog<int>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Input Page Number'),
-          content: Form(
-            key: formKey,
-            child: TextFormField(
-              controller: textController,
-              autofocus: true,
-              keyboardType: TextInputType.number,
-              textInputAction: TextInputAction.go,
-              decoration: InputDecoration(
-                hintText: 'Page: 1 ~ ${notifier.maxPage(totalCount)}',
-                prefixIcon: const Icon(Icons.numbers_outlined),
-                suffixIcon: IconButton(
-                  icon: const Icon(Icons.clear),
-                  onPressed: textController.clear,
-                ),
-                border: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(32)),
-                ),
-              ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter a number';
-                }
-                final pageNum = int.tryParse(value);
-                if (pageNum == null) {
-                  return 'Please enter a valid number';
-                }
-                if (!notifier.validate(pageNum, totalCount)) {
-                  return 'Page number is out of range';
-                }
-                return null;
-              },
-              onFieldSubmitted: submit,
-            ),
-          ),
-          actions: [
-            TextButton(
-              child: const Text('Cancel'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              onPressed: () => submit(textController.text),
-              child: const Text('OK'),
-            ),
-          ],
+        final notifier = ref.read(pageNumberProvider.notifier);
+        final page = await showPageNumberInputDialog(
+          context,
+          totalCount,
+          notifier.maxPage(totalCount),
         );
+        if (page != null) notifier.update(page);
       },
     );
-
-    return result;
   }
 }
