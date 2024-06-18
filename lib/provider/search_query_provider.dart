@@ -36,13 +36,13 @@ class RepoSearchSortType extends _$RepoSearchSortType {
   void update(SortType value) {
     if (value == state) return;
 
-    ref.read(repoSearchPageProvider.notifier).reset();
+    ref.read(repoSearchPageNumberProvider.notifier).reset();
     state = value;
   }
 }
 
 @riverpod
-class RepoSearchPage extends _$RepoSearchPage {
+class RepoSearchPageNumber extends _$RepoSearchPageNumber {
   @override
   int build() => 1;
 
@@ -56,18 +56,18 @@ class RepoSearchPage extends _$RepoSearchPage {
   void reset() => state = 1;
 
   bool validate(int value, int totalCount) {
-    final perPage = ref.watch(repoSearchPerPageProvider);
+    final perPage = ref.watch(repoSearchPerPageNumberProvider);
     return value > 0 && (value - 1) * perPage < totalCount;
   }
 
   int maxPage(int totalCount) {
-    final perPage = ref.watch(repoSearchPerPageProvider);
+    final perPage = ref.watch(repoSearchPerPageNumberProvider);
     return (totalCount - 1) ~/ perPage + 1;
   }
 }
 
 @riverpod
-class RepoSearchPerPage extends _$RepoSearchPerPage {
+class RepoSearchPerPageNumber extends _$RepoSearchPerPageNumber {
   @override
   int build() => 30;
 

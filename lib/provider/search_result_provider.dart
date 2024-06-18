@@ -19,8 +19,8 @@ Future<RepoSearchResult?> repoSearchResult(RepoSearchResultRef ref) async {
   final service = ref.watch(gitHubRepoServiceProvider);
   final query = ref.watch(repoSearchQueryProvider);
   final sortType = ref.watch(repoSearchSortTypeProvider);
-  final page = ref.watch(repoSearchPageProvider);
-  final perPage = ref.watch(repoSearchPerPageProvider);
+  final page = ref.watch(repoSearchPageNumberProvider);
+  final perPage = ref.watch(repoSearchPerPageNumberProvider);
 
   if (query == null) {
     return Future.value();
@@ -34,7 +34,9 @@ Future<RepoSearchResult?> repoSearchResult(RepoSearchResultRef ref) async {
       perPage: perPage,
     );
 
-    ref.read(repoSearchLastPageProvider.notifier).setFromResponse(response);
+    ref
+        .read(repoSearchLastPageNumberProvider.notifier)
+        .setFromResponse(response);
     return response.data;
   } catch (e) {
     final errorMessage = switch (e) {
@@ -52,7 +54,7 @@ Future<RepoSearchResult?> repoSearchResult(RepoSearchResultRef ref) async {
 }
 
 @riverpod
-class RepoSearchLastPage extends _$RepoSearchLastPage {
+class RepoSearchLastPageNumber extends _$RepoSearchLastPageNumber {
   @override
   int? build() => null;
 
@@ -75,7 +77,7 @@ class RepoSearchLastPage extends _$RepoSearchLastPage {
     // 例としては、現状が最後のページの時。
     // そのときは、ページプロバイダーの値を使用する
 
-    final currentPage = ref.read(repoSearchPageProvider);
+    final currentPage = ref.read(repoSearchPageNumberProvider);
 
     // , で分割してリンクとrelを取得
     final links = linkHeader.split(', ');
@@ -99,10 +101,10 @@ class RepoSearchLastPage extends _$RepoSearchLastPage {
 }
 
 @riverpod
-int? realTotalCount(RealTotalCountRef ref) {
-  final lastPage = ref.watch(repoSearchLastPageProvider);
+int? repoSearchTotalCount(RepoSearchTotalCountRef ref) {
+  final lastPage = ref.watch(repoSearchLastPageNumberProvider);
   final totalCount = ref.watch(repoSearchResultProvider).value?.totalCount;
-  final perPage = ref.watch(repoSearchPerPageProvider);
+  final perPage = ref.watch(repoSearchPerPageNumberProvider);
 
   if (lastPage == null || totalCount == null) {
     return null;

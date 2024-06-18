@@ -39,9 +39,9 @@ class ChangePageNumberIconButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final totalCount = ref.watch(realTotalCountProvider) ?? 0;
-    final current = ref.watch(repoSearchPageProvider); // ページの変更を監視する
-    final notifier = ref.watch(repoSearchPageProvider.notifier);
+    final totalCount = ref.watch(repoSearchTotalCountProvider) ?? 0;
+    final current = ref.watch(repoSearchPageNumberProvider); // ページの変更を監視する
+    final notifier = ref.watch(repoSearchPageNumberProvider.notifier);
 
     return IconButton(
       onPressed: isAvailable(notifier, current, totalCount)
@@ -51,7 +51,7 @@ class ChangePageNumberIconButton extends ConsumerWidget {
     );
   }
 
-  bool isAvailable(RepoSearchPage notifier, int current, int totalCount) {
+  bool isAvailable(RepoSearchPageNumber notifier, int current, int totalCount) {
     final next = getNextPageNumber(current, totalCount);
     if (next == current) return false;
     return notifier.validate(next, totalCount);
