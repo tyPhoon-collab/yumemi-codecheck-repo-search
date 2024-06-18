@@ -59,7 +59,7 @@ class LastPageNumber extends _$LastPageNumber {
   /// https://docs.github.com/ja/rest/using-the-rest-api/using-pagination-in-the-rest-api?apiVersion=2022-11-28
   /// 改ページのために必要な情報は応答ヘッダーに含まれる。それを抽出し、モデルに落とし込む
   void setFromResponse(HttpResponse<RepoSearchResult> response) {
-    final linkString = response.response.headers.map['link']?.first ?? '';
+    final linkString = response.response.headers.value('link') ?? '';
 
     final lastPage = _getLastPage(linkString);
     state = lastPage;
