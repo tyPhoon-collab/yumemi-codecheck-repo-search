@@ -9,7 +9,7 @@
   "errorUnexpected": "予期しないエラーが発生しました",
   "errorValidation": "検証に失敗しました。またはAPIのレート制限です",
   "failedLaunch": "{url} が開けませんでした",
-  "inputPageNumberDialogHint": "ページ: 1～{total}",
+  "inputPageNumberDialogHint": "ページ: 1～{maxPage}",
   "inputPageNumberDialogTitle": "ページ番号を入力",
   "language": "言語",
   "light": "ライト",

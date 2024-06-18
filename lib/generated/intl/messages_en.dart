@@ -22,7 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m0(url) => "Failed to launch ${url}";
 
-  static String m1(total) => "Page: 1 ~ ${total}";
+  static String m1(maxPage) => "Page: 1 ~ ${maxPage}";
 
   static String m2(lower, upper, total) => "${lower} ~ ${upper} of ${total}";
 

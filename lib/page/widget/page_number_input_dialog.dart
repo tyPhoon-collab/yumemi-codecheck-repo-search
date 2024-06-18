@@ -1,34 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
-import 'package:yumemi_codecheck_repo_search/provider/search_query_provider.dart';
+
+typedef Validate = bool Function(int value);
 
 Future<int?> showPageNumberInputDialog(
   BuildContext context,
-  int totalCount,
   int maxPage,
+  Validate validate,
 ) async {
   final result = await showDialog<int>(
     context: context,
     builder: (BuildContext context) {
-      return PageNumberInputDialog(totalCount, maxPage);
+      return PageNumberInputDialog(
+        maxPage: maxPage,
+        validate: validate,
+      );
     },
   );
 
   return result;
 }
 
-class PageNumberInputDialog extends ConsumerStatefulWidget {
-  const PageNumberInputDialog(this.totalCount, this.maxPage, {super.key});
-  final int totalCount;
+class PageNumberInputDialog extends StatefulWidget {
+  const PageNumberInputDialog({
+    required this.maxPage,
+    required this.validate,
+    super.key,
+  });
   final int maxPage;
+  final Validate validate;
 
   @override
-  ConsumerState<PageNumberInputDialog> createState() =>
-      _PageNumberInputDialogState();
+  State<PageNumberInputDialog> createState() => _PageNumberInputDialogState();
 }
 
-class _PageNumberInputDialogState extends ConsumerState<PageNumberInputDialog> {
+class _PageNumberInputDialogState extends State<PageNumberInputDialog> {
   late final textController = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
@@ -74,10 +80,7 @@ class _PageNumberInputDialogState extends ConsumerState<PageNumberInputDialog> {
             if (pageNum == null) {
               return S.current.validationPleaseEnterAValidNumber;
             }
-            if (!ref.read(pageNumberProvider.notifier).validate(
-                  pageNum,
-                  widget.totalCount,
-                )) {
+            if (!widget.validate(pageNum)) {
               return S.current.validationPageNumberIsOutOfRange;
             }
             return null;

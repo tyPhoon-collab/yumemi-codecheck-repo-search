@@ -56,8 +56,7 @@ class PageNumber extends _$PageNumber {
   void reset() => state = 1;
 
   bool validate(int value, int totalCount) {
-    final perPage = ref.watch(perPageNumberProvider);
-    return value > 0 && (value - 1) * perPage < totalCount;
+    return 1 <= value && value <= maxPage(totalCount);
   }
 
   int maxPage(int totalCount) {
