@@ -68,15 +68,18 @@ class RepoListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(repo.fullName),
-      leading: const BrightnessAdaptiveSvg(SvgAssets.repo),
-      subtitle: Text(
-        repo.description ?? '',
-        maxLines: 3,
-        overflow: TextOverflow.ellipsis,
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      child: ListTile(
+        title: Text(repo.fullName),
+        leading: const BrightnessAdaptiveSvg(SvgAssets.repo),
+        subtitle: Text(
+          repo.description ?? '',
+          maxLines: 3,
+          overflow: TextOverflow.ellipsis,
+        ),
+        onTap: () => _pushToDetail(context),
       ),
-      onTap: () => _pushToDetail(context),
     );
   }
 
