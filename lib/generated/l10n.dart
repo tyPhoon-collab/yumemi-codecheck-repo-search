@@ -60,6 +60,46 @@ class S {
     );
   }
 
+  /// `Clear`
+  String get clear {
+    return Intl.message(
+      'Clear',
+      name: 'clear',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Clear History`
+  String get clearHistory {
+    return Intl.message(
+      'Clear History',
+      name: 'clearHistory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to clear the history?`
+  String get clearHistoryConfirm {
+    return Intl.message(
+      'Are you sure you want to clear the history?',
+      name: 'clearHistoryConfirm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `History cleared successfully`
+  String get clearHistorySuccess {
+    return Intl.message(
+      'History cleared successfully',
+      name: 'clearHistorySuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dark`
   String get dark {
     return Intl.message(
