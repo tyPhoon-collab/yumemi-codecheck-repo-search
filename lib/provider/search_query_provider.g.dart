@@ -6,72 +6,65 @@ part of 'search_query_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$repoSearchQueryHash() => r'96f1113bc8cea6b11097df9ea35e3baf1ccf9534';
+String _$queryHash() => r'd00bd4d37fdebf55ae926f1af0672a606d3351f2';
 
-/// See also [RepoSearchQuery].
-@ProviderFor(RepoSearchQuery)
-final repoSearchQueryProvider =
-    AutoDisposeNotifierProvider<RepoSearchQuery, String?>.internal(
-  RepoSearchQuery.new,
-  name: r'repoSearchQueryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$repoSearchQueryHash,
+/// See also [Query].
+@ProviderFor(Query)
+final queryProvider = AutoDisposeNotifierProvider<Query, String?>.internal(
+  Query.new,
+  name: r'queryProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$queryHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$RepoSearchQuery = AutoDisposeNotifier<String?>;
-String _$repoSearchSortTypeHash() =>
-    r'ca9135e93ccc665c4ce875b67a36f422ef21f9f5';
+typedef _$Query = AutoDisposeNotifier<String?>;
+String _$sortTypeHash() => r'a3cbd0948071476be59661ce036446603eeaab0d';
 
-/// See also [RepoSearchSortType].
-@ProviderFor(RepoSearchSortType)
-final repoSearchSortTypeProvider =
-    AutoDisposeNotifierProvider<RepoSearchSortType, SortType>.internal(
-  RepoSearchSortType.new,
-  name: r'repoSearchSortTypeProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$repoSearchSortTypeHash,
+/// See also [SortType].
+@ProviderFor(SortType)
+final sortTypeProvider =
+    AutoDisposeNotifierProvider<SortType, RepoSearchSortType>.internal(
+  SortType.new,
+  name: r'sortTypeProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$sortTypeHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$RepoSearchSortType = AutoDisposeNotifier<SortType>;
-String _$repoSearchPageNumberHash() =>
-    r'e398055c73f00e0c1d6aafe8c16793983f69366f';
+typedef _$SortType = AutoDisposeNotifier<RepoSearchSortType>;
+String _$pageNumberHash() => r'b3ade8ba87eb3988cce9e7f1911edb43d12d7efd';
 
-/// See also [RepoSearchPageNumber].
-@ProviderFor(RepoSearchPageNumber)
-final repoSearchPageNumberProvider =
-    AutoDisposeNotifierProvider<RepoSearchPageNumber, int>.internal(
-  RepoSearchPageNumber.new,
-  name: r'repoSearchPageNumberProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$repoSearchPageNumberHash,
+/// See also [PageNumber].
+@ProviderFor(PageNumber)
+final pageNumberProvider =
+    AutoDisposeNotifierProvider<PageNumber, int>.internal(
+  PageNumber.new,
+  name: r'pageNumberProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$pageNumberHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$RepoSearchPageNumber = AutoDisposeNotifier<int>;
-String _$repoSearchPerPageNumberHash() =>
-    r'06e83f07b07c8706be14bffb8f1d3d441518d659';
+typedef _$PageNumber = AutoDisposeNotifier<int>;
+String _$perPageNumberHash() => r'78b0f1404045b17078f11098b2c60437c5c4ad01';
 
-/// See also [RepoSearchPerPageNumber].
-@ProviderFor(RepoSearchPerPageNumber)
-final repoSearchPerPageNumberProvider =
-    AutoDisposeNotifierProvider<RepoSearchPerPageNumber, int>.internal(
-  RepoSearchPerPageNumber.new,
-  name: r'repoSearchPerPageNumberProvider',
+/// See also [PerPageNumber].
+@ProviderFor(PerPageNumber)
+final perPageNumberProvider =
+    AutoDisposeNotifierProvider<PerPageNumber, int>.internal(
+  PerPageNumber.new,
+  name: r'perPageNumberProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$repoSearchPerPageNumberHash,
+      : _$perPageNumberHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$RepoSearchPerPageNumber = AutoDisposeNotifier<int>;
+typedef _$PerPageNumber = AutoDisposeNotifier<int>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

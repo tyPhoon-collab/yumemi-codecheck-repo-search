@@ -60,7 +60,7 @@ Future<void> _buildWidget(
   await tester.pumpWidget(
     ProviderScope(
       overrides: [
-        repoSearchResultProvider.overrideWith(create),
+        resultProvider.overrideWith(create),
       ],
       child: const MaterialApp(
         localizationsDelegates: [S.delegate],

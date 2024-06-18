@@ -67,6 +67,6 @@ Future<void> _buildWidget(WidgetTester tester) async {
 extension _ReadQuery on WidgetTester {
   String? readQuery() {
     return ProviderScope.containerOf(element(find.byType(RepoSearchBar)))
-        .read(repoSearchQueryProvider);
+        .read(queryProvider);
   }
 }

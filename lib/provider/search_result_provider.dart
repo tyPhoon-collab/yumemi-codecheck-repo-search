@@ -15,12 +15,12 @@ part 'search_result_provider.g.dart';
 /// エラー時は必ずGitHubRepoServiceExceptionをthrowする
 /// Sが初期化されている必要があり、やや責務が大きいが、一旦おいておく
 @riverpod
-Future<RepoSearchResult?> repoSearchResult(RepoSearchResultRef ref) async {
+Future<RepoSearchResult?> result(ResultRef ref) async {
   final service = ref.watch(gitHubRepoServiceProvider);
-  final query = ref.watch(repoSearchQueryProvider);
-  final sortType = ref.watch(repoSearchSortTypeProvider);
-  final page = ref.watch(repoSearchPageNumberProvider);
-  final perPage = ref.watch(repoSearchPerPageNumberProvider);
+  final query = ref.watch(queryProvider);
+  final sortType = ref.watch(sortTypeProvider);
+  final page = ref.watch(pageNumberProvider);
+  final perPage = ref.watch(perPageNumberProvider);
 
   if (query == null) {
     return Future.value();
@@ -34,9 +34,7 @@ Future<RepoSearchResult?> repoSearchResult(RepoSearchResultRef ref) async {
       perPage: perPage,
     );
 
-    ref
-        .read(repoSearchLastPageNumberProvider.notifier)
-        .setFromResponse(response);
+    ref.read(lastPageNumberProvider.notifier).setFromResponse(response);
     return response.data;
   } catch (e) {
     final errorMessage = switch (e) {
@@ -54,7 +52,7 @@ Future<RepoSearchResult?> repoSearchResult(RepoSearchResultRef ref) async {
 }
 
 @riverpod
-class RepoSearchLastPageNumber extends _$RepoSearchLastPageNumber {
+class LastPageNumber extends _$LastPageNumber {
   @override
   int? build() => null;
 
@@ -77,7 +75,7 @@ class RepoSearchLastPageNumber extends _$RepoSearchLastPageNumber {
     // 例としては、現状が最後のページの時。
     // そのときは、ページプロバイダーの値を使用する
 
-    final currentPage = ref.read(repoSearchPageNumberProvider);
+    final currentPage = ref.read(pageNumberProvider);
 
     // , で分割してリンクとrelを取得
     final links = linkHeader.split(', ');
@@ -101,10 +99,10 @@ class RepoSearchLastPageNumber extends _$RepoSearchLastPageNumber {
 }
 
 @riverpod
-int? repoSearchTotalCount(RepoSearchTotalCountRef ref) {
-  final lastPage = ref.watch(repoSearchLastPageNumberProvider);
-  final totalCount = ref.watch(repoSearchResultProvider).value?.totalCount;
-  final perPage = ref.watch(repoSearchPerPageNumberProvider);
+int? totalCount(TotalCountRef ref) {
+  final lastPage = ref.watch(lastPageNumberProvider);
+  final totalCount = ref.watch(resultProvider).value?.totalCount;
+  final perPage = ref.watch(perPageNumberProvider);
 
   if (lastPage == null || totalCount == null) {
     return null;

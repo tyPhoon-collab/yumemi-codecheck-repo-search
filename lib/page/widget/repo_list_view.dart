@@ -20,7 +20,7 @@ class SearchedRepoListView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final result = ref.watch(repoSearchResultProvider);
+    final result = ref.watch(resultProvider);
 
     return result.when(
       data: (data) {

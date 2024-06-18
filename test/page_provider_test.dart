@@ -4,13 +4,13 @@ import 'package:yumemi_codecheck_repo_search/provider/search_query_provider.dart
 
 void main() {
   late ProviderContainer container;
-  late RepoSearchPageNumber pageNumber;
-  late RepoSearchPerPageNumber perPageNumber;
+  late PageNumber pageNumber;
+  late PerPageNumber perPageNumber;
 
   setUp(() {
     container = ProviderContainer();
-    pageNumber = container.read(repoSearchPageNumberProvider.notifier);
-    perPageNumber = container.read(repoSearchPerPageNumberProvider.notifier);
+    pageNumber = container.read(pageNumberProvider.notifier);
+    perPageNumber = container.read(perPageNumberProvider.notifier);
   });
 
   tearDown(() {

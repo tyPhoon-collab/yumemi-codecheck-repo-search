@@ -26,16 +26,16 @@ class _CurrentPageNumberState extends ConsumerState<CurrentPageNumber> {
 
   @override
   Widget build(BuildContext context) {
-    final realTotalCount = ref.watch(repoSearchTotalCountProvider);
-    final currentPage = ref.watch(repoSearchPageNumberProvider);
-    final perPage = ref.watch(repoSearchPerPageNumberProvider);
+    final totalCount = ref.watch(totalCountProvider);
+    final currentPage = ref.watch(pageNumberProvider);
+    final perPage = ref.watch(perPageNumberProvider);
 
-    if (realTotalCount == null) {
+    if (totalCount == null) {
       return const LoadingIndicator();
     }
 
     int upperCount() {
-      return min(currentPage * perPage, realTotalCount);
+      return min(currentPage * perPage, totalCount);
     }
 
     int lowerCount() {
@@ -48,11 +48,11 @@ class _CurrentPageNumberState extends ConsumerState<CurrentPageNumber> {
           decoration: TextDecoration.underline,
         ),
       ),
-      child: Text('${lowerCount()} ~ ${upperCount()} of $realTotalCount'),
+      child: Text('${lowerCount()} ~ ${upperCount()} of $totalCount'),
       onPressed: () async {
-        final page = await _showPageNumberInputDialog(context, realTotalCount);
+        final page = await _showPageNumberInputDialog(context, totalCount);
         if (page != null) {
-          ref.read(repoSearchPageNumberProvider.notifier).update(page);
+          ref.read(pageNumberProvider.notifier).update(page);
         }
       },
     );
@@ -63,7 +63,7 @@ class _CurrentPageNumberState extends ConsumerState<CurrentPageNumber> {
     int totalCount,
   ) async {
     final formKey = GlobalKey<FormState>();
-    final notifier = ref.read(repoSearchPageNumberProvider.notifier);
+    final notifier = ref.read(pageNumberProvider.notifier);
 
     void submit(String text) {
       if (formKey.currentState!.validate()) {

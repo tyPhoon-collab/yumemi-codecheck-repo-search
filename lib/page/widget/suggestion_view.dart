@@ -28,9 +28,7 @@ class SuggestionsView extends ConsumerWidget {
                       onTap: () {
                         FocusScope.of(context).unfocus();
 
-                        ref
-                            .read(repoSearchQueryProvider.notifier)
-                            .update(query);
+                        ref.read(queryProvider.notifier).update(query);
                       },
                     ),
                 ],

@@ -37,7 +37,7 @@ class GitHubRepoSearchPage extends ConsumerWidget {
                   child: AnimatedSize(
                     duration: Animations.searched.duration,
                     curve: Animations.searched.curve,
-                    child: ref.watch(repoSearchQueryProvider) == null
+                    child: ref.watch(queryProvider) == null
                         ? const SuggestionsView()
                         : const SearchedRepoListView(
                             padding: EdgeInsets.only(top: 4, bottom: 32),
@@ -59,7 +59,7 @@ class GitHubRepoSearchPage extends ConsumerWidget {
         child: const Icon(Icons.settings),
       ),
       persistentFooterAlignment: AlignmentDirectional.center,
-      persistentFooterButtons: ref.watch(repoSearchQueryProvider) == null
+      persistentFooterButtons: ref.watch(queryProvider) == null
           ? null
           : [
               ChangePageNumberIconButton.first(),
@@ -67,7 +67,7 @@ class GitHubRepoSearchPage extends ConsumerWidget {
               const CurrentPageNumber(),
               ChangePageNumberIconButton.next(),
               ChangePageNumberIconButton.last(
-                ref.watch(repoSearchTotalCountProvider) ?? 0,
+                ref.watch(totalCountProvider) ?? 0,
               ),
             ],
     );
@@ -83,7 +83,7 @@ class _TitleWidget extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: AnimatedDefaultTextStyle(
-        style: (ref.watch(repoSearchQueryProvider) == null
+        style: (ref.watch(queryProvider) == null
                 ? textTheme.headlineMedium!
                 : textTheme.titleMedium!)
             .copyWith(fontWeight: FontWeight.bold),

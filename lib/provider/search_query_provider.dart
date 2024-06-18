@@ -6,7 +6,7 @@ import 'package:yumemi_codecheck_repo_search/provider/service_provider.dart';
 part 'search_query_provider.g.dart';
 
 @riverpod
-class RepoSearchQuery extends _$RepoSearchQuery {
+class Query extends _$Query {
   @override
   String? build() {
     return null;
@@ -29,20 +29,20 @@ class RepoSearchQuery extends _$RepoSearchQuery {
 }
 
 @riverpod
-class RepoSearchSortType extends _$RepoSearchSortType {
+class SortType extends _$SortType {
   @override
-  SortType build() => SortType.bestMatch;
+  RepoSearchSortType build() => RepoSearchSortType.bestMatch;
 
-  void update(SortType value) {
+  void update(RepoSearchSortType value) {
     if (value == state) return;
 
-    ref.read(repoSearchPageNumberProvider.notifier).reset();
+    ref.read(pageNumberProvider.notifier).reset();
     state = value;
   }
 }
 
 @riverpod
-class RepoSearchPageNumber extends _$RepoSearchPageNumber {
+class PageNumber extends _$PageNumber {
   @override
   int build() => 1;
 
@@ -56,18 +56,18 @@ class RepoSearchPageNumber extends _$RepoSearchPageNumber {
   void reset() => state = 1;
 
   bool validate(int value, int totalCount) {
-    final perPage = ref.watch(repoSearchPerPageNumberProvider);
+    final perPage = ref.watch(perPageNumberProvider);
     return value > 0 && (value - 1) * perPage < totalCount;
   }
 
   int maxPage(int totalCount) {
-    final perPage = ref.watch(repoSearchPerPageNumberProvider);
+    final perPage = ref.watch(perPageNumberProvider);
     return (totalCount - 1) ~/ perPage + 1;
   }
 }
 
 @riverpod
-class RepoSearchPerPageNumber extends _$RepoSearchPerPageNumber {
+class PerPageNumber extends _$PerPageNumber {
   @override
   int build() => 30;
 

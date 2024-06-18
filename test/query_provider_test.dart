@@ -43,7 +43,7 @@ void main() {
     String message,
   ) {
     expect(
-      () => container.read(repoSearchResultProvider.future),
+      () => container.read(resultProvider.future),
       throwsA(
         isA<GitHubRepoServiceException>().having(
           (e) => e.message,
@@ -63,7 +63,7 @@ void main() {
       exception: exception,
     );
 
-    container.read(repoSearchQueryProvider.notifier).state = 'flutter';
+    container.read(queryProvider.notifier).state = 'flutter';
 
     expectExceptionMessage(message);
   }
@@ -83,15 +83,15 @@ void main() {
       ),
     );
 
-    container.read(repoSearchQueryProvider.notifier).state = 'flutter';
+    container.read(queryProvider.notifier).state = 'flutter';
 
     expectExceptionMessage(message);
   }
 
   test('returns null when query is null', () async {
-    container.read(repoSearchQueryProvider.notifier).state = null;
+    container.read(queryProvider.notifier).state = null;
 
-    final result = await container.read(repoSearchResultProvider.future);
+    final result = await container.read(resultProvider.future);
 
     expect(result, isNull);
   });
@@ -104,9 +104,9 @@ void main() {
     );
 
     const query = 'flutter';
-    container.read(repoSearchQueryProvider.notifier).state = query;
+    container.read(queryProvider.notifier).state = query;
 
-    final result = await container.read(repoSearchResultProvider.future);
+    final result = await container.read(resultProvider.future);
 
     expect(result, equals(expectedResult));
   });
