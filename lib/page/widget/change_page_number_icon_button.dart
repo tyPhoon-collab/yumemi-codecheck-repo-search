@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:yumemi_codecheck_repo_search/service.dart';
+import 'package:yumemi_codecheck_repo_search/provider/search_query_provider.dart';
+import 'package:yumemi_codecheck_repo_search/provider/search_result_provider.dart';
 
 class ChangePageNumberIconButton extends ConsumerWidget {
   const ChangePageNumberIconButton(this.iconData, this.modifier, {super.key});
@@ -38,9 +39,9 @@ class ChangePageNumberIconButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final totalCount = ref.watch(realTotalCountProvider) ?? 0;
-    final current = ref.watch(repoSearchPageProvider); // ページの変更を監視する
-    final notifier = ref.watch(repoSearchPageProvider.notifier);
+    final totalCount = ref.watch(totalCountProvider) ?? 0;
+    final current = ref.watch(pageNumberProvider); // ページの変更を監視する
+    final notifier = ref.watch(pageNumberProvider.notifier);
 
     return IconButton(
       onPressed: isAvailable(notifier, current, totalCount)
@@ -50,7 +51,7 @@ class ChangePageNumberIconButton extends ConsumerWidget {
     );
   }
 
-  bool isAvailable(RepoSearchPage notifier, int current, int totalCount) {
+  bool isAvailable(PageNumber notifier, int current, int totalCount) {
     final next = getNextPageNumber(current, totalCount);
     if (next == current) return false;
     return notifier.validate(next, totalCount);

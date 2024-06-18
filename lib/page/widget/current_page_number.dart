@@ -3,7 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yumemi_codecheck_repo_search/common/loading_indicator.dart';
-import 'package:yumemi_codecheck_repo_search/service.dart';
+import 'package:yumemi_codecheck_repo_search/provider/search_query_provider.dart';
+import 'package:yumemi_codecheck_repo_search/provider/search_result_provider.dart';
 
 class CurrentPageNumber extends ConsumerStatefulWidget {
   const CurrentPageNumber({
@@ -25,16 +26,16 @@ class _CurrentPageNumberState extends ConsumerState<CurrentPageNumber> {
 
   @override
   Widget build(BuildContext context) {
-    final realTotalCount = ref.watch(realTotalCountProvider);
-    final currentPage = ref.watch(repoSearchPageProvider);
-    final perPage = ref.watch(repoSearchPerPageProvider);
+    final totalCount = ref.watch(totalCountProvider);
+    final currentPage = ref.watch(pageNumberProvider);
+    final perPage = ref.watch(perPageNumberProvider);
 
-    if (realTotalCount == null) {
+    if (totalCount == null) {
       return const LoadingIndicator();
     }
 
     int upperCount() {
-      return min(currentPage * perPage, realTotalCount);
+      return min(currentPage * perPage, totalCount);
     }
 
     int lowerCount() {
@@ -47,11 +48,11 @@ class _CurrentPageNumberState extends ConsumerState<CurrentPageNumber> {
           decoration: TextDecoration.underline,
         ),
       ),
-      child: Text('${lowerCount()} ~ ${upperCount()} of $realTotalCount'),
+      child: Text('${lowerCount()} ~ ${upperCount()} of $totalCount'),
       onPressed: () async {
-        final page = await _showPageNumberInputDialog(context, realTotalCount);
+        final page = await _showPageNumberInputDialog(context, totalCount);
         if (page != null) {
-          ref.read(repoSearchPageProvider.notifier).update(page);
+          ref.read(pageNumberProvider.notifier).update(page);
         }
       },
     );
@@ -62,7 +63,7 @@ class _CurrentPageNumberState extends ConsumerState<CurrentPageNumber> {
     int totalCount,
   ) async {
     final formKey = GlobalKey<FormState>();
-    final notifier = ref.read(repoSearchPageProvider.notifier);
+    final notifier = ref.read(pageNumberProvider.notifier);
 
     void submit(String text) {
       if (formKey.currentState!.validate()) {

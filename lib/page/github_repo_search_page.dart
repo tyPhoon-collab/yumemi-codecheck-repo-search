@@ -9,7 +9,8 @@ import 'package:yumemi_codecheck_repo_search/page/widget/repo_list_view.dart';
 import 'package:yumemi_codecheck_repo_search/page/widget/search_bar.dart';
 import 'package:yumemi_codecheck_repo_search/page/widget/sort_type_selection.dart';
 import 'package:yumemi_codecheck_repo_search/page/widget/suggestion_view.dart';
-import 'package:yumemi_codecheck_repo_search/service.dart';
+import 'package:yumemi_codecheck_repo_search/provider/search_query_provider.dart';
+import 'package:yumemi_codecheck_repo_search/provider/search_result_provider.dart';
 
 class GitHubRepoSearchPage extends ConsumerWidget {
   const GitHubRepoSearchPage({super.key});
@@ -36,11 +37,11 @@ class GitHubRepoSearchPage extends ConsumerWidget {
                   child: AnimatedSize(
                     duration: Animations.searched.duration,
                     curve: Animations.searched.curve,
-                    child: ref.watch(repoSearchQueryProvider) == null
-                        ? const SuggestionsView()
-                        : const SearchedRepoListView(
+                    child: ref.watch(hasQueryProvider)
+                        ? const SearchedRepoListView(
                             padding: EdgeInsets.only(top: 4, bottom: 32),
-                          ),
+                          )
+                        : const SuggestionsView(),
                   ),
                 ),
               ],
@@ -58,17 +59,17 @@ class GitHubRepoSearchPage extends ConsumerWidget {
         child: const Icon(Icons.settings),
       ),
       persistentFooterAlignment: AlignmentDirectional.center,
-      persistentFooterButtons: ref.watch(repoSearchQueryProvider) == null
-          ? null
-          : [
+      persistentFooterButtons: ref.watch(hasQueryProvider)
+          ? [
               ChangePageNumberIconButton.first(),
               ChangePageNumberIconButton.prev(),
               const CurrentPageNumber(),
               ChangePageNumberIconButton.next(),
               ChangePageNumberIconButton.last(
-                ref.watch(realTotalCountProvider) ?? 0,
+                ref.watch(totalCountProvider) ?? 0,
               ),
-            ],
+            ]
+          : null,
     );
   }
 }
@@ -82,9 +83,9 @@ class _TitleWidget extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: AnimatedDefaultTextStyle(
-        style: (ref.watch(repoSearchQueryProvider) == null
-                ? textTheme.headlineMedium!
-                : textTheme.titleMedium!)
+        style: (ref.watch(hasQueryProvider)
+                ? textTheme.titleMedium!
+                : textTheme.headlineMedium!)
             .copyWith(fontWeight: FontWeight.bold),
         duration: Animations.searched.duration,
         curve: Animations.searched.curve,

@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:meta/meta.dart';
 import 'package:yumemi_codecheck_repo_search/main.dart';
 import 'package:yumemi_codecheck_repo_search/page/github_repo_search_page.dart';
-import 'package:yumemi_codecheck_repo_search/service.dart';
+import 'package:yumemi_codecheck_repo_search/provider/service_provider.dart';
 
 import '../test/mocks.dart';
 import 'extension.dart';

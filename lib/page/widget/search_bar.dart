@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
-import 'package:yumemi_codecheck_repo_search/service.dart';
+import 'package:yumemi_codecheck_repo_search/provider/search_query_provider.dart';
 
 /// SearchBarというWidgetはすでにあるので、Repoというprefixを使っている
 class RepoSearchBar extends ConsumerStatefulWidget {
@@ -22,7 +22,7 @@ class _RepoSearchBarState extends ConsumerState<RepoSearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    ref.listen(repoSearchQueryProvider, (_, query) {
+    ref.listen(queryProvider, (_, query) {
       if (query == null) {
         _controller.clear();
       } else {
@@ -35,15 +35,15 @@ class _RepoSearchBarState extends ConsumerState<RepoSearchBar> {
       hintText: S.current.searchPlaceholder,
       leading: const Icon(Icons.search),
       trailing: [
-        if (ref.watch(repoSearchQueryProvider) != null)
+        if (ref.watch(hasQueryProvider))
           IconButton(
             icon: const Icon(Icons.close),
-            onPressed: ref.read(repoSearchQueryProvider.notifier).reset,
+            onPressed: ref.read(queryProvider.notifier).reset,
           ),
       ],
       padding: const WidgetStatePropertyAll(EdgeInsets.only(left: 16)),
       textInputAction: TextInputAction.search,
-      onSubmitted: ref.read(repoSearchQueryProvider.notifier).update,
+      onSubmitted: ref.read(queryProvider.notifier).update,
     );
   }
 }
