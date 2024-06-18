@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yumemi_codecheck_repo_search/common/loading_indicator.dart';
+import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
 import 'package:yumemi_codecheck_repo_search/page/widget/page_number_input_dialog.dart';
 import 'package:yumemi_codecheck_repo_search/provider/search_query_provider.dart';
 import 'package:yumemi_codecheck_repo_search/provider/search_result_provider.dart';
@@ -49,7 +50,13 @@ class _CurrentPageNumberState extends ConsumerState<CurrentPageNumber> {
           decoration: TextDecoration.underline,
         ),
       ),
-      child: Text('${lowerCount()} ~ ${upperCount()} of $totalCount'),
+      child: Text(
+        S.current.resultCount(
+          lowerCount(),
+          upperCount(),
+          totalCount,
+        ),
+      ),
       onPressed: () async {
         final notifier = ref.read(pageNumberProvider.notifier);
         final page = await showPageNumberInputDialog(

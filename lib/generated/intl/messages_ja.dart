@@ -22,11 +22,18 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m0(url) => "${url} が開けませんでした";
 
+  static String m1(total) => "ページ: 1～${total}";
+
+  static String m2(lower, upper, total) => "${total} 件中 ${lower}〜${upper} 件";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "cancel": MessageLookupByLibrary.simpleMessage("キャンセル"),
         "dark": MessageLookupByLibrary.simpleMessage("ダーク"),
         "description": MessageLookupByLibrary.simpleMessage(
             "このアプリはGitHubのリポジトリ検索APIラッパーです。\n\nyumemi codecheck 用に作成されました。"),
+        "errorFetchQueryHistory":
+            MessageLookupByLibrary.simpleMessage("履歴の取得に失敗しました"),
         "errorNoInternet":
             MessageLookupByLibrary.simpleMessage("インターネットに接続できません"),
         "errorServiceUnavailable":
@@ -36,13 +43,31 @@ class MessageLookup extends MessageLookupByLibrary {
         "errorValidation":
             MessageLookupByLibrary.simpleMessage("検証に失敗しました。またはAPIのレート制限です"),
         "failedLaunch": m0,
+        "inputPageNumberDialogHint": m1,
+        "inputPageNumberDialogTitle":
+            MessageLookupByLibrary.simpleMessage("ページ番号を入力"),
         "language": MessageLookupByLibrary.simpleMessage("言語"),
         "light": MessageLookupByLibrary.simpleMessage("ライト"),
         "noResults": MessageLookupByLibrary.simpleMessage("結果が見つかりませんでした"),
+        "ok": MessageLookupByLibrary.simpleMessage("OK"),
+        "resultCount": m2,
         "searchPlaceholder":
             MessageLookupByLibrary.simpleMessage("Repositoryを検索"),
+        "sortBy": MessageLookupByLibrary.simpleMessage("並び替え: "),
+        "sortTypeBestMatch": MessageLookupByLibrary.simpleMessage("ベストマッチ"),
+        "sortTypeForks": MessageLookupByLibrary.simpleMessage("フォーク"),
+        "sortTypeHelpWantedIssues":
+            MessageLookupByLibrary.simpleMessage("Help Wanted イシュー"),
+        "sortTypeStars": MessageLookupByLibrary.simpleMessage("スター"),
+        "sortTypeUpdated": MessageLookupByLibrary.simpleMessage("更新"),
         "system": MessageLookupByLibrary.simpleMessage("システム"),
         "theme": MessageLookupByLibrary.simpleMessage("テーマ"),
-        "title": MessageLookupByLibrary.simpleMessage("Github Repos Search")
+        "title": MessageLookupByLibrary.simpleMessage("Github Repos Search"),
+        "validationPageNumberIsOutOfRange":
+            MessageLookupByLibrary.simpleMessage("ページ番号が範囲外です"),
+        "validationPleaseEnterANumber":
+            MessageLookupByLibrary.simpleMessage("数字を入力してください"),
+        "validationPleaseEnterAValidNumber":
+            MessageLookupByLibrary.simpleMessage("有効な数字を入力してください")
       };
 }

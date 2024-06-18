@@ -22,11 +22,18 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m0(url) => "Failed to launch ${url}";
 
+  static String m1(total) => "Page: 1 ~ ${total}";
+
+  static String m2(lower, upper, total) => "${lower} ~ ${upper} of ${total}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "dark": MessageLookupByLibrary.simpleMessage("Dark"),
         "description": MessageLookupByLibrary.simpleMessage(
             "This app is a GitHub Repository Search API wrapper.\n\nFor yumemi codecheck."),
+        "errorFetchQueryHistory": MessageLookupByLibrary.simpleMessage(
+            "Failed to fetch query history"),
         "errorNoInternet":
             MessageLookupByLibrary.simpleMessage("No internet connection"),
         "errorServiceUnavailable": MessageLookupByLibrary.simpleMessage(
@@ -36,13 +43,31 @@ class MessageLookup extends MessageLookupByLibrary {
         "errorValidation": MessageLookupByLibrary.simpleMessage(
             "Validation failed, or the endpoint has been spammed."),
         "failedLaunch": m0,
+        "inputPageNumberDialogHint": m1,
+        "inputPageNumberDialogTitle":
+            MessageLookupByLibrary.simpleMessage("Input page number"),
         "language": MessageLookupByLibrary.simpleMessage("Language"),
         "light": MessageLookupByLibrary.simpleMessage("Light"),
         "noResults": MessageLookupByLibrary.simpleMessage("No results found"),
+        "ok": MessageLookupByLibrary.simpleMessage("OK"),
+        "resultCount": m2,
         "searchPlaceholder":
             MessageLookupByLibrary.simpleMessage("Search Repositories"),
+        "sortBy": MessageLookupByLibrary.simpleMessage("Sort by: "),
+        "sortTypeBestMatch": MessageLookupByLibrary.simpleMessage("Best Match"),
+        "sortTypeForks": MessageLookupByLibrary.simpleMessage("Forks"),
+        "sortTypeHelpWantedIssues":
+            MessageLookupByLibrary.simpleMessage("Help Wanted Issues"),
+        "sortTypeStars": MessageLookupByLibrary.simpleMessage("Stars"),
+        "sortTypeUpdated": MessageLookupByLibrary.simpleMessage("Updated"),
         "system": MessageLookupByLibrary.simpleMessage("System"),
         "theme": MessageLookupByLibrary.simpleMessage("Theme"),
-        "title": MessageLookupByLibrary.simpleMessage("Github Repos Search")
+        "title": MessageLookupByLibrary.simpleMessage("Github Repos Search"),
+        "validationPageNumberIsOutOfRange":
+            MessageLookupByLibrary.simpleMessage("Page number is out of range"),
+        "validationPleaseEnterANumber":
+            MessageLookupByLibrary.simpleMessage("Please enter a number"),
+        "validationPleaseEnterAValidNumber":
+            MessageLookupByLibrary.simpleMessage("Please enter a valid number")
       };
 }

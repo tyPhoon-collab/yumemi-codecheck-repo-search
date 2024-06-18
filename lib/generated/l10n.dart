@@ -140,6 +140,26 @@ class S {
     );
   }
 
+  /// `OK`
+  String get ok {
+    return Intl.message(
+      'OK',
+      name: 'ok',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Unexpected error occurred`
   String get errorUnexpected {
     return Intl.message(
@@ -180,11 +200,141 @@ class S {
     );
   }
 
+  /// `Failed to fetch query history`
+  String get errorFetchQueryHistory {
+    return Intl.message(
+      'Failed to fetch query history',
+      name: 'errorFetchQueryHistory',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `This app is a GitHub Repository Search API wrapper.\n\nFor yumemi codecheck.`
   String get description {
     return Intl.message(
       'This app is a GitHub Repository Search API wrapper.\n\nFor yumemi codecheck.',
       name: 'description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{lower} ~ {upper} of {total}`
+  String resultCount(Object lower, Object upper, Object total) {
+    return Intl.message(
+      '$lower ~ $upper of $total',
+      name: 'resultCount',
+      desc: '',
+      args: [lower, upper, total],
+    );
+  }
+
+  /// `Input page number`
+  String get inputPageNumberDialogTitle {
+    return Intl.message(
+      'Input page number',
+      name: 'inputPageNumberDialogTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Page: 1 ~ {total}`
+  String inputPageNumberDialogHint(Object total) {
+    return Intl.message(
+      'Page: 1 ~ $total',
+      name: 'inputPageNumberDialogHint',
+      desc: '',
+      args: [total],
+    );
+  }
+
+  /// `Please enter a number`
+  String get validationPleaseEnterANumber {
+    return Intl.message(
+      'Please enter a number',
+      name: 'validationPleaseEnterANumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter a valid number`
+  String get validationPleaseEnterAValidNumber {
+    return Intl.message(
+      'Please enter a valid number',
+      name: 'validationPleaseEnterAValidNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Page number is out of range`
+  String get validationPageNumberIsOutOfRange {
+    return Intl.message(
+      'Page number is out of range',
+      name: 'validationPageNumberIsOutOfRange',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sort by: `
+  String get sortBy {
+    return Intl.message(
+      'Sort by: ',
+      name: 'sortBy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Best Match`
+  String get sortTypeBestMatch {
+    return Intl.message(
+      'Best Match',
+      name: 'sortTypeBestMatch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stars`
+  String get sortTypeStars {
+    return Intl.message(
+      'Stars',
+      name: 'sortTypeStars',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Forks`
+  String get sortTypeForks {
+    return Intl.message(
+      'Forks',
+      name: 'sortTypeForks',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Help Wanted Issues`
+  String get sortTypeHelpWantedIssues {
+    return Intl.message(
+      'Help Wanted Issues',
+      name: 'sortTypeHelpWantedIssues',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Updated`
+  String get sortTypeUpdated {
+    return Intl.message(
+      'Updated',
+      name: 'sortTypeUpdated',
       desc: '',
       args: [],
     );
