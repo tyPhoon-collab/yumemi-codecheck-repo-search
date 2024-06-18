@@ -1,6 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:faker/faker.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:yumemi_codecheck_repo_search/model/owner.dart';
+import 'package:yumemi_codecheck_repo_search/model/repo.dart';
 import 'package:yumemi_codecheck_repo_search/model/repo_search_result.dart';
 import 'package:yumemi_codecheck_repo_search/service/github_repo_service.dart';
 import 'package:yumemi_codecheck_repo_search/service/query_history_service.dart';
@@ -50,4 +53,40 @@ void registerMockGitHubRepoServiceWhen(
       ),
     );
   }
+}
+
+Repo generateRepo({
+  int? id,
+  String? createdAt,
+  String? name,
+  String? fullName,
+  String? htmlUrl,
+  int? stargazersCount,
+  int? watchersCount,
+  int? forksCount,
+  int? openIssuesCount,
+  Owner? owner,
+  String? description,
+  String? language,
+}) =>
+    Repo(
+      id: id ?? faker.randomGenerator.integer(100000),
+      createdAt: createdAt ?? faker.date.dateTime().toIso8601String(),
+      name: name ?? faker.lorem.word(),
+      fullName: fullName ?? '${faker.lorem.word()}/${faker.lorem.word()}',
+      htmlUrl: htmlUrl ?? '',
+      stargazersCount: stargazersCount ?? faker.randomGenerator.integer(10000),
+      watchersCount: watchersCount ?? faker.randomGenerator.integer(10000),
+      forksCount: forksCount ?? faker.randomGenerator.integer(10000),
+      openIssuesCount: openIssuesCount ?? faker.randomGenerator.integer(1000),
+      owner: owner ?? generateOwner(),
+      description: description ?? faker.lorem.sentence(),
+      language: language ?? faker.lorem.word(),
+    );
+
+Owner generateOwner() {
+  return const Owner(
+    avatarUrl: '',
+    htmlUrl: '',
+  );
 }

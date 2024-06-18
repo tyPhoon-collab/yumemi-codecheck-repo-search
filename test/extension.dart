@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:yumemi_codecheck_repo_search/provider/search_query_provider.dart';
 
-extension WidgetTesterExt on WidgetTester {
+extension Settle on WidgetTester {
   Future<void> tapAndSettle(Finder finder) async {
     await tap(finder);
     await pumpAndSettle();
@@ -24,7 +26,19 @@ extension WidgetTesterExt on WidgetTester {
   /// WidgetTester.pageBackが失敗することがある。
   /// そこで、オリジナルのページを戻るためのメソッドを追加。
   Future<void> pageBackSafe() {
-    return tapAndSettle(find.byType(BackButtonIcon));
+    return tapAndSettle(_findBackIcon());
+  }
+
+  Finder _findBackIcon() {
+    var icon = _findInAppBar(find.byType(BackButton));
+    if (icon.evaluate().isEmpty) {
+      icon = _findInAppBar(find.byType(CloseButton));
+    }
+    return icon;
+  }
+
+  Finder _findInAppBar(Finder finder) {
+    return find.descendant(of: find.byType(AppBar), matching: finder);
   }
 
   Future<void> pumpUntilFound(
@@ -61,5 +75,17 @@ extension WidgetTesterExt on WidgetTester {
     } else {
       timer.cancel();
     }
+  }
+}
+
+extension Container on WidgetTester {
+  ProviderContainer container() {
+    return ProviderScope.containerOf(
+      element(find.byType(MaterialApp)),
+    );
+  }
+
+  String? readQuery() {
+    return container().read(queryProvider);
   }
 }

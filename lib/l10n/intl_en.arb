@@ -13,7 +13,7 @@
   "errorUnexpected": "Unexpected error occurred",
   "errorValidation": "Validation failed, or the endpoint has been spammed.",
   "failedLaunch": "Failed to launch {url}",
-  "inputPageNumberDialogHint": "Page: 1 ~ {total}",
+  "inputPageNumberDialogHint": "Page: 1 ~ {maxPage}",
   "inputPageNumberDialogTitle": "Input page number",
   "language": "Language",
   "light": "Light",

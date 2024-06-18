@@ -8,7 +8,7 @@ import 'package:yumemi_codecheck_repo_search/page/settings_page.dart';
 import 'package:yumemi_codecheck_repo_search/provider/service_provider.dart';
 import 'package:yumemi_codecheck_repo_search/theme.dart';
 
-import '../integration_test/extension.dart';
+import 'extension.dart';
 import 'mocks.dart';
 
 void main() {
@@ -24,8 +24,36 @@ void main() {
     );
   });
 
+  Future<void> buildWidget(
+    WidgetTester tester, {
+    List<String>? history,
+  }) async {
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          queryHistoryServiceImplProvider.overrideWith((_) {
+            final impl = MockQueryHistoryService();
+            registerMockQueryHistoryServiceWhens(impl, history ?? []);
+            return impl;
+          }),
+        ],
+        child: AdaptiveTheme(
+          initial: AdaptiveThemeMode.system,
+          light: theme,
+          dark: darkTheme,
+          builder: (theme, darkTheme) => MaterialApp(
+            localizationsDelegates: const [S.delegate],
+            theme: theme,
+            darkTheme: darkTheme,
+            home: const SettingsPage(),
+          ),
+        ),
+      ),
+    );
+  }
+
   testWidgets('shows all settings tiles', (WidgetTester tester) async {
-    await _buildWidget(tester);
+    await buildWidget(tester);
 
     expect(find.byKey(const Key('language_list_tile')), findsOneWidget);
     expect(find.byKey(const Key('theme_list_tile')), findsOneWidget);
@@ -37,7 +65,7 @@ void main() {
   });
 
   testWidgets('changes theme on toggle', (WidgetTester tester) async {
-    await _buildWidget(tester);
+    await buildWidget(tester);
 
     await tester.tapAndSettle(find.byIcon(Icons.light_mode));
     expect(tester.currentThemeMode, AdaptiveThemeMode.light);
@@ -51,12 +79,12 @@ void main() {
 
   testWidgets('clear all history list tile is disabled when no history',
       (WidgetTester tester) async {
-    await _buildWidget(tester);
+    await buildWidget(tester);
     _expectEnable(find.byKey(const Key('clear_all_history_list_tile')), false);
   });
 
   testWidgets('clear all history', (WidgetTester tester) async {
-    await _buildWidget(tester, history: ['1', '2', '3']);
+    await buildWidget(tester, history: ['1', '2', '3']);
 
     await tester.pumpAndSettle();
 
@@ -70,16 +98,14 @@ void main() {
 
     expect(find.text(S.current.clearHistorySuccess), findsOneWidget);
     expect(
-      await ProviderScope.containerOf(
-        tester.element(find.byType(MaterialApp)),
-      ).read(queryHistoryServiceProvider).getAll(),
+      await tester.container().read(queryHistoryServiceProvider).getAll(),
       isEmpty,
     );
   });
 
   testWidgets('shows about dialog with correct version',
       (WidgetTester tester) async {
-    await _buildWidget(tester);
+    await buildWidget(tester);
 
     await tester.tapAndSettle(
       find.byKey(const Key('about_list_tile')),
@@ -90,34 +116,6 @@ void main() {
     expect(find.text('Copyright 2024 Hiroaki Osawa'), findsOneWidget);
     expect(find.text(S.current.description), findsOneWidget);
   });
-}
-
-Future<void> _buildWidget(
-  WidgetTester tester, {
-  List<String>? history,
-}) async {
-  await tester.pumpWidget(
-    ProviderScope(
-      overrides: [
-        queryHistoryServiceImplProvider.overrideWith((_) {
-          final impl = MockQueryHistoryService();
-          registerMockQueryHistoryServiceWhens(impl, history ?? []);
-          return impl;
-        }),
-      ],
-      child: AdaptiveTheme(
-        initial: AdaptiveThemeMode.system,
-        light: theme,
-        dark: darkTheme,
-        builder: (theme, darkTheme) => MaterialApp(
-          localizationsDelegates: const [S.delegate],
-          theme: theme,
-          darkTheme: darkTheme,
-          home: const SettingsPage(),
-        ),
-      ),
-    ),
-  );
 }
 
 extension _GetCurrentThemeMode on WidgetTester {

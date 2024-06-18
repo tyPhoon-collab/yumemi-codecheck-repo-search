@@ -4,7 +4,6 @@ import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:retrofit/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
 import 'package:yumemi_codecheck_repo_search/model/repo_search_result.dart';
 import 'package:yumemi_codecheck_repo_search/provider/search_query_provider.dart';
 import 'package:yumemi_codecheck_repo_search/provider/service_provider.dart';
@@ -13,7 +12,6 @@ import 'package:yumemi_codecheck_repo_search/service/github_repo_service.dart';
 part 'search_result_provider.g.dart';
 
 /// エラー時は必ずGitHubRepoServiceExceptionをthrowする
-/// Sが初期化されている必要があり、やや責務が大きいが、一旦おいておく
 @riverpod
 Future<RepoSearchResult?> result(ResultRef ref) async {
   final service = ref.watch(gitHubRepoServiceProvider);
@@ -35,19 +33,19 @@ Future<RepoSearchResult?> result(ResultRef ref) async {
     );
 
     ref.read(lastPageNumberProvider.notifier).setFromResponse(response);
-    return response.data;
-  } catch (e) {
-    final errorMessage = switch (e) {
-      final DioException e => switch (e.response?.statusCode) {
-          422 => S.current.errorValidation,
-          503 => S.current.errorServiceUnavailable,
-          _ => S.current.errorUnexpected,
-        },
-      final SocketException _ => S.current.errorNoInternet,
-      _ => S.current.errorUnexpected,
-    };
+    await ref.read(queryHistoryServiceProvider).add(query);
 
-    throw GitHubRepoServiceException(errorMessage, e);
+    return response.data;
+  } catch (error) {
+    throw switch (error) {
+      final DioException e => switch (e.response?.statusCode) {
+          422 => const ValidationGRSException(),
+          503 => const ServiceUnavailableGRSException(),
+          _ => const UnexpectedGRSException(),
+        },
+      final SocketException _ => const NoInternetGRSException(),
+      _ => GRSException(error.toString()),
+    };
   }
 }
 
@@ -59,7 +57,7 @@ class LastPageNumber extends _$LastPageNumber {
   /// https://docs.github.com/ja/rest/using-the-rest-api/using-pagination-in-the-rest-api?apiVersion=2022-11-28
   /// 改ページのために必要な情報は応答ヘッダーに含まれる。それを抽出し、モデルに落とし込む
   void setFromResponse(HttpResponse<RepoSearchResult> response) {
-    final linkString = response.response.headers.map['link']?.first ?? '';
+    final linkString = response.response.headers.value('link') ?? '';
 
     final lastPage = _getLastPage(linkString);
     state = lastPage;

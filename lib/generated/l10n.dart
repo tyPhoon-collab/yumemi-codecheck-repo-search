@@ -180,13 +180,13 @@ class S {
     );
   }
 
-  /// `Page: 1 ~ {total}`
-  String inputPageNumberDialogHint(Object total) {
+  /// `Page: 1 ~ {maxPage}`
+  String inputPageNumberDialogHint(Object maxPage) {
     return Intl.message(
-      'Page: 1 ~ $total',
+      'Page: 1 ~ $maxPage',
       name: 'inputPageNumberDialogHint',
       desc: '',
-      args: [total],
+      args: [maxPage],
     );
   }
 

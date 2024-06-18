@@ -6,8 +6,8 @@ import 'package:yumemi_codecheck_repo_search/main.dart';
 import 'package:yumemi_codecheck_repo_search/page/github_repo_search_page.dart';
 import 'package:yumemi_codecheck_repo_search/provider/service_provider.dart';
 
+import '../test/extension.dart';
 import '../test/mocks.dart';
-import 'extension.dart';
 
 typedef WidgetTesterCallbackWithService = Future<void> Function(
   WidgetTester tester,

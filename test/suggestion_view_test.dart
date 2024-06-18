@@ -10,9 +10,39 @@ import 'package:yumemi_codecheck_repo_search/provider/service_provider.dart';
 import 'mocks.dart';
 
 void main() {
+  Future<void> buildWidget(
+    WidgetTester tester, {
+    List<String>? history,
+    bool throwError = false,
+  }) async {
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          queryHistoryServiceImplProvider.overrideWith((_) {
+            final service = MockQueryHistoryService();
+            if (throwError) {
+              when(service.getAll).thenThrow('Error from buildWidget()');
+            } else {
+              registerMockQueryHistoryServiceWhens(service, history ?? []);
+            }
+            return service;
+          }),
+          gitHubRepoServiceProvider.overrideWithValue(MockGitHubRepoService()),
+        ],
+        child: const MaterialApp(
+          localizationsDelegates: [S.delegate],
+          home: Scaffold(
+            body: SuggestionsView(),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+  }
+
   testWidgets('shows suggestions when data is available',
       (WidgetTester tester) async {
-    await _buildWidget(
+    await buildWidget(
       tester,
       history: [
         'flutter',
@@ -29,21 +59,21 @@ void main() {
 
   testWidgets('shows no suggestions when data is empty',
       (WidgetTester tester) async {
-    await _buildWidget(tester);
+    await buildWidget(tester);
 
     expect(find.byType(SizedBox), findsOneWidget);
     expect(find.byType(ListTile), findsNothing);
   });
 
   testWidgets('shows error text when error', (WidgetTester tester) async {
-    await _buildWidget(tester, throwError: true);
+    await buildWidget(tester, throwError: true);
 
     expect(find.byType(ErrorText), findsOneWidget);
     expect(find.text(S.current.errorFetchQueryHistory), findsOneWidget);
   });
 
   testWidgets('removes item on delete icon tap', (WidgetTester tester) async {
-    await _buildWidget(tester, history: ['flutter']);
+    await buildWidget(tester, history: ['flutter']);
 
     expect(find.byType(ListTile), findsOneWidget);
     expect(find.text('flutter'), findsOneWidget);
@@ -57,7 +87,7 @@ void main() {
 
   testWidgets('updates suggestions when query is submitted',
       (WidgetTester tester) async {
-    await _buildWidget(tester);
+    await buildWidget(tester);
 
     final service =
         ProviderScope.containerOf(tester.element(find.byType(SuggestionsView)))
@@ -70,35 +100,4 @@ void main() {
     expect(find.byType(ListTile), findsOneWidget);
     expect(find.text('flutter'), findsOneWidget);
   });
-}
-
-Future<void> _buildWidget(
-  WidgetTester tester, {
-  List<String>? history,
-  bool throwError = false,
-}) async {
-  await tester.pumpWidget(
-    ProviderScope(
-      overrides: [
-        queryHistoryServiceImplProvider.overrideWith((_) {
-          final service = MockQueryHistoryService();
-          if (throwError) {
-            when(service.getAll).thenThrow('Error from _buildWidget()');
-          } else {
-            registerMockQueryHistoryServiceWhens(service, history ?? []);
-          }
-          return service;
-        }),
-        gitHubRepoServiceProvider.overrideWithValue(MockGitHubRepoService()),
-      ],
-      child: const MaterialApp(
-        localizationsDelegates: [S.delegate],
-        home: Scaffold(
-          body: SuggestionsView(),
-        ),
-      ),
-    ),
-  );
-
-  await tester.pumpAndSettle();
 }

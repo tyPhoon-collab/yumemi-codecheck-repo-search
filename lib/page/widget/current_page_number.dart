@@ -61,8 +61,8 @@ class _CurrentPageNumberState extends ConsumerState<CurrentPageNumber> {
         final notifier = ref.read(pageNumberProvider.notifier);
         final page = await showPageNumberInputDialog(
           context,
-          totalCount,
           notifier.maxPage(totalCount),
+          (value) => notifier.validate(value, totalCount),
         );
         if (page != null) notifier.update(page);
       },

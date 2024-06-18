@@ -54,4 +54,13 @@ void main() {
     expect(pageNumber.validate(2, 5), isFalse); // 2ページ目（無効）、5件
     expect(pageNumber.validate(-1, 100), isFalse); // -1ページ目（無効）
   });
+
+  test('maxPage works correctly', () {
+    perPageNumber.update(10);
+
+    expect(pageNumber.maxPage(0), 1);
+    expect(pageNumber.maxPage(1), 1);
+    expect(pageNumber.maxPage(100), 10); // 合計100アイテム、1ページ10アイテムの場合、10ページが最大
+    expect(pageNumber.maxPage(101), 11); // 合計101アイテム、1ページ10アイテムの場合、11ページが最大
+  });
 }

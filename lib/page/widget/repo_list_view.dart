@@ -31,13 +31,9 @@ class SearchedRepoListView extends ConsumerWidget {
         return RepoListView(items: items, padding: padding);
       },
       error: (error, stackTrace) {
-        if (error is GitHubRepoServiceException) {
-          return ErrorText(text: error.message);
-        }
-
-        // 予期しない例外は、どこかにレコードして管理する。今回は省略
-        // FirebaseCrashlytics.instance.recordError(error, stackTrace);
-        return ErrorText(text: error.toString());
+        final errorMessage =
+            error is GRSException ? error.message : S.current.errorUnexpected;
+        return ErrorText(text: errorMessage);
       },
       loading: () => const Center(child: LoadingIndicator()),
     );
