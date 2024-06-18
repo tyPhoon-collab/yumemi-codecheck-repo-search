@@ -29,6 +29,12 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+        "clear": MessageLookupByLibrary.simpleMessage("Clear"),
+        "clearHistory": MessageLookupByLibrary.simpleMessage("Clear History"),
+        "clearHistoryConfirm": MessageLookupByLibrary.simpleMessage(
+            "Are you sure you want to clear the history?"),
+        "clearHistorySuccess": MessageLookupByLibrary.simpleMessage(
+            "History cleared successfully"),
         "dark": MessageLookupByLibrary.simpleMessage("Dark"),
         "description": MessageLookupByLibrary.simpleMessage(
             "This app is a GitHub Repository Search API wrapper.\n\nFor yumemi codecheck."),

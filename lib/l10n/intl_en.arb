@@ -1,6 +1,10 @@
 {
   "@@locale": "en",
   "cancel": "Cancel",
+  "clear": "Clear",
+  "clearHistory": "Clear History",
+  "clearHistoryConfirm": "Are you sure you want to clear the history?",
+  "clearHistorySuccess": "History cleared successfully",
   "dark": "Dark",
   "description": "This app is a GitHub Repository Search API wrapper.\n\nFor yumemi codecheck.",
   "errorFetchQueryHistory": "Failed to fetch query history",

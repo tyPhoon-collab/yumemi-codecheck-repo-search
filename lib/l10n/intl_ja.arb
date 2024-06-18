@@ -1,6 +1,10 @@
 {
   "@@locale": "ja",
   "cancel": "キャンセル",
+  "clear": "クリア",
+  "clearHistory": "履歴をクリア",
+  "clearHistoryConfirm": "履歴をクリアしますか？",
+  "clearHistorySuccess": "履歴をクリアしました",
   "dark": "ダーク",
   "description": "このアプリはGitHubのリポジトリ検索APIラッパーです。\n\nyumemi codecheck 用に作成されました。",
   "errorFetchQueryHistory": "履歴の取得に失敗しました",

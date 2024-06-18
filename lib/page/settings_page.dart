@@ -1,8 +1,10 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
+import 'package:yumemi_codecheck_repo_search/provider/service_provider.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -16,6 +18,7 @@ class SettingsPage extends StatelessWidget {
           children: [
             _LanguageListTile(),
             _ThemeListTile(),
+            _ClearAllHistoryListTile(),
             _AboutListTile(),
           ],
         ),
@@ -107,6 +110,54 @@ class _ThemeListTileState extends State<_ThemeListTile> {
     setState(() {
       AdaptiveTheme.of(context).setThemeMode(newMode);
     });
+  }
+}
+
+class _ClearAllHistoryListTile extends ConsumerWidget {
+  const _ClearAllHistoryListTile();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final queryHistory = ref.watch(queryHistoryStreamProvider);
+
+    final isEmpty = queryHistory.value?.isEmpty ?? true;
+
+    return ListTile(
+      enabled: !isEmpty,
+      key: const Key('clear_all_history_list_tile'),
+      leading: const Icon(Icons.history),
+      title: Text(S.current.clearHistory),
+      trailing: const Icon(Icons.navigate_next_outlined),
+      onTap: () => _showClearAllHistoryDialog(context, ref),
+    );
+  }
+
+  Future<void> _showClearAllHistoryDialog(BuildContext context, WidgetRef ref) {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(S.current.clearHistory),
+        content: Text(S.current.clearHistoryConfirm),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(S.current.cancel),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              ref.read(queryHistoryServiceProvider).clearAll();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(S.current.clearHistorySuccess),
+                ),
+              );
+            },
+            child: Text(S.current.clear),
+          ),
+        ],
+      ),
+    );
   }
 }
 
