@@ -50,81 +50,11 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  /// `Github Repos Search`
-  String get title {
+  /// `Cancel`
+  String get cancel {
     return Intl.message(
-      'Github Repos Search',
-      name: 'title',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Search Repositories`
-  String get searchPlaceholder {
-    return Intl.message(
-      'Search Repositories',
-      name: 'searchPlaceholder',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `No results found`
-  String get noResults {
-    return Intl.message(
-      'No results found',
-      name: 'noResults',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Failed to launch {url}`
-  String failedLaunch(Object url) {
-    return Intl.message(
-      'Failed to launch $url',
-      name: 'failedLaunch',
-      desc: '',
-      args: [url],
-    );
-  }
-
-  /// `Language`
-  String get language {
-    return Intl.message(
-      'Language',
-      name: 'language',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Theme`
-  String get theme {
-    return Intl.message(
-      'Theme',
-      name: 'theme',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `System`
-  String get system {
-    return Intl.message(
-      'System',
-      name: 'system',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Light`
-  String get light {
-    return Intl.message(
-      'Light',
-      name: 'light',
+      'Cancel',
+      name: 'cancel',
       desc: '',
       args: [],
     );
@@ -140,61 +70,11 @@ class S {
     );
   }
 
-  /// `OK`
-  String get ok {
+  /// `This app is a GitHub Repository Search API wrapper.\n\nFor yumemi codecheck.`
+  String get description {
     return Intl.message(
-      'OK',
-      name: 'ok',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Cancel`
-  String get cancel {
-    return Intl.message(
-      'Cancel',
-      name: 'cancel',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Unexpected error occurred`
-  String get errorUnexpected {
-    return Intl.message(
-      'Unexpected error occurred',
-      name: 'errorUnexpected',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `GitHub service is temporarily unavailable`
-  String get errorServiceUnavailable {
-    return Intl.message(
-      'GitHub service is temporarily unavailable',
-      name: 'errorServiceUnavailable',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `No internet connection`
-  String get errorNoInternet {
-    return Intl.message(
-      'No internet connection',
-      name: 'errorNoInternet',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Validation failed, or the endpoint has been spammed.`
-  String get errorValidation {
-    return Intl.message(
-      'Validation failed, or the endpoint has been spammed.',
-      name: 'errorValidation',
+      'This app is a GitHub Repository Search API wrapper.\n\nFor yumemi codecheck.',
+      name: 'description',
       desc: '',
       args: [],
     );
@@ -210,11 +90,111 @@ class S {
     );
   }
 
-  /// `This app is a GitHub Repository Search API wrapper.\n\nFor yumemi codecheck.`
-  String get description {
+  /// `No internet connection`
+  String get errorNoInternet {
     return Intl.message(
-      'This app is a GitHub Repository Search API wrapper.\n\nFor yumemi codecheck.',
-      name: 'description',
+      'No internet connection',
+      name: 'errorNoInternet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `GitHub service is temporarily unavailable`
+  String get errorServiceUnavailable {
+    return Intl.message(
+      'GitHub service is temporarily unavailable',
+      name: 'errorServiceUnavailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unexpected error occurred`
+  String get errorUnexpected {
+    return Intl.message(
+      'Unexpected error occurred',
+      name: 'errorUnexpected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Validation failed, or the endpoint has been spammed.`
+  String get errorValidation {
+    return Intl.message(
+      'Validation failed, or the endpoint has been spammed.',
+      name: 'errorValidation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to launch {url}`
+  String failedLaunch(Object url) {
+    return Intl.message(
+      'Failed to launch $url',
+      name: 'failedLaunch',
+      desc: '',
+      args: [url],
+    );
+  }
+
+  /// `Page: 1 ~ {total}`
+  String inputPageNumberDialogHint(Object total) {
+    return Intl.message(
+      'Page: 1 ~ $total',
+      name: 'inputPageNumberDialogHint',
+      desc: '',
+      args: [total],
+    );
+  }
+
+  /// `Input page number`
+  String get inputPageNumberDialogTitle {
+    return Intl.message(
+      'Input page number',
+      name: 'inputPageNumberDialogTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Language`
+  String get language {
+    return Intl.message(
+      'Language',
+      name: 'language',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Light`
+  String get light {
+    return Intl.message(
+      'Light',
+      name: 'light',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No results found`
+  String get noResults {
+    return Intl.message(
+      'No results found',
+      name: 'noResults',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `OK`
+  String get ok {
+    return Intl.message(
+      'OK',
+      name: 'ok',
       desc: '',
       args: [],
     );
@@ -230,51 +210,11 @@ class S {
     );
   }
 
-  /// `Input page number`
-  String get inputPageNumberDialogTitle {
+  /// `Search Repositories`
+  String get searchPlaceholder {
     return Intl.message(
-      'Input page number',
-      name: 'inputPageNumberDialogTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Page: 1 ~ {total}`
-  String inputPageNumberDialogHint(Object total) {
-    return Intl.message(
-      'Page: 1 ~ $total',
-      name: 'inputPageNumberDialogHint',
-      desc: '',
-      args: [total],
-    );
-  }
-
-  /// `Please enter a number`
-  String get validationPleaseEnterANumber {
-    return Intl.message(
-      'Please enter a number',
-      name: 'validationPleaseEnterANumber',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Please enter a valid number`
-  String get validationPleaseEnterAValidNumber {
-    return Intl.message(
-      'Please enter a valid number',
-      name: 'validationPleaseEnterAValidNumber',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Page number is out of range`
-  String get validationPageNumberIsOutOfRange {
-    return Intl.message(
-      'Page number is out of range',
-      name: 'validationPageNumberIsOutOfRange',
+      'Search Repositories',
+      name: 'searchPlaceholder',
       desc: '',
       args: [],
     );
@@ -300,16 +240,6 @@ class S {
     );
   }
 
-  /// `Stars`
-  String get sortTypeStars {
-    return Intl.message(
-      'Stars',
-      name: 'sortTypeStars',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Forks`
   String get sortTypeForks {
     return Intl.message(
@@ -330,11 +260,81 @@ class S {
     );
   }
 
+  /// `Stars`
+  String get sortTypeStars {
+    return Intl.message(
+      'Stars',
+      name: 'sortTypeStars',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Updated`
   String get sortTypeUpdated {
     return Intl.message(
       'Updated',
       name: 'sortTypeUpdated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `System`
+  String get system {
+    return Intl.message(
+      'System',
+      name: 'system',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Theme`
+  String get theme {
+    return Intl.message(
+      'Theme',
+      name: 'theme',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Github Repos Search`
+  String get title {
+    return Intl.message(
+      'Github Repos Search',
+      name: 'title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Page number is out of range`
+  String get validationPageNumberIsOutOfRange {
+    return Intl.message(
+      'Page number is out of range',
+      name: 'validationPageNumberIsOutOfRange',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter a number`
+  String get validationPleaseEnterANumber {
+    return Intl.message(
+      'Please enter a number',
+      name: 'validationPleaseEnterANumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter a valid number`
+  String get validationPleaseEnterAValidNumber {
+    return Intl.message(
+      'Please enter a valid number',
+      name: 'validationPleaseEnterAValidNumber',
       desc: '',
       args: [],
     );
