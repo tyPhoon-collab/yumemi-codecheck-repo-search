@@ -15,8 +15,6 @@ import 'package:yumemi_codecheck_repo_search/service/github_repo_service.dart';
 
 import 'mocks.dart';
 
-class MockGitHubRepoService extends Mock implements GitHubRepoService {}
-
 /// クエリプロバイダーの更新→リザルトプロバイダーの更新の流れを確認する
 /// 適切なExceptionが返ってくるかもチェックする
 void main() {

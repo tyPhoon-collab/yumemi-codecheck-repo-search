@@ -1,21 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yumemi_codecheck_repo_search/common/loading_indicator.dart';
 import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
 import 'package:yumemi_codecheck_repo_search/page/widget/current_page_number.dart';
 import 'package:yumemi_codecheck_repo_search/page/widget/page_number_input_dialog.dart';
 import 'package:yumemi_codecheck_repo_search/provider/search_query_provider.dart';
+import 'package:yumemi_codecheck_repo_search/provider/search_result_provider.dart';
 
-import 'common.dart';
 import 'extension.dart';
 
 void main() {
+  Future<void> buildWidget(
+    WidgetTester tester, {
+    int? totalCount,
+  }) async {
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          totalCountProvider.overrideWithValue(totalCount),
+        ],
+        child: const MaterialApp(
+          localizationsDelegates: [S.delegate],
+          home: Scaffold(
+            body: CurrentPageNumber(),
+          ),
+        ),
+      ),
+    );
+  }
+
   testWidgets('displays LoadingIndicator when totalCount is null',
       (WidgetTester tester) async {
-    await buildWidget(
-      tester,
-      () => const CurrentPageNumber(),
-    );
+    await buildWidget(tester);
 
     expect(find.byType(LoadingIndicator), findsOneWidget);
   });
@@ -24,7 +41,6 @@ void main() {
       (WidgetTester tester) async {
     await buildWidget(
       tester,
-      () => const CurrentPageNumber(),
       totalCount: 50,
     );
 
@@ -45,7 +61,6 @@ void main() {
       (WidgetTester tester) async {
     await buildWidget(
       tester,
-      () => const CurrentPageNumber(),
       totalCount: 50,
     );
 
@@ -60,7 +75,6 @@ void main() {
       (WidgetTester tester) async {
     await buildWidget(
       tester,
-      () => const CurrentPageNumber(),
       totalCount: 100,
     );
 

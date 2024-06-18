@@ -1,15 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yumemi_codecheck_repo_search/page/widget/change_page_number_icon_button.dart';
 import 'package:yumemi_codecheck_repo_search/provider/search_query_provider.dart';
+import 'package:yumemi_codecheck_repo_search/provider/search_result_provider.dart';
 
-import '../integration_test/extension.dart';
-import 'common.dart';
+import 'extension.dart';
 
 void main() {
+  Future<void> buildWidget(
+    WidgetTester tester,
+    Widget Function() builder, {
+    int? totalCount = 100,
+  }) async {
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          totalCountProvider.overrideWithValue(totalCount),
+        ],
+        child: MaterialApp(
+          home: Scaffold(
+            body: builder(),
+          ),
+        ),
+      ),
+    );
+  }
+
   testWidgets('next button updates the page number',
       (WidgetTester tester) async {
-    await buildWidget(tester, ChangePageNumberIconButton.next, totalCount: 100);
+    await buildWidget(tester, ChangePageNumberIconButton.next);
 
     final container = tester.container();
 
@@ -22,7 +42,7 @@ void main() {
 
   testWidgets('prev button updates the page number',
       (WidgetTester tester) async {
-    await buildWidget(tester, ChangePageNumberIconButton.prev, totalCount: 100);
+    await buildWidget(tester, ChangePageNumberIconButton.prev);
 
     final container = tester.container();
 
@@ -39,7 +59,6 @@ void main() {
     await buildWidget(
       tester,
       ChangePageNumberIconButton.first,
-      totalCount: 100,
     );
 
     final container = tester.container();

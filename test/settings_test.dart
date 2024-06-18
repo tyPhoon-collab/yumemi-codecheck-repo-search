@@ -6,7 +6,7 @@ import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
 import 'package:yumemi_codecheck_repo_search/page/settings_page.dart';
 import 'package:yumemi_codecheck_repo_search/theme.dart';
 
-import '../integration_test/extension.dart';
+import 'extension.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -21,8 +21,26 @@ void main() {
     );
   });
 
+  Future<void> buildWidget(
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      AdaptiveTheme(
+        initial: AdaptiveThemeMode.system,
+        light: theme,
+        dark: darkTheme,
+        builder: (theme, darkTheme) => MaterialApp(
+          localizationsDelegates: const [S.delegate],
+          theme: theme,
+          darkTheme: darkTheme,
+          home: const Scaffold(body: SettingsPage()),
+        ),
+      ),
+    );
+  }
+
   testWidgets('shows all settings tiles', (WidgetTester tester) async {
-    await _buildWidget(tester);
+    await buildWidget(tester);
 
     expect(find.byKey(const Key('language_list_tile')), findsOneWidget);
     expect(find.byKey(const Key('theme_list_tile')), findsOneWidget);
@@ -30,7 +48,7 @@ void main() {
   });
 
   testWidgets('changes theme on toggle', (WidgetTester tester) async {
-    await _buildWidget(tester);
+    await buildWidget(tester);
 
     await tester.tapAndSettle(find.byIcon(Icons.light_mode));
     expect(tester.currentThemeMode, AdaptiveThemeMode.light);
@@ -44,7 +62,7 @@ void main() {
 
   testWidgets('shows about dialog with correct version',
       (WidgetTester tester) async {
-    await _buildWidget(tester);
+    await buildWidget(tester);
 
     await tester.tapAndSettle(
       find.byKey(const Key('about_list_tile')),
@@ -55,24 +73,6 @@ void main() {
     expect(find.text('Copyright 2024 Hiroaki Osawa'), findsOneWidget);
     expect(find.text(S.current.description), findsOneWidget);
   });
-}
-
-Future<void> _buildWidget(
-  WidgetTester tester,
-) async {
-  await tester.pumpWidget(
-    AdaptiveTheme(
-      initial: AdaptiveThemeMode.system,
-      light: theme,
-      dark: darkTheme,
-      builder: (theme, darkTheme) => MaterialApp(
-        localizationsDelegates: const [S.delegate],
-        theme: theme,
-        darkTheme: darkTheme,
-        home: const Scaffold(body: SettingsPage()),
-      ),
-    ),
-  );
 }
 
 extension _GetCurrentThemeMode on WidgetTester {

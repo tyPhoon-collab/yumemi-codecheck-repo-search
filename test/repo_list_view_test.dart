@@ -13,9 +13,26 @@ import 'package:yumemi_codecheck_repo_search/provider/search_result_provider.dar
 import 'package:yumemi_codecheck_repo_search/service/github_repo_service.dart';
 
 void main() {
+  Future<void> buildWidget(
+    WidgetTester tester,
+    FutureOr<RepoSearchResult> Function(Ref ref) create,
+  ) async {
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          resultProvider.overrideWith(create),
+        ],
+        child: const MaterialApp(
+          localizationsDelegates: [S.delegate],
+          home: Scaffold(body: SearchedRepoListView()),
+        ),
+      ),
+    );
+  }
+
   testWidgets('shows loading indicator when loading',
       (WidgetTester tester) async {
-    await _buildWidget(
+    await buildWidget(
       tester,
       (_) => Future.delayed(
         const Duration(seconds: 1),
@@ -31,7 +48,7 @@ void main() {
   });
 
   testWidgets('shows error text when error', (WidgetTester tester) async {
-    await _buildWidget(
+    await buildWidget(
       tester,
       (_) => Future.error(const GitHubRepoServiceException('Error message')),
     );
@@ -43,7 +60,7 @@ void main() {
 
   testWidgets('shows list of repos when data is available',
       (WidgetTester tester) async {
-    await _buildWidget(
+    await buildWidget(
       tester,
       (_) => RepoSearchResult.items([Repo.mock(), Repo.mock()]),
     );
@@ -51,21 +68,4 @@ void main() {
     expect(find.byType(ListView), findsOneWidget);
     expect(find.byType(RepoListTile), findsNWidgets(2));
   });
-}
-
-Future<void> _buildWidget(
-  WidgetTester tester,
-  FutureOr<RepoSearchResult> Function(Ref ref) create,
-) async {
-  await tester.pumpWidget(
-    ProviderScope(
-      overrides: [
-        resultProvider.overrideWith(create),
-      ],
-      child: const MaterialApp(
-        localizationsDelegates: [S.delegate],
-        home: Scaffold(body: SearchedRepoListView()),
-      ),
-    ),
-  );
 }

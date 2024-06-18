@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:yumemi_codecheck_repo_search/provider/search_query_provider.dart';
 
 extension Settle on WidgetTester {
   Future<void> tapAndSettle(Finder finder) async {
@@ -70,5 +71,9 @@ extension Container on WidgetTester {
     return ProviderScope.containerOf(
       element(find.byType(MaterialApp)),
     );
+  }
+
+  String? readQuery() {
+    return container().read(queryProvider);
   }
 }

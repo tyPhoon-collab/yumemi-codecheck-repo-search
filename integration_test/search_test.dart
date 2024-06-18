@@ -6,9 +6,9 @@ import 'package:yumemi_codecheck_repo_search/model/repo_search_result.dart';
 import 'package:yumemi_codecheck_repo_search/page/widget/suggestion_view.dart';
 import 'package:yumemi_codecheck_repo_search/provider/service_provider.dart';
 
+import '../test/extension.dart';
 import '../test/mocks.dart';
 import 'custom_test_widgets.dart';
-import 'extension.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
