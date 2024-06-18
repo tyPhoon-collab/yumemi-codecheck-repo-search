@@ -62,7 +62,7 @@ class SortTypeSelection extends ConsumerWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(sortType.iconData),
+            _SortTypeSymbolIcon(sortType: sortType),
             const SizedBox(width: 8),
             Text(sortType.displayName),
           ],
@@ -76,7 +76,7 @@ class SortTypeSelection extends ConsumerWidget {
       yield Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(sortType.iconData),
+          _SortTypeSymbolIcon(sortType: sortType),
           const SizedBox(width: 8),
           DefaultTextStyle.merge(
             style: TextStyle(
@@ -88,5 +88,19 @@ class SortTypeSelection extends ConsumerWidget {
         ],
       );
     }
+  }
+}
+
+class _SortTypeSymbolIcon extends StatelessWidget {
+  const _SortTypeSymbolIcon({required this.sortType});
+
+  final RepoSearchSortType sortType;
+
+  @override
+  Widget build(BuildContext context) {
+    return Icon(
+      sortType.iconData,
+      color: Theme.of(context).colorScheme.onSurface,
+    );
   }
 }
