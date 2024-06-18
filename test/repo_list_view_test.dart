@@ -9,7 +9,7 @@ import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
 import 'package:yumemi_codecheck_repo_search/model/repo.dart';
 import 'package:yumemi_codecheck_repo_search/model/repo_search_result.dart';
 import 'package:yumemi_codecheck_repo_search/page/widget/repo_list_view.dart';
-import 'package:yumemi_codecheck_repo_search/service.dart';
+import 'package:yumemi_codecheck_repo_search/provider/search_result_provider.dart';
 import 'package:yumemi_codecheck_repo_search/service/github_repo_service.dart';
 
 void main() {

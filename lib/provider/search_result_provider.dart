@@ -2,29 +2,15 @@ import 'dart:io' show SocketException;
 import 'dart:math';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:retrofit/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
 import 'package:yumemi_codecheck_repo_search/model/repo_search_result.dart';
-import 'package:yumemi_codecheck_repo_search/page/widget/sort_type_selection.dart';
+import 'package:yumemi_codecheck_repo_search/provider/search_query_provider.dart';
+import 'package:yumemi_codecheck_repo_search/provider/service_provider.dart';
 import 'package:yumemi_codecheck_repo_search/service/github_repo_service.dart';
-import 'package:yumemi_codecheck_repo_search/service/query_history_service.dart';
 
-part 'service.g.dart';
-
-@Riverpod(keepAlive: true)
-GitHubRepoService gitHubRepoService(GitHubRepoServiceRef ref) {
-  final dio = Dio(
-    BaseOptions(
-      headers: {
-        'accept': 'application/vnd.github+json',
-      },
-    ),
-  );
-
-  return GitHubRepoService(dio);
-}
+part 'search_result_provider.g.dart';
 
 /// エラー時は必ずGitHubRepoServiceExceptionをthrowする
 /// Sが初期化されている必要があり、やや責務が大きいが、一旦おいておく
@@ -62,88 +48,6 @@ Future<RepoSearchResult?> repoSearchResult(RepoSearchResultRef ref) async {
     };
 
     throw GitHubRepoServiceException(errorMessage, e);
-  }
-}
-
-@riverpod
-class RepoSearchQuery extends _$RepoSearchQuery {
-  @override
-  String? build() {
-    return null;
-  }
-
-  /// 戻り値は整形後のクエリの文字列とする
-  String? update(String value) {
-    final query = value.trim();
-    if (query.isEmpty) {
-      state = null;
-      return null;
-    }
-    state = query;
-    ref.read(queryHistoryServiceProvider).add(query);
-
-    return query;
-  }
-
-  void reset() => state = null;
-}
-
-@Riverpod(keepAlive: true)
-@visibleForTesting
-QueryHistoryService queryHistoryServiceImpl(
-  QueryHistoryServiceImplRef ref,
-) {
-  return PrefsQueryHistoryService();
-}
-
-@Riverpod(keepAlive: true)
-ReactiveQueryHistoryService queryHistoryService(QueryHistoryServiceRef ref) {
-  final impl = ref.watch(queryHistoryServiceImplProvider);
-  final service = ReactiveQueryHistoryService(impl);
-  ref.onDispose(service.dispose);
-  return service;
-}
-
-@Riverpod(keepAlive: true)
-Stream<List<String>> queryHistoryStream(QueryHistoryStreamRef ref) {
-  return ref.watch(queryHistoryServiceProvider).stream;
-}
-
-@riverpod
-class RepoSearchSortType extends _$RepoSearchSortType {
-  @override
-  SortType build() => SortType.bestMatch;
-
-  void update(SortType value) {
-    if (value == state) return;
-
-    ref.read(repoSearchPageProvider.notifier).reset();
-    state = value;
-  }
-}
-
-@riverpod
-class RepoSearchPage extends _$RepoSearchPage {
-  @override
-  int build() => 1;
-
-  /// validate()を呼び出してチェックする前提とする
-  /// この関数内でチェックしない理由は、不要な引数が増えるため
-  void update(int value) {
-    if (value == state) return;
-    state = value;
-  }
-
-  void reset() => state = 1;
-
-  bool validate(int value, int totalCount) {
-    final perPage = ref.watch(repoSearchPerPageProvider);
-    return value > 0 && (value - 1) * perPage < totalCount;
-  }
-
-  int maxPage(int totalCount) {
-    final perPage = ref.watch(repoSearchPerPageProvider);
-    return (totalCount - 1) ~/ perPage + 1;
   }
 }
 
@@ -191,18 +95,6 @@ class RepoSearchLastPage extends _$RepoSearchLastPage {
     }
 
     return currentPage;
-  }
-}
-
-@riverpod
-class RepoSearchPerPage extends _$RepoSearchPerPage {
-  @override
-  int build() => 30;
-
-  @visibleForTesting
-  void update(int value) {
-    assert(0 < value && value <= 100, 'invalid value: $value');
-    state = value;
   }
 }
 

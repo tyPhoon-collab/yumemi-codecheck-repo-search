@@ -5,7 +5,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:yumemi_codecheck_repo_search/common/error_text.dart';
 import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
 import 'package:yumemi_codecheck_repo_search/page/widget/suggestion_view.dart';
-import 'package:yumemi_codecheck_repo_search/service.dart';
+import 'package:yumemi_codecheck_repo_search/provider/service_provider.dart';
 
 import 'mocks.dart';
 

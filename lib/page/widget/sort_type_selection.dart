@@ -1,7 +1,7 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:yumemi_codecheck_repo_search/service.dart';
+import 'package:yumemi_codecheck_repo_search/provider/search_query_provider.dart';
 
 enum SortType {
   bestMatch('best-match', Icons.sort_by_alpha_outlined),

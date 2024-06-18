@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:yumemi_codecheck_repo_search/service.dart';
+import 'package:yumemi_codecheck_repo_search/provider/search_query_provider.dart';
+import 'package:yumemi_codecheck_repo_search/provider/search_result_provider.dart';
 
 class ChangePageNumberIconButton extends ConsumerWidget {
   const ChangePageNumberIconButton(this.iconData, this.modifier, {super.key});

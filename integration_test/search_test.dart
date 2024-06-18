@@ -4,7 +4,7 @@ import 'package:integration_test/integration_test.dart';
 import 'package:yumemi_codecheck_repo_search/model/repo.dart';
 import 'package:yumemi_codecheck_repo_search/model/repo_search_result.dart';
 import 'package:yumemi_codecheck_repo_search/page/widget/suggestion_view.dart';
-import 'package:yumemi_codecheck_repo_search/service.dart';
+import 'package:yumemi_codecheck_repo_search/provider/service_provider.dart';
 
 import '../test/mocks.dart';
 import 'custom_test_widgets.dart';

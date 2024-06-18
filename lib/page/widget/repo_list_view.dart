@@ -7,7 +7,7 @@ import 'package:yumemi_codecheck_repo_search/const.dart';
 import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
 import 'package:yumemi_codecheck_repo_search/model/repo.dart';
 import 'package:yumemi_codecheck_repo_search/page/github_repo_detail_page.dart';
-import 'package:yumemi_codecheck_repo_search/service.dart';
+import 'package:yumemi_codecheck_repo_search/provider/search_result_provider.dart';
 import 'package:yumemi_codecheck_repo_search/service/github_repo_service.dart';
 
 class SearchedRepoListView extends ConsumerWidget {

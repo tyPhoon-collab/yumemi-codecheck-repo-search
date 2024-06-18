@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
-import 'package:yumemi_codecheck_repo_search/service.dart';
+import 'package:yumemi_codecheck_repo_search/provider/search_query_provider.dart';
 
 /// SearchBarというWidgetはすでにあるので、Repoというprefixを使っている
 class RepoSearchBar extends ConsumerStatefulWidget {

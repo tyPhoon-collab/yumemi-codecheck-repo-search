@@ -9,7 +9,8 @@ import 'package:yumemi_codecheck_repo_search/page/widget/repo_list_view.dart';
 import 'package:yumemi_codecheck_repo_search/page/widget/search_bar.dart';
 import 'package:yumemi_codecheck_repo_search/page/widget/sort_type_selection.dart';
 import 'package:yumemi_codecheck_repo_search/page/widget/suggestion_view.dart';
-import 'package:yumemi_codecheck_repo_search/service.dart';
+import 'package:yumemi_codecheck_repo_search/provider/search_query_provider.dart';
+import 'package:yumemi_codecheck_repo_search/provider/search_result_provider.dart';
 
 class GitHubRepoSearchPage extends ConsumerWidget {
   const GitHubRepoSearchPage({super.key});
