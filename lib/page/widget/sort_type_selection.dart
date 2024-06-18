@@ -63,7 +63,7 @@ class SortTypeSelection extends ConsumerWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             _SortTypeSymbolIcon(sortType: sortType),
-            const SizedBox(width: 8),
+            const SizedBox(width: 16),
             Text(sortType.displayName),
           ],
         ),
@@ -77,7 +77,7 @@ class SortTypeSelection extends ConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           _SortTypeSymbolIcon(sortType: sortType),
-          const SizedBox(width: 8),
+          const SizedBox(width: 16),
           DefaultTextStyle.merge(
             style: TextStyle(
               color: Theme.of(context).colorScheme.outline,
