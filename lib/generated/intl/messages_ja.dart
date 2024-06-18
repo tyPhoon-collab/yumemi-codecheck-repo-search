@@ -29,6 +29,12 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "cancel": MessageLookupByLibrary.simpleMessage("キャンセル"),
+        "clear": MessageLookupByLibrary.simpleMessage("クリア"),
+        "clearHistory": MessageLookupByLibrary.simpleMessage("履歴をクリア"),
+        "clearHistoryConfirm":
+            MessageLookupByLibrary.simpleMessage("履歴をクリアしますか？"),
+        "clearHistorySuccess":
+            MessageLookupByLibrary.simpleMessage("履歴をクリアしました"),
         "dark": MessageLookupByLibrary.simpleMessage("ダーク"),
         "description": MessageLookupByLibrary.simpleMessage(
             "このアプリはGitHubのリポジトリ検索APIラッパーです。\n\nyumemi codecheck 用に作成されました。"),
