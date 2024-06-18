@@ -68,16 +68,20 @@ class RepoListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final description = repo.description;
+
     return Card(
       clipBehavior: Clip.antiAlias,
       child: ListTile(
         title: Text(repo.fullName),
         leading: const BrightnessAdaptiveSvg(SvgAssets.repo),
-        subtitle: Text(
-          repo.description ?? '',
-          maxLines: 3,
-          overflow: TextOverflow.ellipsis,
-        ),
+        subtitle: description != null && description.isNotEmpty
+            ? Text(
+                description,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+              )
+            : null,
         onTap: () => _pushToDetail(context),
       ),
     );
