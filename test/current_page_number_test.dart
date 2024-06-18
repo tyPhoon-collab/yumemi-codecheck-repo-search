@@ -6,8 +6,8 @@ import 'package:yumemi_codecheck_repo_search/page/widget/current_page_number.dar
 import 'package:yumemi_codecheck_repo_search/page/widget/page_number_input_dialog.dart';
 import 'package:yumemi_codecheck_repo_search/provider/search_query_provider.dart';
 
-import '../integration_test/extension.dart';
 import 'common.dart';
+import 'extension.dart';
 
 void main() {
   testWidgets('displays LoadingIndicator when totalCount is null',

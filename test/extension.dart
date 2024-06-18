@@ -2,8 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-extension WidgetTesterExt on WidgetTester {
+extension Settle on WidgetTester {
   Future<void> tapAndSettle(Finder finder) async {
     await tap(finder);
     await pumpAndSettle();
@@ -61,5 +62,13 @@ extension WidgetTesterExt on WidgetTester {
     } else {
       timer.cancel();
     }
+  }
+}
+
+extension Container on WidgetTester {
+  ProviderContainer container() {
+    return ProviderScope.containerOf(
+      element(find.byType(MaterialApp)),
+    );
   }
 }
