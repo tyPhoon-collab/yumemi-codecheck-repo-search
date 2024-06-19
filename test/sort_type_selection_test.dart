@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -42,8 +40,7 @@ void main() {
     final container = tester.container();
 
     final firstSortType = container.read(sortTypeProvider);
-    final secondSortType = RepoSearchSortType.values
-        .elementAt(Random().nextInt(RepoSearchSortType.values.length));
+    const secondSortType = RepoSearchSortType.updated;
 
     expect(find.text(firstSortType.displayName), findsOneWidget);
     expect(find.text(secondSortType.displayName), findsNothing);
