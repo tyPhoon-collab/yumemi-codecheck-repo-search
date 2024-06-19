@@ -19,6 +19,7 @@
   "light": "Light",
   "noResults": "No results found",
   "ok": "OK",
+  "reset": "Reset",
   "resultCount": "{lower} ~ {upper} of {total}",
   "searchPlaceholder": "Search Repositories",
   "sortTypeBestMatch": "Best Match",
@@ -31,6 +32,5 @@
   "title": "Github Repos Search",
   "validationPageNumberIsOutOfRange": "Page number is out of range",
   "validationPleaseEnterANumber": "Please enter a number",
-  "validationPleaseEnterAValidNumber": "Please enter a valid number",
-  "reset": "Reset"
+  "validationPleaseEnterAValidNumber": "Please enter a valid number"
 }
