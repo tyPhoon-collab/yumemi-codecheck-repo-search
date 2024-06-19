@@ -240,6 +240,16 @@ class S {
     );
   }
 
+  /// `Reset`
+  String get reset {
+    return Intl.message(
+      'Reset',
+      name: 'reset',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `{lower} ~ {upper} of {total}`
   String resultCount(Object lower, Object upper, Object total) {
     return Intl.message(
@@ -365,16 +375,6 @@ class S {
     return Intl.message(
       'Please enter a valid number',
       name: 'validationPleaseEnterAValidNumber',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Reset`
-  String get reset {
-    return Intl.message(
-      'Reset',
-      name: 'reset',
       desc: '',
       args: [],
     );
