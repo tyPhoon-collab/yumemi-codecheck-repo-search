@@ -40,7 +40,10 @@ class _RepoSearchBarState extends ConsumerState<RepoSearchBar> {
         if (ref.watch(hasQueryProvider))
           IconButton(
             icon: const Icon(Icons.close),
-            onPressed: ref.read(queryProvider.notifier).reset,
+            onPressed: () {
+              FocusScope.of(context).unfocus();
+              ref.read(queryProvider.notifier).reset();
+            },
           ),
       ],
       padding: const WidgetStatePropertyAll(EdgeInsets.only(left: 16)),
