@@ -32,5 +32,6 @@
   "title": "Github Repos Search",
   "validationPageNumberIsOutOfRange": "Page number is out of range",
   "validationPleaseEnterANumber": "Please enter a number",
-  "validationPleaseEnterAValidNumber": "Please enter a valid number"
+  "validationPleaseEnterAValidNumber": "Please enter a valid number",
+  "reset": "Reset"
 }

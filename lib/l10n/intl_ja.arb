@@ -32,5 +32,6 @@
   "title": "Github Repos Search",
   "validationPageNumberIsOutOfRange": "ページ番号が範囲外です",
   "validationPleaseEnterANumber": "数字を入力してください",
-  "validationPleaseEnterAValidNumber": "有効な数字を入力してください"
+  "validationPleaseEnterAValidNumber": "有効な数字を入力してください",
+  "reset": "リセット"
 }

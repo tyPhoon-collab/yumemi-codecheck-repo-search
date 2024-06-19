@@ -56,6 +56,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "light": MessageLookupByLibrary.simpleMessage("Light"),
         "noResults": MessageLookupByLibrary.simpleMessage("No results found"),
         "ok": MessageLookupByLibrary.simpleMessage("OK"),
+        "reset": MessageLookupByLibrary.simpleMessage("Reset"),
         "resultCount": m2,
         "searchPlaceholder":
             MessageLookupByLibrary.simpleMessage("Search Repositories"),

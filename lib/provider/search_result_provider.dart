@@ -44,6 +44,7 @@ Future<RepoSearchResult?> result(ResultRef ref) async {
           _ => const UnexpectedGRSException(),
         },
       final SocketException _ => const NoInternetGRSException(),
+      final GRSException e => e,
       _ => GRSException(error.toString()),
     };
   }
@@ -99,12 +100,17 @@ class LastPageNumber extends _$LastPageNumber {
 @riverpod
 int? totalCount(TotalCountRef ref) {
   final lastPage = ref.watch(lastPageNumberProvider);
-  final totalCount = ref.watch(resultProvider).value?.totalCount;
-  final perPage = ref.watch(perPageNumberProvider);
 
-  if (lastPage == null || totalCount == null) {
+  if (lastPage == null) return null;
+
+  final int totalCount;
+  try {
+    totalCount = ref.watch(resultProvider).value?.totalCount ?? 0;
+  } catch (error) {
     return null;
   }
+
+  final perPage = ref.watch(perPageNumberProvider);
 
   return min(perPage * lastPage, totalCount);
 }
