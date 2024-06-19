@@ -27,7 +27,10 @@ class GitHubRepoSearchPage extends ConsumerWidget {
               children: [
                 const _TitleWidget(),
                 const RepoSearchBar(),
-                const SortTypeSelection(),
+                if (MediaQuery.orientationOf(context) == Orientation.portrait)
+                  const SortTypeSelection()
+                else
+                  const SizedBox(height: 8),
                 Flexible(
                   child: AnimatedSize(
                     duration: Animations.searched.duration,

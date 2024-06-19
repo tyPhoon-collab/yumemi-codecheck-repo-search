@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
+import 'package:yumemi_codecheck_repo_search/page/widget/sort_type_selection.dart';
 import 'package:yumemi_codecheck_repo_search/provider/search_query_provider.dart';
 
 /// SearchBarというWidgetはすでにあるので、Repoというprefixを使っている
@@ -35,6 +36,8 @@ class _RepoSearchBarState extends ConsumerState<RepoSearchBar> {
       hintText: S.current.searchPlaceholder,
       leading: const Icon(Icons.search),
       trailing: [
+        if (MediaQuery.orientationOf(context) == Orientation.landscape)
+          const SortTypeSelectionByMenu(),
         if (ref.watch(hasQueryProvider))
           IconButton(
             icon: const Icon(Icons.close),
