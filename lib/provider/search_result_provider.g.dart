@@ -6,10 +6,9 @@ part of 'search_result_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$resultHash() => r'76b2555c70dfb9b8b4668c8ad75a6697f7cbfacf';
+String _$resultHash() => r'69c73928e07bad0d515267fdf50f2eed32c4ffbf';
 
 /// エラー時は必ずGitHubRepoServiceExceptionをthrowする
-/// Sが初期化されている必要があり、やや責務が大きいが、一旦おいておく
 ///
 /// Copied from [result].
 @ProviderFor(result)
@@ -23,7 +22,7 @@ final resultProvider = AutoDisposeFutureProvider<RepoSearchResult?>.internal(
 );
 
 typedef ResultRef = AutoDisposeFutureProviderRef<RepoSearchResult?>;
-String _$totalCountHash() => r'9100d7160d8676a5d09eb2d38ec5baf418278599';
+String _$totalCountHash() => r'8d405f243e3c05071f75ed2b5ba16814bf7eb5d7';
 
 /// See also [totalCount].
 @ProviderFor(totalCount)
@@ -37,12 +36,11 @@ final totalCountProvider = AutoDisposeProvider<int?>.internal(
 );
 
 typedef TotalCountRef = AutoDisposeProviderRef<int?>;
-String _$lastPageNumberHash() => r'8c082dbe6a14eec2d82b9de19148f186473522bd';
+String _$lastPageNumberHash() => r'2438b277e6afba4f45a5f133b0bf7a0621a528cb';
 
 /// See also [LastPageNumber].
 @ProviderFor(LastPageNumber)
-final lastPageNumberProvider =
-    AutoDisposeNotifierProvider<LastPageNumber, int?>.internal(
+final lastPageNumberProvider = NotifierProvider<LastPageNumber, int?>.internal(
   LastPageNumber.new,
   name: r'lastPageNumberProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -52,6 +50,6 @@ final lastPageNumberProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$LastPageNumber = AutoDisposeNotifier<int?>;
+typedef _$LastPageNumber = Notifier<int?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

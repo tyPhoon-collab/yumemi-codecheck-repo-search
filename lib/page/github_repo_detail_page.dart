@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:yumemi_codecheck_repo_search/common/brightness_adaptive_svg.dart';
 import 'package:yumemi_codecheck_repo_search/common/launch_url.dart';
 import 'package:yumemi_codecheck_repo_search/common/loading_indicator.dart';
@@ -117,9 +118,24 @@ class _RepoDescription extends StatelessWidget {
             assetName: SvgAssets.code,
             text: language,
           ),
+        const SizedBox(height: 8),
         _RepoPopularitySummaryView(repo: repo),
+        const SizedBox(height: 8),
+        _SVGAndText(
+          assetName: SvgAssets.clock,
+          text: _formatDate(repo.createdDateTime),
+        ),
+        _SVGAndText(
+          assetName: SvgAssets.history,
+          text: _formatDate(repo.updatedDateTime),
+        ),
       ],
     );
+  }
+
+  String _formatDate(DateTime dateTime) {
+    final formatter = DateFormat.yMMMd().add_jm();
+    return formatter.format(dateTime);
   }
 }
 

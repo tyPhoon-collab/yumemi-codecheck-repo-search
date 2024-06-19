@@ -20,7 +20,7 @@ final hasQueryProvider = AutoDisposeProvider<bool>.internal(
 );
 
 typedef HasQueryRef = AutoDisposeProviderRef<bool>;
-String _$queryHash() => r'd00bd4d37fdebf55ae926f1af0672a606d3351f2';
+String _$queryHash() => r'a60ea5c78eec9e334c7154ab733cf0075cf903ac';
 
 /// See also [Query].
 @ProviderFor(Query)
@@ -49,7 +49,7 @@ final sortTypeProvider =
 );
 
 typedef _$SortType = AutoDisposeNotifier<RepoSearchSortType>;
-String _$pageNumberHash() => r'b3ade8ba87eb3988cce9e7f1911edb43d12d7efd';
+String _$pageNumberHash() => r'557e2ebaf4aae740b598cbaec204ff88127f4bc0';
 
 /// See also [PageNumber].
 @ProviderFor(PageNumber)

@@ -260,16 +260,6 @@ class S {
     );
   }
 
-  /// `Sort by: `
-  String get sortBy {
-    return Intl.message(
-      'Sort by: ',
-      name: 'sortBy',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Best Match`
   String get sortTypeBestMatch {
     return Intl.message(
@@ -375,6 +365,16 @@ class S {
     return Intl.message(
       'Please enter a valid number',
       name: 'validationPleaseEnterAValidNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reset`
+  String get reset {
+    return Intl.message(
+      'Reset',
+      name: 'reset',
       desc: '',
       args: [],
     );

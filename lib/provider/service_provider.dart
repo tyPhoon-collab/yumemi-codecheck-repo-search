@@ -8,6 +8,8 @@ part 'service_provider.g.dart';
 
 @Riverpod(keepAlive: true)
 GitHubRepoService gitHubRepoService(GitHubRepoServiceRef ref) {
+  // return const ExceptionalGitHubRepoService(ValidationGRSException());
+
   final dio = Dio(
     BaseOptions(
       headers: {

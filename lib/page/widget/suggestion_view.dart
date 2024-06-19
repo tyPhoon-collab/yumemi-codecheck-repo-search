@@ -18,19 +18,22 @@ class SuggestionsView extends ConsumerWidget {
               child: Column(
                 children: [
                   for (final query in data)
-                    ListTile(
-                      title: Text(query),
-                      leading: const Icon(Icons.history),
-                      trailing: GestureDetector(
-                        onTap: () =>
-                            ref.read(queryHistoryServiceProvider).remove(query),
-                        child: const Icon(Icons.delete),
-                      ),
-                      onTap: () {
-                        FocusScope.of(context).unfocus();
+                    Card(
+                      child: ListTile(
+                        title: Text(query),
+                        leading: const Icon(Icons.history),
+                        trailing: GestureDetector(
+                          onTap: () => ref
+                              .read(queryHistoryServiceProvider)
+                              .remove(query),
+                          child: const Icon(Icons.delete),
+                        ),
+                        onTap: () {
+                          FocusScope.of(context).unfocus();
 
-                        ref.read(queryProvider.notifier).update(query);
-                      },
+                          ref.read(queryProvider.notifier).update(query);
+                        },
+                      ),
                     ),
                 ],
               ),

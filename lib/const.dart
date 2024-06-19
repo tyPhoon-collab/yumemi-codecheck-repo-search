@@ -9,6 +9,8 @@ class SvgAssets {
   static const String star = '$_basePath/star.svg';
   static const String watch = '$_basePath/eye.svg';
   static const String code = '$_basePath/file-code.svg';
+  static const String clock = '$_basePath/clock.svg';
+  static const String history = '$_basePath/history.svg';
 }
 
 class AnimationData {

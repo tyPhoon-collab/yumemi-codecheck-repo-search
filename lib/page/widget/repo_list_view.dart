@@ -7,6 +7,7 @@ import 'package:yumemi_codecheck_repo_search/const.dart';
 import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
 import 'package:yumemi_codecheck_repo_search/model/repo.dart';
 import 'package:yumemi_codecheck_repo_search/page/github_repo_detail_page.dart';
+import 'package:yumemi_codecheck_repo_search/provider/search_query_provider.dart';
 import 'package:yumemi_codecheck_repo_search/provider/search_result_provider.dart';
 import 'package:yumemi_codecheck_repo_search/service/github_repo_service.dart';
 
@@ -21,6 +22,7 @@ class SearchedRepoListView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final result = ref.watch(resultProvider);
+    final colorScheme = Theme.of(context).colorScheme;
 
     return result.when(
       data: (data) {
@@ -33,7 +35,23 @@ class SearchedRepoListView extends ConsumerWidget {
       error: (error, stackTrace) {
         final errorMessage =
             error is GRSException ? error.message : S.current.errorUnexpected;
-        return ErrorText(text: errorMessage);
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const SizedBox(height: 64),
+            ErrorText(text: errorMessage),
+            const SizedBox(height: 8),
+            ElevatedButton.icon(
+              onPressed: ref.read(queryProvider.notifier).reset,
+              label: Text(S.current.reset),
+              icon: const Icon(Icons.refresh),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: colorScheme.errorContainer,
+                foregroundColor: colorScheme.onErrorContainer,
+              ),
+            ),
+          ],
+        );
       },
       loading: () => const Center(child: LoadingIndicator()),
     );
@@ -68,15 +86,22 @@ class RepoListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(repo.fullName),
-      leading: const BrightnessAdaptiveSvg(SvgAssets.repo),
-      subtitle: Text(
-        repo.description ?? '',
-        maxLines: 3,
-        overflow: TextOverflow.ellipsis,
+    final description = repo.description;
+
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      child: ListTile(
+        title: Text(repo.fullName),
+        leading: const BrightnessAdaptiveSvg(SvgAssets.repo),
+        subtitle: description != null && description.isNotEmpty
+            ? Text(
+                description,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+              )
+            : null,
+        onTap: () => _pushToDetail(context),
       ),
-      onTap: () => _pushToDetail(context),
     );
   }
 

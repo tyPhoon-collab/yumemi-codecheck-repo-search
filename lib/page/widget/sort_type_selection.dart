@@ -1,4 +1,3 @@
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
@@ -27,66 +26,33 @@ enum RepoSearchSortType {
       };
 }
 
-class SortTypeSelection extends ConsumerWidget {
+class SortTypeSelection extends ConsumerStatefulWidget {
   const SortTypeSelection({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: DropdownButton2(
-        value: ref.watch(sortTypeProvider),
-        isExpanded: true,
-        selectedItemBuilder: (context) => _buildSelectedItems(context).toList(),
-        items: _buildItems(context).toList(),
-        dropdownStyleData: DropdownStyleData(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(32),
+  ConsumerState<SortTypeSelection> createState() => _SortTypeSelectionState();
+}
+
+class _SortTypeSelectionState extends ConsumerState<SortTypeSelection> {
+  final _controller = MenuController();
+
+  @override
+  Widget build(BuildContext context) {
+    return MenuAnchor(
+      controller: _controller,
+      menuChildren: [
+        for (final sortType in RepoSearchSortType.values)
+          MenuItemButton(
+            leadingIcon: Icon(sortType.iconData),
+            onPressed: () =>
+                ref.read(sortTypeProvider.notifier).update(sortType),
+            child: Text(sortType.displayName),
           ),
-        ),
-        onChanged: (value) {
-          if (value != null) {
-            ref.read(sortTypeProvider.notifier).update(value);
-          }
-        },
+      ],
+      child: IconButton(
+        onPressed: _controller.open,
+        icon: Icon(ref.watch(sortTypeProvider).iconData),
       ),
     );
-  }
-
-  Iterable<DropdownMenuItem<RepoSearchSortType>> _buildItems(
-    BuildContext context,
-  ) sync* {
-    for (final sortType in RepoSearchSortType.values) {
-      yield DropdownMenuItem(
-        value: sortType,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(sortType.iconData),
-            const SizedBox(width: 8),
-            Text(sortType.displayName),
-          ],
-        ),
-      );
-    }
-  }
-
-  Iterable<Widget> _buildSelectedItems(BuildContext context) sync* {
-    for (final sortType in RepoSearchSortType.values) {
-      yield Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(sortType.iconData),
-          const SizedBox(width: 8),
-          DefaultTextStyle.merge(
-            style: TextStyle(
-              color: Theme.of(context).colorScheme.outline,
-            ),
-            child: Text(S.current.sortBy),
-          ),
-          Text(sortType.displayName),
-        ],
-      );
-    }
   }
 }

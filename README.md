@@ -81,3 +81,14 @@ Tools • Dart 3.4.3 • DevTools 2.34.3
 ### 6/19
 
 - テストをカバレッジ97%程度まで実装
+- UI/UXの向上
+  - 特に、ソート手法を選択するUIは、選択肢としてPopupMenuButtonとMenuAnchor、DropdownButtonとDropdownMenuなど、同じ機能をもつWidgetが複数あり、どれを使うべきか悩んだ
+  - 結果として、MenuAnchorを採用した
+    - Material 3に対応したWidgetである。[参考](https://api.flutter.dev/flutter/material/PopupMenuButton-class.html)
+    - 個人的に、直感的なコードが書ける
+    - Dropdownと比べて必要なスペースが少ない
+      - 横画面対応の際に有利
+      - SearchBarにIconButtonとして配置。配置するボタンは２個まで許されている。[参考](https://m3.material.io/components/search/guidelines)
+      - 唯一のデメリットとして、カスタマイズ性が低いことが挙げられる
+        - アニメーションの設定などができない
+        - サードパーティのパッケージや自前実装を検討しても良いかもしれない

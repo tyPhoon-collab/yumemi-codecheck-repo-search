@@ -150,6 +150,7 @@ class _ClearAllHistoryListTile extends ConsumerWidget {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(S.current.clearHistorySuccess),
+                  showCloseIcon: true,
                 ),
               );
             },

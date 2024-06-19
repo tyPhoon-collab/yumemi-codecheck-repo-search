@@ -18,6 +18,23 @@ abstract class GitHubRepoService {
   });
 }
 
+/// エラーをチェックする際に便利なクラス
+class ExceptionalGitHubRepoService implements GitHubRepoService {
+  const ExceptionalGitHubRepoService(this._exception);
+
+  final Exception _exception;
+
+  @override
+  Future<HttpResponse<RepoSearchResult>> searchRepositories(
+    String query, {
+    int? page,
+    int? perPage,
+    String? sort,
+  }) async {
+    throw _exception;
+  }
+}
+
 typedef GRSException = GitHubRepoServiceException;
 
 class GitHubRepoServiceException implements Exception {

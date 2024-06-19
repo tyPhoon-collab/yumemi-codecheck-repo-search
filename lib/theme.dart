@@ -20,5 +20,8 @@ ThemeData _buildTheme(ThemeData base, ColorScheme colorScheme) {
     colorScheme: colorScheme,
     // もし全体で変えるテーマがあればここに書くことで、ダークモードとともに適用できる
     // textTheme: base.textTheme.copyWith(...)  // 例）フォントを変える時
+    snackBarTheme: base.snackBarTheme.copyWith(
+      behavior: SnackBarBehavior.floating,
+    ),
   );
 }

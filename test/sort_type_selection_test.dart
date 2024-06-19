@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -25,11 +23,14 @@ void main() {
     await tester.pumpAndSettle();
   }
 
+  Future<void> tapSelection(WidgetTester tester) async {
+    await tester.tapAndSettle(find.byType(SortTypeSelection));
+  }
+
   testWidgets('displays dropdown with correct items',
       (WidgetTester tester) async {
     await buildWidget(tester);
-
-    await tester.tapAndSettle(find.text(S.current.sortBy));
+    await tapSelection(tester);
 
     for (final sortType in RepoSearchSortType.values) {
       expect(find.text(sortType.displayName), findsWidgets);
@@ -42,17 +43,17 @@ void main() {
     final container = tester.container();
 
     final firstSortType = container.read(sortTypeProvider);
-    final secondSortType = RepoSearchSortType.values
-        .elementAt(Random().nextInt(RepoSearchSortType.values.length));
+    const secondSortType = RepoSearchSortType.updated;
 
-    expect(find.text(firstSortType.displayName), findsOneWidget);
-    expect(find.text(secondSortType.displayName), findsNothing);
+    expect(find.byIcon(firstSortType.iconData), findsOneWidget);
+    expect(find.byIcon(secondSortType.iconData), findsNothing);
 
-    await tester.tapAndSettle(find.text(S.current.sortBy));
+    await tapSelection(tester);
+
     await tester.tapAndSettle(find.text(secondSortType.displayName).last);
 
-    expect(find.text(firstSortType.displayName), findsNothing);
-    expect(find.text(secondSortType.displayName), findsOneWidget);
+    expect(find.byIcon(firstSortType.iconData), findsNothing);
+    expect(find.byIcon(secondSortType.iconData), findsOneWidget);
     expect(tester.container().read(sortTypeProvider), secondSortType);
   });
 }

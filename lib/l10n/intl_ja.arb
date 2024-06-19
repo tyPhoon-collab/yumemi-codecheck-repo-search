@@ -21,7 +21,6 @@
   "ok": "OK",
   "resultCount": "{total} 件中 {lower}〜{upper} 件",
   "searchPlaceholder": "Repositoryを検索",
-  "sortBy": "並び替え: ",
   "sortTypeBestMatch": "ベストマッチ",
   "sortTypeForks": "フォーク",
   "sortTypeHelpWantedIssues": "Help Wanted イシュー",
@@ -32,5 +31,6 @@
   "title": "Github Repos Search",
   "validationPageNumberIsOutOfRange": "ページ番号が範囲外です",
   "validationPleaseEnterANumber": "数字を入力してください",
-  "validationPleaseEnterAValidNumber": "有効な数字を入力してください"
+  "validationPleaseEnterAValidNumber": "有効な数字を入力してください",
+  "reset": "リセット"
 }

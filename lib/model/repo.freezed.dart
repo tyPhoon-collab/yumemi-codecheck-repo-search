@@ -22,6 +22,7 @@ Repo _$RepoFromJson(Map<String, dynamic> json) {
 mixin _$Repo {
   int get id => throw _privateConstructorUsedError;
   String get createdAt => throw _privateConstructorUsedError;
+  String get updatedAt => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get fullName => throw _privateConstructorUsedError;
   String get htmlUrl => throw _privateConstructorUsedError;
@@ -46,6 +47,7 @@ abstract class $RepoCopyWith<$Res> {
   $Res call(
       {int id,
       String createdAt,
+      String updatedAt,
       String name,
       String fullName,
       String htmlUrl,
@@ -75,6 +77,7 @@ class _$RepoCopyWithImpl<$Res, $Val extends Repo>
   $Res call({
     Object? id = null,
     Object? createdAt = null,
+    Object? updatedAt = null,
     Object? name = null,
     Object? fullName = null,
     Object? htmlUrl = null,
@@ -94,6 +97,10 @@ class _$RepoCopyWithImpl<$Res, $Val extends Repo>
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
               as String,
       name: null == name
           ? _value.name
@@ -157,6 +164,7 @@ abstract class _$$RepoImplCopyWith<$Res> implements $RepoCopyWith<$Res> {
   $Res call(
       {int id,
       String createdAt,
+      String updatedAt,
       String name,
       String fullName,
       String htmlUrl,
@@ -184,6 +192,7 @@ class __$$RepoImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? createdAt = null,
+    Object? updatedAt = null,
     Object? name = null,
     Object? fullName = null,
     Object? htmlUrl = null,
@@ -203,6 +212,10 @@ class __$$RepoImplCopyWithImpl<$Res>
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
               as String,
       name: null == name
           ? _value.name
@@ -251,10 +264,11 @@ class __$$RepoImplCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(explicitToJson: true, fieldRename: FieldRename.snake)
-class _$RepoImpl implements _Repo {
+class _$RepoImpl extends _Repo {
   const _$RepoImpl(
       {required this.id,
       required this.createdAt,
+      required this.updatedAt,
       required this.name,
       required this.fullName,
       required this.htmlUrl,
@@ -264,7 +278,8 @@ class _$RepoImpl implements _Repo {
       required this.openIssuesCount,
       required this.owner,
       this.description,
-      this.language});
+      this.language})
+      : super._();
 
   factory _$RepoImpl.fromJson(Map<String, dynamic> json) =>
       _$$RepoImplFromJson(json);
@@ -273,6 +288,8 @@ class _$RepoImpl implements _Repo {
   final int id;
   @override
   final String createdAt;
+  @override
+  final String updatedAt;
   @override
   final String name;
   @override
@@ -296,7 +313,7 @@ class _$RepoImpl implements _Repo {
 
   @override
   String toString() {
-    return 'Repo(id: $id, createdAt: $createdAt, name: $name, fullName: $fullName, htmlUrl: $htmlUrl, stargazersCount: $stargazersCount, watchersCount: $watchersCount, forksCount: $forksCount, openIssuesCount: $openIssuesCount, owner: $owner, description: $description, language: $language)';
+    return 'Repo(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, name: $name, fullName: $fullName, htmlUrl: $htmlUrl, stargazersCount: $stargazersCount, watchersCount: $watchersCount, forksCount: $forksCount, openIssuesCount: $openIssuesCount, owner: $owner, description: $description, language: $language)';
   }
 
   @override
@@ -307,6 +324,8 @@ class _$RepoImpl implements _Repo {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.fullName, fullName) ||
                 other.fullName == fullName) &&
@@ -332,6 +351,7 @@ class _$RepoImpl implements _Repo {
       runtimeType,
       id,
       createdAt,
+      updatedAt,
       name,
       fullName,
       htmlUrl,
@@ -357,10 +377,11 @@ class _$RepoImpl implements _Repo {
   }
 }
 
-abstract class _Repo implements Repo {
+abstract class _Repo extends Repo {
   const factory _Repo(
       {required final int id,
       required final String createdAt,
+      required final String updatedAt,
       required final String name,
       required final String fullName,
       required final String htmlUrl,
@@ -371,6 +392,7 @@ abstract class _Repo implements Repo {
       required final Owner owner,
       final String? description,
       final String? language}) = _$RepoImpl;
+  const _Repo._() : super._();
 
   factory _Repo.fromJson(Map<String, dynamic> json) = _$RepoImpl.fromJson;
 
@@ -378,6 +400,8 @@ abstract class _Repo implements Repo {
   int get id;
   @override
   String get createdAt;
+  @override
+  String get updatedAt;
   @override
   String get name;
   @override

@@ -21,7 +21,6 @@
   "ok": "OK",
   "resultCount": "{lower} ~ {upper} of {total}",
   "searchPlaceholder": "Search Repositories",
-  "sortBy": "Sort by: ",
   "sortTypeBestMatch": "Best Match",
   "sortTypeForks": "Forks",
   "sortTypeHelpWantedIssues": "Help Wanted Issues",
@@ -32,5 +31,6 @@
   "title": "Github Repos Search",
   "validationPageNumberIsOutOfRange": "Page number is out of range",
   "validationPleaseEnterANumber": "Please enter a number",
-  "validationPleaseEnterAValidNumber": "Please enter a valid number"
+  "validationPleaseEnterAValidNumber": "Please enter a valid number",
+  "reset": "Reset"
 }
