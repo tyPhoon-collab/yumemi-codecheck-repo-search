@@ -27,6 +27,7 @@ class _GitHubRepoSearchPageState extends ConsumerState<GitHubRepoSearchPage> {
   Widget build(BuildContext context) {
     final isPortrait =
         MediaQuery.of(context).orientation == Orientation.portrait;
+    final hasQuery = ref.watch(hasQueryProvider);
 
     return Scaffold(
       body: SafeArea(
@@ -46,7 +47,7 @@ class _GitHubRepoSearchPageState extends ConsumerState<GitHubRepoSearchPage> {
                   child: AnimatedSize(
                     duration: Animations.searched.duration,
                     curve: Animations.searched.curve,
-                    child: ref.watch(hasQueryProvider)
+                    child: hasQuery
                         ? NotificationListener<ScrollNotification>(
                             onNotification: _onScrollNotification,
                             child: SearchedRepoListView(
@@ -65,16 +66,11 @@ class _GitHubRepoSearchPageState extends ConsumerState<GitHubRepoSearchPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton.small(
-        onPressed: () => Navigator.of(context).push(
-          MaterialPageRoute<void>(
-            builder: (context) => const SettingsPage(),
-            fullscreenDialog: true,
-          ),
-        ),
+        onPressed: _pushToSettings,
         child: const Icon(Icons.settings),
       ),
       persistentFooterAlignment: AlignmentDirectional.center,
-      persistentFooterButtons: ref.watch(hasQueryProvider) && _showCurrentPage
+      persistentFooterButtons: hasQuery && _showCurrentPage
           ? [
               ChangePageNumberIconButton.first(),
               ChangePageNumberIconButton.prev(),
@@ -100,6 +96,15 @@ class _GitHubRepoSearchPageState extends ConsumerState<GitHubRepoSearchPage> {
     }
     return true;
   }
+
+  void _pushToSettings() {
+    Navigator.of(context).push<void>(
+      MaterialPageRoute(
+        builder: (context) => const SettingsPage(),
+        fullscreenDialog: true,
+      ),
+    );
+  }
 }
 
 class _TitleWidget extends ConsumerWidget {
@@ -108,12 +113,12 @@ class _TitleWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final textTheme = Theme.of(context).textTheme;
+    final hasQuery = ref.watch(hasQueryProvider);
+
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(hasQuery ? 4 : 16),
       child: AnimatedDefaultTextStyle(
-        style: (ref.watch(hasQueryProvider)
-                ? textTheme.titleMedium!
-                : textTheme.headlineMedium!)
+        style: (hasQuery ? textTheme.titleMedium! : textTheme.headlineMedium!)
             .copyWith(fontWeight: FontWeight.bold),
         duration: Animations.searched.duration,
         curve: Animations.searched.curve,

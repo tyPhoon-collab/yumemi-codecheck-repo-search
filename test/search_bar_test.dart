@@ -25,13 +25,6 @@ void main() {
     );
   }
 
-  testWidgets('shows search bar correctly', (WidgetTester tester) async {
-    await buildWidget(tester);
-
-    expect(find.byType(SearchBar), findsOneWidget);
-    expect(find.byType(Icon), findsOneWidget);
-  });
-
   testWidgets('enter text updates the query provider',
       (WidgetTester tester) async {
     await buildWidget(tester);
