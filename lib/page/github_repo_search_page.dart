@@ -12,11 +12,22 @@ import 'package:yumemi_codecheck_repo_search/page/widget/suggestion_view.dart';
 import 'package:yumemi_codecheck_repo_search/provider/search_query_provider.dart';
 import 'package:yumemi_codecheck_repo_search/provider/search_result_provider.dart';
 
-class GitHubRepoSearchPage extends ConsumerWidget {
+class GitHubRepoSearchPage extends ConsumerStatefulWidget {
   const GitHubRepoSearchPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<GitHubRepoSearchPage> createState() =>
+      _GitHubRepoSearchPageState();
+}
+
+class _GitHubRepoSearchPageState extends ConsumerState<GitHubRepoSearchPage> {
+  bool _showCurrentPage = true;
+
+  @override
+  Widget build(BuildContext context) {
+    final isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -27,7 +38,7 @@ class GitHubRepoSearchPage extends ConsumerWidget {
               children: [
                 const _TitleWidget(),
                 const RepoSearchBar(),
-                if (MediaQuery.orientationOf(context) == Orientation.portrait)
+                if (isPortrait)
                   const SortTypeSelection()
                 else
                   const SizedBox(height: 8),
@@ -36,8 +47,14 @@ class GitHubRepoSearchPage extends ConsumerWidget {
                     duration: Animations.searched.duration,
                     curve: Animations.searched.curve,
                     child: ref.watch(hasQueryProvider)
-                        ? const SearchedRepoListView(
-                            padding: EdgeInsets.only(top: 4, bottom: 32),
+                        ? NotificationListener<ScrollNotification>(
+                            onNotification: _onScrollNotification,
+                            child: SearchedRepoListView(
+                              padding: EdgeInsets.only(
+                                top: 4,
+                                bottom: isPortrait ? 4 : 68,
+                              ),
+                            ),
                           )
                         : const SuggestionsView(),
                   ),
@@ -57,7 +74,7 @@ class GitHubRepoSearchPage extends ConsumerWidget {
         child: const Icon(Icons.settings),
       ),
       persistentFooterAlignment: AlignmentDirectional.center,
-      persistentFooterButtons: ref.watch(hasQueryProvider)
+      persistentFooterButtons: ref.watch(hasQueryProvider) && _showCurrentPage
           ? [
               ChangePageNumberIconButton.first(),
               ChangePageNumberIconButton.prev(),
@@ -69,6 +86,19 @@ class GitHubRepoSearchPage extends ConsumerWidget {
             ]
           : null,
     );
+  }
+
+  bool _onScrollNotification(ScrollNotification notification) {
+    final metrics = notification.metrics;
+    final showCurrentPage = metrics.pixels == metrics.maxScrollExtent ||
+        MediaQuery.orientationOf(context) == Orientation.portrait;
+
+    if (_showCurrentPage != showCurrentPage) {
+      setState(() {
+        _showCurrentPage = showCurrentPage;
+      });
+    }
+    return true;
   }
 }
 

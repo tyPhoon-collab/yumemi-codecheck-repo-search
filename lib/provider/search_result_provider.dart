@@ -49,7 +49,7 @@ Future<RepoSearchResult?> result(ResultRef ref) async {
   }
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class LastPageNumber extends _$LastPageNumber {
   @override
   int? build() => null;
