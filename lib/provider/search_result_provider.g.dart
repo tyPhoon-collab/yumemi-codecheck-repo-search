@@ -6,7 +6,7 @@ part of 'search_result_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$resultHash() => r'36f6380ffdb056d295d744b6f38700496ec564af';
+String _$resultHash() => r'69c73928e07bad0d515267fdf50f2eed32c4ffbf';
 
 /// エラー時は必ずGitHubRepoServiceExceptionをthrowする
 ///
@@ -22,7 +22,7 @@ final resultProvider = AutoDisposeFutureProvider<RepoSearchResult?>.internal(
 );
 
 typedef ResultRef = AutoDisposeFutureProviderRef<RepoSearchResult?>;
-String _$totalCountHash() => r'9100d7160d8676a5d09eb2d38ec5baf418278599';
+String _$totalCountHash() => r'8d405f243e3c05071f75ed2b5ba16814bf7eb5d7';
 
 /// See also [totalCount].
 @ProviderFor(totalCount)

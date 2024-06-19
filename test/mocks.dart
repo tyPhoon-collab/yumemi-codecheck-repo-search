@@ -58,6 +58,7 @@ void registerMockGitHubRepoServiceWhen(
 Repo generateRepo({
   int? id,
   String? createdAt,
+  String? updatedAt,
   String? name,
   String? fullName,
   String? htmlUrl,
@@ -72,6 +73,7 @@ Repo generateRepo({
     Repo(
       id: id ?? faker.randomGenerator.integer(100000),
       createdAt: createdAt ?? faker.date.dateTime().toIso8601String(),
+      updatedAt: updatedAt ?? faker.date.dateTime().toIso8601String(),
       name: name ?? faker.lorem.word(),
       fullName: fullName ?? '${faker.lorem.word()}/${faker.lorem.word()}',
       htmlUrl: htmlUrl ?? '',

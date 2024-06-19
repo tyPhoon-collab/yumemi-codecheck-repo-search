@@ -10,6 +10,7 @@ class Repo with _$Repo {
   const factory Repo({
     required int id,
     required String createdAt,
+    required String updatedAt,
     required String name,
     required String fullName,
     required String htmlUrl,
@@ -23,4 +24,10 @@ class Repo with _$Repo {
   }) = _Repo;
 
   factory Repo.fromJson(Map<String, dynamic> json) => _$RepoFromJson(json);
+
+  const Repo._();
+
+  DateTime get createdDateTime => DateTime.parse(createdAt);
+
+  DateTime get updatedDateTime => DateTime.parse(updatedAt);
 }
