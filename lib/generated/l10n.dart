@@ -260,16 +260,6 @@ class S {
     );
   }
 
-  /// `Sort by: `
-  String get sortBy {
-    return Intl.message(
-      'Sort by: ',
-      name: 'sortBy',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Best Match`
   String get sortTypeBestMatch {
     return Intl.message(

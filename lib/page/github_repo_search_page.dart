@@ -7,7 +7,6 @@ import 'package:yumemi_codecheck_repo_search/page/widget/change_page_number_icon
 import 'package:yumemi_codecheck_repo_search/page/widget/current_page_number.dart';
 import 'package:yumemi_codecheck_repo_search/page/widget/repo_list_view.dart';
 import 'package:yumemi_codecheck_repo_search/page/widget/search_bar.dart';
-import 'package:yumemi_codecheck_repo_search/page/widget/sort_type_selection.dart';
 import 'package:yumemi_codecheck_repo_search/page/widget/suggestion_view.dart';
 import 'package:yumemi_codecheck_repo_search/provider/search_query_provider.dart';
 import 'package:yumemi_codecheck_repo_search/provider/search_result_provider.dart';
@@ -39,10 +38,7 @@ class _GitHubRepoSearchPageState extends ConsumerState<GitHubRepoSearchPage> {
               children: [
                 const _TitleWidget(),
                 const RepoSearchBar(),
-                if (isPortrait)
-                  const SortTypeSelection()
-                else
-                  const SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Flexible(
                   child: AnimatedSize(
                     duration: Animations.searched.duration,

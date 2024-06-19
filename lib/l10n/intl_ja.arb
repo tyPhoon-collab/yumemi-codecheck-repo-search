@@ -21,7 +21,6 @@
   "ok": "OK",
   "resultCount": "{total} 件中 {lower}〜{upper} 件",
   "searchPlaceholder": "Repositoryを検索",
-  "sortBy": "並び替え: ",
   "sortTypeBestMatch": "ベストマッチ",
   "sortTypeForks": "フォーク",
   "sortTypeHelpWantedIssues": "Help Wanted イシュー",

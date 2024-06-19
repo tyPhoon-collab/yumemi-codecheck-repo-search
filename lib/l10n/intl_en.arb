@@ -21,7 +21,6 @@
   "ok": "OK",
   "resultCount": "{lower} ~ {upper} of {total}",
   "searchPlaceholder": "Search Repositories",
-  "sortBy": "Sort by: ",
   "sortTypeBestMatch": "Best Match",
   "sortTypeForks": "Forks",
   "sortTypeHelpWantedIssues": "Help Wanted Issues",

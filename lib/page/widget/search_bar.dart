@@ -36,8 +36,7 @@ class _RepoSearchBarState extends ConsumerState<RepoSearchBar> {
       hintText: S.current.searchPlaceholder,
       leading: const Icon(Icons.search),
       trailing: [
-        if (MediaQuery.orientationOf(context) == Orientation.landscape)
-          const SortTypeSelectionByMenu(),
+        const SortTypeSelection(),
         if (ref.watch(hasQueryProvider))
           IconButton(
             icon: const Icon(Icons.close),

@@ -60,7 +60,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "resultCount": m2,
         "searchPlaceholder":
             MessageLookupByLibrary.simpleMessage("Repositoryを検索"),
-        "sortBy": MessageLookupByLibrary.simpleMessage("並び替え: "),
         "sortTypeBestMatch": MessageLookupByLibrary.simpleMessage("ベストマッチ"),
         "sortTypeForks": MessageLookupByLibrary.simpleMessage("フォーク"),
         "sortTypeHelpWantedIssues":

@@ -1,4 +1,3 @@
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
@@ -27,108 +26,33 @@ enum RepoSearchSortType {
       };
 }
 
-class SortTypeSelection extends ConsumerWidget {
+class SortTypeSelection extends ConsumerStatefulWidget {
   const SortTypeSelection({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return DropdownButton2(
-      value: ref.watch(sortTypeProvider),
-      isExpanded: true,
-      selectedItemBuilder: (context) => _buildSelectedItems(context).toList(),
-      items: _buildItems(context).toList(),
-      dropdownStyleData: DropdownStyleData(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(32),
-        ),
-      ),
-      onChanged: (value) {
-        if (value != null) {
-          ref.read(sortTypeProvider.notifier).update(value);
-        }
-      },
-    );
-  }
-
-  Iterable<DropdownMenuItem<RepoSearchSortType>> _buildItems(
-    BuildContext context,
-  ) sync* {
-    for (final sortType in RepoSearchSortType.values) {
-      yield DropdownMenuItem(
-        value: sortType,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _SortTypeSymbolIcon(sortType: sortType),
-            const SizedBox(width: 16),
-            Text(sortType.displayName),
-          ],
-        ),
-      );
-    }
-  }
-
-  Iterable<Widget> _buildSelectedItems(BuildContext context) sync* {
-    for (final sortType in RepoSearchSortType.values) {
-      yield Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _SortTypeSymbolIcon(sortType: sortType),
-          const SizedBox(width: 16),
-          DefaultTextStyle.merge(
-            style: TextStyle(
-              color: Theme.of(context).colorScheme.outline,
-            ),
-            child: Text(S.current.sortBy),
-          ),
-          Text(sortType.displayName),
-        ],
-      );
-    }
-  }
+  ConsumerState<SortTypeSelection> createState() => _SortTypeSelectionState();
 }
 
-class SortTypeSelectionByMenu extends ConsumerWidget {
-  const SortTypeSelectionByMenu({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return PopupMenuButton(
-      itemBuilder: (context) => _buildItems(context).toList(),
-      onSelected: ref.read(sortTypeProvider.notifier).update,
-      icon: Icon(ref.watch(sortTypeProvider).iconData),
-    );
-  }
-
-  Iterable<PopupMenuItem<RepoSearchSortType>> _buildItems(
-    BuildContext context,
-  ) sync* {
-    for (final sortType in RepoSearchSortType.values) {
-      yield PopupMenuItem(
-        value: sortType,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _SortTypeSymbolIcon(sortType: sortType),
-            const SizedBox(width: 16),
-            Text(sortType.displayName),
-          ],
-        ),
-      );
-    }
-  }
-}
-
-class _SortTypeSymbolIcon extends StatelessWidget {
-  const _SortTypeSymbolIcon({required this.sortType});
-
-  final RepoSearchSortType sortType;
+class _SortTypeSelectionState extends ConsumerState<SortTypeSelection> {
+  final _controller = MenuController();
 
   @override
   Widget build(BuildContext context) {
-    return Icon(
-      sortType.iconData,
-      color: Theme.of(context).colorScheme.onSurface,
+    return MenuAnchor(
+      controller: _controller,
+      menuChildren: [
+        for (final sortType in RepoSearchSortType.values)
+          MenuItemButton(
+            leadingIcon: Icon(sortType.iconData),
+            onPressed: () =>
+                ref.read(sortTypeProvider.notifier).update(sortType),
+            child: Text(sortType.displayName),
+          ),
+      ],
+      child: IconButton(
+        onPressed: _controller.open,
+        icon: Icon(ref.watch(sortTypeProvider).iconData),
+      ),
     );
   }
 }
