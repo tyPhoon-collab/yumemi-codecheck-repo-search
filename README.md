@@ -21,9 +21,42 @@ Tools • Dart 3.4.3 • DevTools 2.34.3
 | メモリ | 16GB         |
 | macOS  | Sonoma 14.5  |
 
+### bashファイル
+
+便利なbashファイルを2つ用意している
+
+- calculate_coverage.sh
+  - カバレッジを計算する。UI, Widget, Integrationテストのカバレッジを計算し、lcovファイルをマージする。その際に、カバレッジで考慮するべきでないファイルを除去する
+  - lcovコマンドをインストールする必要がある
+    - `brew install lcov`
+- arb_sort.sh
+  - arbファイルをソートする。ローカライズの値を探すときに便利になる
+  - 実行すると`arb_utils`がインストールされます
+
+### デプロイ
+
+デプロイ環境は用意していない。ただし、ブランチをmain, devに分けて管理していて、mainブランチはリリース可能なコードがあるとする。そのため、[Codemagic](https://codemagic.io/apps)などでmainのプッシュを監視すれば、プッシュ＋リリースノートの記述のみでリリースできる想定
+
 ## アピールする点
 
 <!-- TODO 後でまとめる -->
+- レビューのしやすさ
+  - issue, pull requestを積極的に使用
+- Git
+  - mainとdevを分けて運用。devに対してPR
+  - PRの使用
+- 簡潔性・可読性・安全性・保守性の高いコード
+  - very_good_analysisの導入による可読性の高く、一貫性のあるコード
+  - cSpellによるタイポの制御
+- Dart の言語機能を適切に使いこなせているか
+  - 新しい機能であるブランチ構文などを使用
+- テスト
+  - riverpodを用いたDI
+  - 高いテストのカバレッジ
+- UI/UX
+  - Material 3 に則ったデザイン
+- CI/CD
+  - GitHub Actions による`flutter test`の自動化
 
 ## 開発日記
 
@@ -65,11 +98,11 @@ Tools • Dart 3.4.3 • DevTools 2.34.3
 
 ### 6/18
 
-- ページ機能の追加
+- 改ページ機能の追加
   - ドキュメントを良く読んでいなかった、かつ、知識不足で時間を取られた
   - [ここ](https://docs.github.com/ja/rest/using-the-rest-api/using-pagination-in-the-rest-api?apiVersion=2022-11-28)に詳しく書いてあるが、応答ヘッダーに次のページや最後のページの情報が含まれている。bodyのtotalCountが大きな値であっても、最大のページ数が決まっている
     - ただし、可用性を意識して書いていたため、サービスクラスのシグネチャを変えても、たった三箇所の修正で済んだ
-      - 具体的には、サービスクラスをProviderでラップすることによって、クライアントコードの変更は一切なく、プロバイダーのシグネチャを変更する修正で済んだ
+      - 具体的には、サービスクラスをProviderでラップすることによって、クライアントコードの変更は一切なく、プロバイダーの実装を変更する修正で済んだ
       - 同様にテストコードにおいても、意味的に共通な部分は共通化しておいたので、問題なく対応できた
 
 - リファクタリング
@@ -77,13 +110,16 @@ Tools • Dart 3.4.3 • DevTools 2.34.3
   - 冗長な名前を修正
     - 名前の命名規則を決めるべきだった
     - 特にProviderはシンプルな名前のほうが良いと感じた
+      - ex) repoSearchResultProvider -> resultProvider
+      - 基本的にProviderというsuffixがつくので、名前が衝突しにくい
 
 ### 6/19
 
 - テストをカバレッジ97%程度まで実装
 - UI/UXの向上
+  - 横画面でも問題ないようにUIを改善
   - 特に、ソート手法を選択するUIは、選択肢としてPopupMenuButtonとMenuAnchor、DropdownButtonとDropdownMenuなど、同じ機能をもつWidgetが複数あり、どれを使うべきか悩んだ
-  - 結果として、MenuAnchorを採用した
+  - 結果として、[MenuAnchor](https://api.flutter.dev/flutter/material/MenuAnchor-class.html)を採用した
     - Material 3に対応したWidgetである。[参考](https://api.flutter.dev/flutter/material/PopupMenuButton-class.html)
     - 個人的に、直感的なコードが書ける
     - Dropdownと比べて必要なスペースが少ない
@@ -92,3 +128,7 @@ Tools • Dart 3.4.3 • DevTools 2.34.3
       - 唯一のデメリットとして、カスタマイズ性が低いことが挙げられる
         - アニメーションの設定などができない
         - サードパーティのパッケージや自前実装を検討しても良いかもしれない
+
+### 6/20
+
+- READMEを更新
