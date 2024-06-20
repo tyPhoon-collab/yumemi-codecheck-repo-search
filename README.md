@@ -5,6 +5,7 @@
 ## 開発環境
 
 [![style: very good analysis](https://img.shields.io/badge/style-very_good_analysis-B22C89.svg)](https://pub.dev/packages/very_good_analysis)
+[![codecov](https://codecov.io/gh/tyPhoon-collab/yumemi-codecheck-repo-search/graph/badge.svg?token=SnTnvzjge7)](https://codecov.io/gh/tyPhoon-collab/yumemi-codecheck-repo-search)
 
 ```bash
 $ flutter --version
