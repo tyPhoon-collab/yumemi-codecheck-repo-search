@@ -45,18 +45,27 @@ Tools • Dart 3.4.3 • DevTools 2.34.3
 - Git
   - mainとdevを分けて運用。devに対してPR
   - PRの使用
+  - コミットは極力意味で分けるようにし、コミットメッセージにprefixを付与
+    - ex) Update, Fix, Change, Rename, Add...
 - 簡潔性・可読性・安全性・保守性の高いコード
-  - very_good_analysisの導入による可読性の高く、一貫性のあるコード
   - cSpellによるタイポの制御
 - Dart の言語機能を適切に使いこなせているか
   - 新しい機能であるブランチ構文などを使用
 - テスト
   - riverpodを用いたDI
+    - モックの置き換えが簡単
+    - ex) overrideWith, overrideWithValue
+  - mocktailの導入
+    - 柔軟なモック
+    - ex) when(() => MockClass).thenAnswer((_) => value)
   - 高いテストのカバレッジ
 - UI/UX
   - Material 3 に則ったデザイン
+  - 横画面の対応
 - CI/CD
   - GitHub Actions による`flutter test`の自動化
+  - very_good_analysisの導入
+  - [デプロイ](#デプロイ)
 
 ## 開発日記
 
