@@ -213,7 +213,7 @@ class _SVGAndText extends StatelessWidget {
       children: [
         BrightnessAdaptiveSvg(assetName),
         const SizedBox(width: 4),
-        Text(text),
+        Flexible(child: Text(text)),
       ],
     );
   }
