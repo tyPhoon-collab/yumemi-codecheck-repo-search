@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:faker/faker.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:url_launcher_platform_interface/url_launcher_platform_interface.dart';
 import 'package:yumemi_codecheck_repo_search/model/owner.dart';
 import 'package:yumemi_codecheck_repo_search/model/repo.dart';
 import 'package:yumemi_codecheck_repo_search/model/repo_search_result.dart';
@@ -11,6 +13,11 @@ import 'package:yumemi_codecheck_repo_search/service/query_history_service.dart'
 class MockGitHubRepoService extends Mock implements GitHubRepoService {}
 
 class MockQueryHistoryService extends Mock implements QueryHistoryService {}
+
+// https://stackoverflow.com/questions/72026825/how-to-mock-url-launcher-package-for-flutter-test
+class MockUrlLauncher extends Mock
+    with MockPlatformInterfaceMixin
+    implements UrlLauncherPlatform {}
 
 /// Prefsを使わず、メモリ上で履歴を管理する。後片付けがいらない上、書き込みしないので速い
 void registerMockQueryHistoryServiceWhens(
@@ -55,6 +62,12 @@ void registerMockGitHubRepoServiceWhen(
   }
 }
 
+void registerMockUrlLauncherWhen(MockUrlLauncher mock) {
+  registerFallbackValue(const LaunchOptions());
+  UrlLauncherPlatform.instance = mock;
+  when(() => mock.launchUrl(any(), any())).thenAnswer((_) async => true);
+}
+
 Repo generateRepo({
   int? id,
   String? createdAt,
@@ -76,7 +89,7 @@ Repo generateRepo({
       updatedAt: updatedAt ?? faker.date.dateTime().toIso8601String(),
       name: name ?? faker.lorem.word(),
       fullName: fullName ?? '${faker.lorem.word()}/${faker.lorem.word()}',
-      htmlUrl: htmlUrl ?? '',
+      htmlUrl: htmlUrl ?? faker.internet.httpUrl(),
       stargazersCount: stargazersCount ?? faker.randomGenerator.integer(10000),
       watchersCount: watchersCount ?? faker.randomGenerator.integer(10000),
       forksCount: forksCount ?? faker.randomGenerator.integer(10000),
@@ -86,9 +99,11 @@ Repo generateRepo({
       language: language ?? faker.lorem.word(),
     );
 
-Owner generateOwner() {
-  return const Owner(
+Owner generateOwner({
+  String? htmlUrl,
+}) {
+  return Owner(
     avatarUrl: '',
-    htmlUrl: '',
+    htmlUrl: htmlUrl ?? faker.internet.httpUrl(),
   );
 }

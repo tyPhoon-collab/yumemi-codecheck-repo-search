@@ -183,6 +183,7 @@ class _AvatarImage extends StatelessWidget {
   Widget build(BuildContext context) {
     final borderRadius = BorderRadius.circular(32);
     return InkWell(
+      key: const Key('avatar'),
       onTap: () => launchUrlSafe(context, owner.htmlUrl),
       borderRadius: borderRadius,
       child: ClipRRect(
