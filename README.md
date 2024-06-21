@@ -62,7 +62,7 @@ Tools • Dart 3.4.3 • DevTools 2.34.3
   - mocktailの導入
     - 柔軟なモック
     - ex) `when(() => MockClass).thenAnswer((_) => value)`
-  - 高いテストのカバレッジ
+  - coverage 100%
 - UI/UX
   - Material 3 に則ったデザイン
   - 横画面の対応

@@ -27,10 +27,7 @@ class MyApp extends StatelessWidget {
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-        supportedLocales: const [
-          Locale('en'),
-          Locale('ja'),
-        ],
+        supportedLocales: S.delegate.supportedLocales,
         theme: theme,
         darkTheme: darkTheme,
         home: const GitHubRepoSearchPage(),

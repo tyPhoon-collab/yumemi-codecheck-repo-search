@@ -21,7 +21,7 @@ Future<RepoSearchResult?> result(ResultRef ref) async {
   final perPage = ref.watch(perPageNumberProvider);
 
   if (query == null) {
-    return Future.value();
+    return null;
   }
 
   try {
@@ -32,9 +32,13 @@ Future<RepoSearchResult?> result(ResultRef ref) async {
       perPage: perPage,
     );
 
+    // 最終ページの更新
     ref.read(lastPageNumberProvider.notifier).setFromResponse(response);
+
+    // 検索履歴に追加
     await ref.read(queryHistoryServiceProvider).add(query);
 
+    // 検索結果を返却
     return response.data;
   } catch (error) {
     throw switch (error) {
@@ -56,7 +60,7 @@ class LastPageNumber extends _$LastPageNumber {
   int? build() => null;
 
   /// https://docs.github.com/ja/rest/using-the-rest-api/using-pagination-in-the-rest-api?apiVersion=2022-11-28
-  /// 改ページのために必要な情報は応答ヘッダーに含まれる。それを抽出し、モデルに落とし込む
+  /// 改ページのために必要な情報は応答ヘッダーに含まれる。それを抽出する
   void setFromResponse(HttpResponse<RepoSearchResult> response) {
     final linkString = response.response.headers.value('link') ?? '';
 
@@ -97,6 +101,8 @@ class LastPageNumber extends _$LastPageNumber {
   }
 }
 
+// RepoSearchResult.totalCountは大きい値でも、全てのページを参照することはできない
+// そのため、Headerから算出できる最終ページから全件数を計算し、小さい値をtotalCountとする
 @riverpod
 int? totalCount(TotalCountRef ref) {
   final lastPage = ref.watch(lastPageNumberProvider);

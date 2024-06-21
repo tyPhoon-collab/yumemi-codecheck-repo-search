@@ -1,3 +1,4 @@
+import 'package:app_settings/app_settings_platform_interface.dart';
 import 'package:dio/dio.dart';
 import 'package:faker/faker.dart';
 import 'package:mocktail/mocktail.dart';
@@ -18,6 +19,10 @@ class MockQueryHistoryService extends Mock implements QueryHistoryService {}
 class MockUrlLauncher extends Mock
     with MockPlatformInterfaceMixin
     implements UrlLauncherPlatform {}
+
+class MockAppSettings extends Mock
+    with MockPlatformInterfaceMixin
+    implements AppSettingsPlatform {}
 
 /// Prefsを使わず、メモリ上で履歴を管理する。後片付けがいらない上、書き込みしないので速い
 void registerMockQueryHistoryServiceWhens(
