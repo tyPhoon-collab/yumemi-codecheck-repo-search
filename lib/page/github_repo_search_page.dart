@@ -31,7 +31,12 @@ class _GitHubRepoSearchPageState extends ConsumerState<GitHubRepoSearchPage> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          // 画面幅によってpaddingを変える
+          // FABでUIが隠れてしまうのを防いでいる
+          // 特に検索前（!hasQuery）はFABによって履歴のゴミ箱ボタンが押せなくなるので、余計に余白を入れる
+          padding: EdgeInsets.symmetric(
+            horizontal: !isPortrait && !hasQuery ? 64 : 16,
+          ),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
