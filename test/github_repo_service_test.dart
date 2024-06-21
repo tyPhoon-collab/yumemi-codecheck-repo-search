@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yumemi_codecheck_repo_search/provider/service_provider.dart';
+import 'package:yumemi_codecheck_repo_search/service/github_repo_service.dart';
 
 void main() {
   test('real request', () async {
@@ -15,5 +16,16 @@ void main() {
 
     expect(result, isNotNull);
     expect(result.data.items.length, lessThanOrEqualTo(30));
+  });
+
+  test('exceptional request', () async {
+    const service = ExceptionalGitHubRepoService(
+      UnexpectedGRSException(),
+    );
+
+    expect(
+      () async => service.searchRepositories('flutter'),
+      throwsA(const UnexpectedGRSException()),
+    );
   });
 }

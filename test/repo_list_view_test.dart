@@ -93,6 +93,18 @@ void main() {
     expect(find.text(S.current.errorValidation), findsOneWidget);
   });
 
+  testWidgets('shows error text when truly unexpected',
+      (WidgetTester tester) async {
+    await buildWidget(
+      tester,
+      (_) => Future.error(const GRSException('Error')),
+    );
+
+    await tester.pumpAndSettle();
+    expect(find.byType(ErrorText), findsOneWidget);
+    expect(find.text('Error'), findsOneWidget);
+  });
+
   testWidgets('shows list of repos when data is available',
       (WidgetTester tester) async {
     await buildWidget(

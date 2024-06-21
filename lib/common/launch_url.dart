@@ -6,12 +6,19 @@ import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
 Future<void> launchUrlSafe(BuildContext context, String url) async {
   final uri = Uri.parse(url);
   try {
-    await launchUrl(uri);
+    final result = await launchUrl(uri);
+    if (!result && context.mounted) {
+      _showLaunchUrlError(context, url);
+    }
   } catch (e) {
     if (!context.mounted) return;
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(S.current.failedLaunch(url))),
-    );
+    _showLaunchUrlError(context, url);
   }
+}
+
+void _showLaunchUrlError(BuildContext context, String url) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(content: Text(S.current.failedLaunch(url))),
+  );
 }
