@@ -20,7 +20,7 @@ class GitHubRepoSearchPage extends ConsumerStatefulWidget {
 }
 
 class _GitHubRepoSearchPageState extends ConsumerState<GitHubRepoSearchPage> {
-  bool _showCurrentPage = true;
+  bool _showCurrentPageNumber = true;
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +66,7 @@ class _GitHubRepoSearchPageState extends ConsumerState<GitHubRepoSearchPage> {
         child: const Icon(Icons.settings),
       ),
       persistentFooterAlignment: AlignmentDirectional.center,
-      persistentFooterButtons: hasQuery && _showCurrentPage
+      persistentFooterButtons: hasQuery && _showCurrentPageNumber
           ? [
               ChangePageNumberIconButton.first(),
               ChangePageNumberIconButton.prev(),
@@ -81,13 +81,12 @@ class _GitHubRepoSearchPageState extends ConsumerState<GitHubRepoSearchPage> {
   }
 
   bool _onScrollNotification(ScrollNotification notification) {
-    final metrics = notification.metrics;
-    final showCurrentPage = metrics.pixels == metrics.maxScrollExtent ||
+    final showCurrentPageNumber = notification.metrics.atEdge ||
         MediaQuery.orientationOf(context) == Orientation.portrait;
 
-    if (_showCurrentPage != showCurrentPage) {
+    if (_showCurrentPageNumber != showCurrentPageNumber) {
       setState(() {
-        _showCurrentPage = showCurrentPage;
+        _showCurrentPageNumber = showCurrentPageNumber;
       });
     }
     return true;
