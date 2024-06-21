@@ -26,11 +26,25 @@
     "**/pubspec.yaml",
     // "**/node_modules/**",
     ".vscode",
-    "*.pbxproj"
+    "*.pbxproj",
+    "*.g.dart",
+    "*.freezed.dart",
   ],
   "cSpell.words": [
+    "autofocus",
     "codecheck",
+    "Codecov",
+    "Codemagic",
+    "Cupertino",
+    "fullscreen",
+    "Hiroaki",
+    "lcov",
+    "mocktail",
+    "Osawa",
+    "prefs",
+    "riverpod",
     "Sonoma",
+    "unfocus",
     "yumemi"
   ]
 }
