@@ -11,9 +11,22 @@ Future<int?> showPageNumberInputDialog(
   final result = await showDialog<int>(
     context: context,
     builder: (BuildContext context) {
-      return PageNumberInputDialog(
-        maxPage: maxPage,
-        validate: validate,
+      return OrientationBuilder(
+        builder: (BuildContext context, Orientation orientation) {
+          final dialog = PageNumberInputDialog(
+            maxPage: maxPage,
+            validate: validate,
+          );
+
+          // 横画面では、ダイアログとキーボードが同時に表示できるスペースが無い
+          // そこで、ダイアログ全体をスクロールできるようにする
+          // AlertDialog.scrollableというプロパティもあるが
+          // それは全体がスクロール可能になるわけではないので不採用
+          return switch (orientation) {
+            Orientation.portrait => dialog,
+            Orientation.landscape => SingleChildScrollView(child: dialog),
+          };
+        },
       );
     },
   );

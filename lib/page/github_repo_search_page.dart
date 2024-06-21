@@ -20,7 +20,9 @@ class GitHubRepoSearchPage extends ConsumerStatefulWidget {
 }
 
 class _GitHubRepoSearchPageState extends ConsumerState<GitHubRepoSearchPage> {
-  bool _showCurrentPage = true;
+  // 横画面では縦のスペースが少ないので、必要なときのみページ遷移ツールや現在のページを表示する
+  // それを管理する変数
+  bool _showCurrentPageNumber = true;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,12 @@ class _GitHubRepoSearchPageState extends ConsumerState<GitHubRepoSearchPage> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          // 画面幅によってpaddingを変える
+          // FABでUIが隠れてしまうのを防いでいる
+          // 特に検索前（!hasQuery）はFABによって履歴のゴミ箱ボタンが押せなくなるので、余計に余白を入れる
+          padding: EdgeInsets.symmetric(
+            horizontal: !isPortrait && !hasQuery ? 64 : 16,
+          ),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -66,7 +73,7 @@ class _GitHubRepoSearchPageState extends ConsumerState<GitHubRepoSearchPage> {
         child: const Icon(Icons.settings),
       ),
       persistentFooterAlignment: AlignmentDirectional.center,
-      persistentFooterButtons: hasQuery && _showCurrentPage
+      persistentFooterButtons: hasQuery && _showCurrentPageNumber
           ? [
               ChangePageNumberIconButton.first(),
               ChangePageNumberIconButton.prev(),
@@ -81,13 +88,12 @@ class _GitHubRepoSearchPageState extends ConsumerState<GitHubRepoSearchPage> {
   }
 
   bool _onScrollNotification(ScrollNotification notification) {
-    final metrics = notification.metrics;
-    final showCurrentPage = metrics.pixels == metrics.maxScrollExtent ||
+    final showCurrentPageNumber = notification.metrics.atEdge ||
         MediaQuery.orientationOf(context) == Orientation.portrait;
 
-    if (_showCurrentPage != showCurrentPage) {
+    if (_showCurrentPageNumber != showCurrentPageNumber) {
       setState(() {
-        _showCurrentPage = showCurrentPage;
+        _showCurrentPageNumber = showCurrentPageNumber;
       });
     }
     return true;

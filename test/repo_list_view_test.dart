@@ -100,7 +100,6 @@ void main() {
       (_) => RepoSearchResult.items([generateRepo(), generateRepo()]),
     );
 
-    expect(find.byType(ListView), findsOneWidget);
     expect(find.byType(RepoListTile), findsNWidgets(2));
   });
 }

@@ -30,7 +30,22 @@ class SearchedRepoListView extends ConsumerWidget {
 
         final items = data.items;
 
-        return RepoListView(items: items, padding: padding);
+        if (items.isEmpty) return Center(child: Text(S.current.noResults));
+
+        return OrientationBuilder(
+          builder: (BuildContext context, Orientation orientation) {
+            return switch (orientation) {
+              Orientation.portrait => RepoListView(
+                  items: items,
+                  padding: padding,
+                ),
+              Orientation.landscape => RepoGridView(
+                  items: items,
+                  padding: padding,
+                ),
+            };
+          },
+        );
       },
       error: (error, stackTrace) {
         final errorMessage =
@@ -66,23 +81,54 @@ class RepoListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return items.isEmpty
-        ? Center(child: Text(S.current.noResults))
-        : ListView.builder(
-            itemCount: items.length,
-            padding: padding,
-            itemBuilder: (context, index) {
-              final item = items[index];
-              return RepoListTile(repo: item);
-            },
-          );
+    return ListView.builder(
+      itemCount: items.length,
+      padding: padding,
+      itemBuilder: (context, index) {
+        final item = items[index];
+        return RepoListTile(repo: item);
+      },
+    );
+  }
+}
+
+class RepoGridView extends StatelessWidget {
+  const RepoGridView({required this.items, this.padding, super.key});
+
+  final List<Repo> items;
+  final EdgeInsets? padding;
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        mainAxisSpacing: 4,
+        crossAxisSpacing: 4,
+        childAspectRatio: 3,
+      ),
+      itemCount: items.length,
+      padding: padding,
+      itemBuilder: (context, index) {
+        final item = items[index];
+        return RepoListTile(
+          repo: item,
+          titleAlignment: ListTileTitleAlignment.titleHeight,
+        );
+      },
+    );
   }
 }
 
 class RepoListTile extends StatelessWidget {
-  const RepoListTile({required this.repo, super.key});
+  const RepoListTile({
+    required this.repo,
+    this.titleAlignment = ListTileTitleAlignment.center,
+    super.key,
+  });
 
   final Repo repo;
+  final ListTileTitleAlignment titleAlignment;
 
   @override
   Widget build(BuildContext context) {
@@ -101,6 +147,7 @@ class RepoListTile extends StatelessWidget {
               )
             : null,
         onTap: () => _pushToDetail(context),
+        titleAlignment: titleAlignment,
       ),
     );
   }
