@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class BrightnessAdaptiveSvg extends StatelessWidget {
-  const BrightnessAdaptiveSvg(this.assetName, {super.key});
+class AdaptiveBrightnessSvg extends StatelessWidget {
+  const AdaptiveBrightnessSvg(this.assetName, {super.key});
 
   final String assetName;
 

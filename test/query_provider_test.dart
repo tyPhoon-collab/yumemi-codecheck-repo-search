@@ -4,11 +4,11 @@ import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:yumemi_codecheck_repo_search/common/exception/github_repo_service_exception.dart';
 import 'package:yumemi_codecheck_repo_search/model/repo_search_result.dart';
 import 'package:yumemi_codecheck_repo_search/provider/search_query_provider.dart';
 import 'package:yumemi_codecheck_repo_search/provider/search_result_provider.dart';
 import 'package:yumemi_codecheck_repo_search/provider/service_provider.dart';
-import 'package:yumemi_codecheck_repo_search/service/github_repo_service.dart';
 
 import 'mocks.dart';
 

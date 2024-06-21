@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yumemi_codecheck_repo_search/common/brightness_adaptive_svg.dart';
 import 'package:yumemi_codecheck_repo_search/common/error_text.dart';
+import 'package:yumemi_codecheck_repo_search/common/exception/github_repo_service_exception.dart';
 import 'package:yumemi_codecheck_repo_search/common/loading_indicator.dart';
 import 'package:yumemi_codecheck_repo_search/const.dart';
 import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
@@ -9,7 +10,6 @@ import 'package:yumemi_codecheck_repo_search/model/repo.dart';
 import 'package:yumemi_codecheck_repo_search/page/github_repo_detail_page.dart';
 import 'package:yumemi_codecheck_repo_search/provider/search_query_provider.dart';
 import 'package:yumemi_codecheck_repo_search/provider/search_result_provider.dart';
-import 'package:yumemi_codecheck_repo_search/service/github_repo_service.dart';
 
 class SearchedRepoListView extends ConsumerWidget {
   const SearchedRepoListView({
@@ -138,7 +138,7 @@ class RepoListTile extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: ListTile(
         title: Text(repo.fullName),
-        leading: const BrightnessAdaptiveSvg(SvgAssets.repo),
+        leading: const AdaptiveBrightnessSvg(SvgAssets.repo),
         subtitle: description != null && description.isNotEmpty
             ? Text(
                 description,
