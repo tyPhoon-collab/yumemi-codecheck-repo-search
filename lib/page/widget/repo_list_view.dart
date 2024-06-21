@@ -138,7 +138,7 @@ class RepoListTile extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: ListTile(
         title: Text(repo.fullName),
-        leading: const BrightnessAdaptiveSvg(SvgAssets.repo),
+        leading: const AdaptiveBrightnessSvg(SvgAssets.repo),
         subtitle: description != null && description.isNotEmpty
             ? Text(
                 description,

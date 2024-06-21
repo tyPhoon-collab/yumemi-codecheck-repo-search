@@ -114,18 +114,18 @@ class _RepoDescription extends StatelessWidget {
           SelectableText(description, style: textTheme.bodyLarge),
         const SizedBox(height: 16),
         if (repo.language case final String language)
-          _SVGAndText(
+          _SvgAndText(
             assetName: SvgAssets.code,
             text: language,
           ),
         const SizedBox(height: 8),
         _RepoPopularitySummaryView(repo: repo),
         const SizedBox(height: 8),
-        _SVGAndText(
+        _SvgAndText(
           assetName: SvgAssets.clock,
           text: _formatDate(repo.createdDateTime),
         ),
-        _SVGAndText(
+        _SvgAndText(
           assetName: SvgAssets.history,
           text: _formatDate(repo.updatedDateTime),
         ),
@@ -151,19 +151,19 @@ class _RepoPopularitySummaryView extends StatelessWidget {
     return Wrap(
       spacing: 12,
       children: [
-        _SVGAndText(
+        _SvgAndText(
           assetName: SvgAssets.star,
           text: repo.stargazersCount.toString(),
         ),
-        _SVGAndText(
+        _SvgAndText(
           assetName: SvgAssets.watch,
           text: repo.watchersCount.toString(),
         ),
-        _SVGAndText(
+        _SvgAndText(
           assetName: SvgAssets.fork,
           text: repo.forksCount.toString(),
         ),
-        _SVGAndText(
+        _SvgAndText(
           assetName: SvgAssets.issue,
           text: repo.openIssuesCount.toString(),
         ),
@@ -197,8 +197,8 @@ class _AvatarImage extends StatelessWidget {
   }
 }
 
-class _SVGAndText extends StatelessWidget {
-  const _SVGAndText({
+class _SvgAndText extends StatelessWidget {
+  const _SvgAndText({
     required this.assetName,
     required this.text,
   });
@@ -211,7 +211,7 @@ class _SVGAndText extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        BrightnessAdaptiveSvg(assetName),
+        AdaptiveBrightnessSvg(assetName),
         const SizedBox(width: 4),
         Flexible(child: Text(text)),
       ],
