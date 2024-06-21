@@ -142,3 +142,15 @@ Tools • Dart 3.4.3 • DevTools 2.34.3
 ### 6/20
 
 - READMEを更新
+- Codecovとの連携をした
+  - actというツールをつかってローカルでデバッグしていたが、actでは制限が多く、時間を取られてしまった
+    - runs-onでmacOSが使えない
+    - KVMがローカルでは動かない
+  - PRを出して確認するほうが良い
+
+### 6/21
+
+- デザインを更に改良
+  - 横画面対応を進めた
+    - [ガイドライン](https://m3.material.io/components/lists/guidelines)より、ListTileを横に並べるのも効果的と気付いたため、修正
+- バグ修正
