@@ -20,6 +20,8 @@ class GitHubRepoSearchPage extends ConsumerStatefulWidget {
 }
 
 class _GitHubRepoSearchPageState extends ConsumerState<GitHubRepoSearchPage> {
+  // 横画面では縦のスペースが少ないので、必要なときのみページ遷移ツールや現在のページを表示する
+  // それを管理する変数
   bool _showCurrentPageNumber = true;
 
   @override
