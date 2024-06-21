@@ -59,7 +59,7 @@ void main() {
     verify(() => mock.launchUrl(repo.owner.htmlUrl, any())).called(1);
   });
 
-  testWidgets('launch url error', (WidgetTester tester) async {
+  testWidgets('launch url return false', (WidgetTester tester) async {
     final repo = generateRepo();
     await buildWidget(
       tester,
@@ -68,6 +68,22 @@ void main() {
 
     registerMockUrlLauncherWhen(mock);
     when(() => mock.launchUrl(any(), any())).thenAnswer((_) async => false);
+
+    await tester.tap(find.byIcon(Icons.launch));
+    await tester.pump();
+
+    expect(find.text(S.current.failedLaunch(repo.htmlUrl)), findsOneWidget);
+  });
+
+  testWidgets('launch url error', (WidgetTester tester) async {
+    final repo = generateRepo();
+    await buildWidget(
+      tester,
+      repo: repo,
+    );
+
+    registerMockUrlLauncherWhen(mock);
+    when(() => mock.launchUrl(any(), any())).thenThrow(Exception());
 
     await tester.tap(find.byIcon(Icons.launch));
     await tester.pump();
