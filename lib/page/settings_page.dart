@@ -16,7 +16,7 @@ class SettingsPage extends StatelessWidget {
       body: const SingleChildScrollView(
         child: Column(
           children: [
-            _LanguageListTile(),
+            LanguageListTile(),
             _ThemeListTile(),
             _ClearAllHistoryListTile(),
             _AboutListTile(),
@@ -27,8 +27,11 @@ class SettingsPage extends StatelessWidget {
   }
 }
 
-class _LanguageListTile extends StatelessWidget {
-  const _LanguageListTile();
+@visibleForTesting
+class LanguageListTile extends StatelessWidget {
+  const LanguageListTile({super.key});
+
+  static Locale? overrideLocale;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +44,7 @@ class _LanguageListTile extends StatelessWidget {
       title: Text(S.current.language),
       subtitle: Text(
         _getLanguageName(
-          Localizations.localeOf(context),
+          overrideLocale ?? Localizations.localeOf(context),
         ),
       ),
       trailing: const Icon(Icons.open_in_new),

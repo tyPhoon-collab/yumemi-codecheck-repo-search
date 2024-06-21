@@ -1,7 +1,11 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:app_settings/app_settings.dart';
+import 'package:app_settings/app_settings_platform_interface.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:yumemi_codecheck_repo_search/generated/l10n.dart';
 import 'package:yumemi_codecheck_repo_search/page/settings_page.dart';
@@ -27,6 +31,7 @@ void main() {
   Future<void> buildWidget(
     WidgetTester tester, {
     List<String>? history,
+    Locale? locale,
   }) async {
     await tester.pumpWidget(
       ProviderScope(
@@ -42,7 +47,14 @@ void main() {
           light: theme,
           dark: darkTheme,
           builder: (theme, darkTheme) => MaterialApp(
-            localizationsDelegates: const [S.delegate],
+            locale: locale,
+            localizationsDelegates: const [
+              S.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: S.delegate.supportedLocales,
             theme: theme,
             darkTheme: darkTheme,
             home: const SettingsPage(),
@@ -64,6 +76,41 @@ void main() {
     expect(find.byKey(const Key('about_list_tile')), findsOneWidget);
   });
 
+  testWidgets('change language from device setting',
+      (WidgetTester tester) async {
+    await buildWidget(tester);
+
+    final mock = MockAppSettings();
+    AppSettingsPlatform.instance = mock;
+    registerFallbackValue(AppSettingsType.appLocale);
+    when(() => mock.openAppSettings(type: any(named: 'type')))
+        .thenAnswer((_) async {});
+
+    await tester.tap(find.byKey(const Key('language_list_tile')));
+
+    verify(() => mock.openAppSettings(type: AppSettingsType.appLocale))
+        .called(1);
+  });
+
+  group('shows correct language name', () {
+    testWidgets('ja', (WidgetTester tester) async {
+      await buildWidget(tester, locale: const Locale('ja', 'JP'));
+      expect(find.text('日本語'), findsOneWidget);
+    });
+
+    testWidgets('en', (WidgetTester tester) async {
+      await buildWidget(tester, locale: const Locale('en', 'US'));
+      expect(find.text('English'), findsOneWidget);
+    });
+
+    testWidgets('other', (WidgetTester tester) async {
+      const locale = Locale('fr', 'FR');
+      LanguageListTile.overrideLocale = locale;
+      await buildWidget(tester, locale: locale);
+      expect(find.text('fr'), findsOneWidget);
+    });
+  });
+
   testWidgets('changes theme on toggle', (WidgetTester tester) async {
     await buildWidget(tester);
 
@@ -80,7 +127,10 @@ void main() {
   testWidgets('clear all history list tile is disabled when no history',
       (WidgetTester tester) async {
     await buildWidget(tester);
-    _expectEnable(find.byKey(const Key('clear_all_history_list_tile')), false);
+    _expectListTileEnable(
+      find.byKey(const Key('clear_all_history_list_tile')),
+      false,
+    );
   });
 
   testWidgets('clear all history', (WidgetTester tester) async {
@@ -88,7 +138,10 @@ void main() {
 
     await tester.pumpAndSettle();
 
-    _expectEnable(find.byKey(const Key('clear_all_history_list_tile')), true);
+    _expectListTileEnable(
+      find.byKey(const Key('clear_all_history_list_tile')),
+      true,
+    );
     await tester
         .tapAndSettle(find.byKey(const Key('clear_all_history_list_tile')));
 
@@ -100,6 +153,30 @@ void main() {
     expect(
       await tester.container().read(queryHistoryServiceProvider).getAll(),
       isEmpty,
+    );
+  });
+
+  testWidgets('cancel clear all history', (WidgetTester tester) async {
+    const history = ['1', '2', '3'];
+    await buildWidget(tester, history: history);
+
+    await tester.pumpAndSettle();
+
+    _expectListTileEnable(
+      find.byKey(const Key('clear_all_history_list_tile')),
+      true,
+    );
+    await tester
+        .tapAndSettle(find.byKey(const Key('clear_all_history_list_tile')));
+
+    expect(find.byType(Dialog), findsOneWidget);
+
+    await tester.tapAndSettle(find.text(S.current.cancel));
+
+    expect(find.text(S.current.clearHistorySuccess), findsNothing);
+    expect(
+      await tester.container().read(queryHistoryServiceProvider).getAll(),
+      containsAll(history),
     );
   });
 
@@ -123,7 +200,7 @@ extension _GetCurrentThemeMode on WidgetTester {
       AdaptiveTheme.of(element(find.byType(MaterialApp))).mode;
 }
 
-void _expectEnable(Finder finder, bool enabled) {
+void _expectListTileEnable(Finder finder, bool enabled) {
   expect(
     (finder.evaluate().first.widget as ListTile).enabled,
     enabled,
