@@ -2,6 +2,8 @@
 
 株式会社ゆめみ様 Flutter エンジニアコードチェック課題 提出用リポジトリ
 
+動画は[こちら](https://github.com/tyPhoon-collab/yumemi-codecheck-repo-search/pull/56)を参照してください
+
 ## 開発環境
 
 [![style: very good analysis](https://img.shields.io/badge/style-very_good_analysis-B22C89.svg)](https://pub.dev/packages/very_good_analysis)
@@ -64,9 +66,12 @@ Tools • Dart 3.4.3 • DevTools 2.34.3
   - Material 3 に則ったデザイン
   - 横画面の対応
 - CI/CD
-  - GitHub Actions による`flutter test`の自動化
+  - GitHub Actions
+    - `flutter test`の自動化
+    - Codecovとの連携
+      - Android emulatorを使用した統合テストも含む
   - very_good_analysisの導入
-  - [デプロイ](#デプロイ)
+  - [デプロイ](#デプロイ)の想定
 
 ## 開発日記
 
@@ -143,10 +148,11 @@ Tools • Dart 3.4.3 • DevTools 2.34.3
 
 - READMEを更新
 - Codecovとの連携をした
-  - actというツールをつかってローカルでデバッグしていたが、actでは制限が多く、時間を取られてしまった
+  - actというツールをつかってGitHut Actionsをローカルでデバッグしていたが、actでは制限が多く、実態とは違うことが多く時間を取られてしまった
     - runs-onでmacOSが使えない
-    - KVMがローカルでは動かない
-  - PRを出して確認するほうが良い
+      - 無料枠の関係で、ubuntuを使用するので、あまり問題ではない
+    - Android emulatorで必要なKVMがローカルでは動かなかった
+  - アクションを起こしたいブランチに対してPRを出して確認するほうが良い
 
 ### 6/21
 
@@ -154,3 +160,4 @@ Tools • Dart 3.4.3 • DevTools 2.34.3
   - 横画面対応を進めた
     - [ガイドライン](https://m3.material.io/components/lists/guidelines)より、ListTileを横に並べるのも効果的と気付いたため、修正
 - バグ修正
+- テストの実装
