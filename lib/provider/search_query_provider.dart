@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:yumemi_codecheck_repo_search/page/widget/sort_type_selection.dart';
+import 'package:yumemi_codecheck_repo_search/common/sort_type.dart';
 
 part 'search_query_provider.g.dart';
 
